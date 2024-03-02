@@ -10,38 +10,21 @@ namespace CgvMate.Service;
 
 public class CgvService
 {
-    private static HttpClient _client;
-    private static SocketsHttpHandler _handler;
-    private static HttpClient _authClient;
-    private static SocketsHttpHandler _authHandler;
-
-    static CgvService()
-    {
-        _handler = new SocketsHttpHandler()
-        {
-            UseCookies = true,
-            CookieContainer = new CookieContainer()
-        };
-        _client = new HttpClient(_handler);
-        _client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0;) Chrome/120.0.0.0 Safari/537.36");
-        _client.DefaultRequestHeaders.Host = "m.cgv.co.kr";
-
-        _authHandler = new SocketsHttpHandler()
-        {
-            UseCookies = true,
-            CookieContainer = new CookieContainer()
-        };
-        _authClient = new HttpClient(_authHandler);
-        _authClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0;) Chrome/120.0.0.0 Safari/537.36");
-        _authClient.DefaultRequestHeaders.Host = "m.cgv.co.kr";
-    }
-
+    private HttpClient _client;
+    private SocketsHttpHandler _handler;
+    private HttpClient _authClient;
+    private SocketsHttpHandler _authHandler;
+    
     public CgvEventService Event { get; private set; }
     public CgvAuthService Auth { get; private set; }
     public CgvReservationService Reservation { get; private set; }
 
-    public CgvService()
+    public CgvService(HttpClient client, HttpClient authClient, SocketsHttpHandler handler, SocketsHttpHandler authHandler)
     {
+        _client = client;
+        _authClient = authClient;
+        _handler = handler;
+        _authHandler = authHandler;
         Event = new CgvEventService(_client);
         Auth = new CgvAuthService(_authClient, _authHandler);
         Reservation = new CgvReservationService(_client, _handler, _authClient, _authHandler);
