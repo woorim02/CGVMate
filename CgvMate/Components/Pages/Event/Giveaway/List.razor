@@ -1,21 +1,33 @@
 ﻿@page "/event/giveaway/list"
 @inject CgvService Service
 
-<h3>GiveawayEvents</h3>
+<article class="eventlist">
+    <div class="eventlist-header">
+        <p>진행중인 경품 이벤트 
+            <strong>
+                @if(EventList is not null) {
+                    <span id="listcount">@EventList.Count</span>
+                }
+            </strong>
+            개
+        </p>
+    </div>
+    <ul class="eventlist-body">
+        @if (EventList is not null) {
+            @foreach (var item in EventList) {
+                <li class="eventlist-item" style="cursor:pointer;" onclick="location.href='event/giveaway/detail?eventIndex=@item.EventIndex'">
+                    <strong class="eventlist-item-title">@item.Title</strong>
+                    <span class="eventlist-item-period">@item.Period</span>
+                    <span class="eventlist-item-dday">@item.DDay</span>
+                </li>
+            }
+        }
+    </ul>
+</article>
 
-@if(EventList is not null) {
-    @foreach (var item in EventList) {
-        <button onclick="location.href='event/giveaway/detail?eventIndex=@item.EventIndex'">
-            <div>
-                <p>@item.Title</p>
-                <p>@item.Period</p>
-            </div>
-        </button>
-    }
-}
 
 @code {
-    private List<GiveawayEvent> EventList = new List<GiveawayEvent>();
+    private List<GiveawayEvent>? EventList;
 
     protected override async Task OnInitializedAsync()
     {
