@@ -15,7 +15,7 @@ public class CgvEventService : CgvServiceBase
     }
 
     #region Get
-    public async Task<GiveawayEvent[]> GetGiveawayEventsAsync()
+    public async Task<List<GiveawayEvent>> GetGiveawayEventsAsync()
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventList.aspx/GetGiveawayEventList");
         request.Content = new StringContent("{theaterCode: '', pageNumber: '1', pageSize: '30'}", Encoding.UTF8, "application/json");
@@ -32,7 +32,7 @@ public class CgvEventService : CgvServiceBase
         }
         catch (Exception e){ throw new InvalidDataException(content, e); }
 
-        List<GiveawayEvent> list = new List<GiveawayEvent>();
+        var list = new List<GiveawayEvent>();
         try
         {
             foreach (var i in document.DocumentNode.ChildNodes)
@@ -48,7 +48,7 @@ public class CgvEventService : CgvServiceBase
             }
         }
         catch(Exception e) { throw new InvalidDataException(content, e); }
-        return list.ToArray();
+        return list;
     }
 
     public async Task<GiveawayEventModel> GetGiveawayEventModelAsync(string eventIndex)
