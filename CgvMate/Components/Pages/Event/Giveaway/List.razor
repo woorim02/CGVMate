@@ -1,0 +1,24 @@
+﻿@page "/event/giveaway/list"
+@inject CgvService Service
+
+<h3>GiveawayEvents</h3>
+
+@if(EventList is not null) {
+    @foreach (var item in EventList) {
+        <button onclick="location.href='event/giveaway/detail?eventIndex=@item.EventIndex'">
+            <div>
+                <p>@item.Title</p>
+                <p>@item.Period</p>
+            </div>
+        </button>
+    }
+}
+
+@code {
+    private List<GiveawayEvent> EventList = new List<GiveawayEvent>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        EventList = await Service.Event.GetGiveawayEventsAsync();
+    }
+}
