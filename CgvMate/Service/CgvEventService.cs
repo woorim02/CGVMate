@@ -66,7 +66,7 @@ public class CgvEventService : CgvServiceBase
         return model;
     }
 
-    public async Task<GiveawayTheaterInfo> GetGiveawayTheaterInfoAsync(string giveawayIndex, string areaCode = "")
+    public async Task<GiveawayInfo> GetGiveawayTheaterInfoAsync(string giveawayIndex, string areaCode = "")
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventDetail.aspx/GetGiveawayTheaterInfo");
         request.Content = new StringContent($"{{giveawayIndex: '{giveawayIndex}', areaCode: '{areaCode}'}}", Encoding.UTF8, "application/json");
@@ -75,7 +75,7 @@ public class CgvEventService : CgvServiceBase
 
         string content = await response.Content.ReadAsStringAsync();
         var obj = JObject.Parse(content);
-        var info = obj["d"]?.ToObject<GiveawayTheaterInfo>();
+        var info = obj["d"]?.ToObject<GiveawayInfo>();
         if (info == null) { throw new InvalidDataException(content); }
 
         foreach (var item in info.TheaterList)
