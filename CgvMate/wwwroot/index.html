@@ -24,7 +24,15 @@
     </div>
 
     <script src="_framework/blazor.webview.js" autostart="false"></script>
-
+    <script>
+        function ShowTheatersPartial(id) {
+            document.querySelectorAll('.area-list > li')
+            .forEach(element => {
+                element.removeAttribute('class')
+            });
+            document.getElementById(id).setAttribute('class', 'active');
+        }
+    </script>
 </body>
 
 </html>

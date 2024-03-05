@@ -1,29 +1,90 @@
 ﻿@page "/event/giveaway/detail"
 @inject CgvService Service
+@inject IJSRuntime JSRuntime
 
-<h3>Detail</h3>
-
-@if(_info is not null)
-{
-    @foreach (var item in _info.TheaterList)
+<article class="tl">
+    <div class="tl-h">
+        <p id="tl-h-text">
+            @if (model is not null)
+            {
+                @model.Title
+            }
+        </p>
+    </div>
+    @if (info is not null)
     {
-        <div>
-            <p>@item.TheaterName</p>
-            <p>@item.GiveawayRemainCount</p>
+        <div class="tl-bL">
+            <ul class="area-list">
+                @foreach (var item in info.AreaList)
+                {
+                    <li id="area-@item.AreaCode" class="" style="display: block"
+                        @onclick="async arg => await GetAreaTheaterList(item.AreaCode)">
+                        <a href="javascript:void(0)">
+                            @item.AreaName
+                            <span>(@item.TheaterCount)</span>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="tl-bR">
+            <ui class="theater-list">
+                @foreach (var item in info.TheaterList)
+                {
+                    <li class="theater">
+                        <span class="theater-name">@item.TheaterName</span>
+                        <span class="theater-count" style="background-color: @CountTypeCodeToColor(item.CountTypeCode);">
+                            @item.GiveawayRemainCount
+                        </span>
+                        <span class="theater-state">@CountTypeCodeToText(item.CountTypeCode)</span>
+                    </li>
+                }
+            </ui>
         </div>
     }
-}
+</article>
 
 @code {
     [SupplyParameterFromQuery(Name = "eventIndex")]
     public string? EventIndex { get; set; }
 
-    private GiveawayEventModel? _model;
-    private GiveawayInfo? _info;
+    private GiveawayEventModel? model;
+    private GiveawayInfo? info;
 
     protected override async Task OnInitializedAsync()
     {
-        _model = await Service.Event.GetGiveawayEventModelAsync(EventIndex!);
-        _info = await Service.Event.GetGiveawayTheaterInfoAsync(_model.GiveawayIndex);
+        model = await Service.Event.GetGiveawayEventModelAsync(EventIndex!);
+        info = await Service.Event.GetGiveawayInfoAsync(model.GiveawayIndex);
+    }
+
+    private async Task GetAreaTheaterList(string areaCode)
+    {   
+        await JSRuntime.InvokeVoidAsync($"ShowTheatersPartial", $"area-{areaCode}");
+        if (model is null)
+            return;
+        info = await Service.Event.GetGiveawayInfoAsync(model.GiveawayIndex, areaCode);
+        StateHasChanged();
+    }
+
+    private static string CountTypeCodeToText(string type)
+    {
+        switch (type)
+        {
+            case "type4": return "마감 되었습니다.";
+            case "type3": return "재고 소진 임박 입니다.";
+            case "type2": return "재고 보유 가능성이 높습니다.";
+            default: return "unknown";
+        }
+    }
+
+    private static string CountTypeCodeToColor(string type)
+    {
+        switch (type)
+        {
+            case "type4": return "#d3d3d3";
+            case "type3": return "#fb4357";
+            case "type2": return "#25c326";
+            default: return "unknown";
+        }
     }
 }
