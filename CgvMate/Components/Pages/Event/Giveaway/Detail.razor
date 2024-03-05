@@ -3,45 +3,52 @@
 @inject IJSRuntime JSRuntime
 
 <article class="tl">
-    <div class="tl-h">
-        <p id="tl-h-text">
+    <div class="header">
+        <p id="header-text">
             @if (model is not null)
             {
                 @model.Title
             }
         </p>
     </div>
+    <div class="content">
     @if (info is not null)
     {
-        <div class="tl-bL">
-            <ul class="area-list">
-                @foreach (var item in info.AreaList)
-                {
-                    <li id="area-@item.AreaCode" class="" style="display: block"
-                        @onclick="async arg => await GetAreaTheaterList(item.AreaCode)">
-                        <a href="javascript:void(0)">
-                            @item.AreaName
-                            <span>(@item.TheaterCount)</span>
-                        </a>
-                    </li>
-                }
-            </ul>
-        </div>
-        <div class="tl-bR">
+        if(info.AreaList.Select(x=>int.Parse(x.TheaterCount)).Sum() > 10)
+        {
+            <div class="contentL">
+                <ul class="area-list">
+                    @foreach (var item in info.AreaList)
+                    {
+                        <li id="area-@item.AreaCode" class="@(item.AreaCode == "13" ? "active" : string.Empty)" style="display: block"
+                            @onclick="async arg => await GetAreaTheaterList(item.AreaCode)">
+                            <a href="javascript:void(0)">
+                                @item.AreaName
+                                <span>(@item.TheaterCount)</span>
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+        <div class="contentR">
             <ui class="theater-list">
                 @foreach (var item in info.TheaterList)
                 {
                     <li class="theater">
                         <span class="theater-name">@item.TheaterName</span>
-                        <span class="theater-count" style="background-color: @CountTypeCodeToColor(item.CountTypeCode);">
-                            @item.GiveawayRemainCount
-                        </span>
-                        <span class="theater-state">@CountTypeCodeToText(item.CountTypeCode)</span>
+                        <div>
+                            <span class="theater-count" style="background-color: @CountTypeCodeToColor(item.CountTypeCode);">
+                                @item.GiveawayRemainCount
+                            </span>
+                            <span class="theater-state">@CountTypeCodeToText(item.CountTypeCode)</span>
+                        </div>
                     </li>
                 }
             </ui>
         </div>
-    }
+        }
+    </div>
 </article>
 
 @code {
