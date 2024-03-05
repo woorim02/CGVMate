@@ -66,7 +66,7 @@ public class CgvEventService : CgvServiceBase
         return model;
     }
 
-    public async Task<GiveawayInfo> GetGiveawayTheaterInfoAsync(string giveawayIndex, string areaCode = "")
+    public async Task<GiveawayInfo> GetGiveawayInfoAsync(string giveawayIndex, string areaCode = "")
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventDetail.aspx/GetGiveawayTheaterInfo");
         request.Content = new StringContent($"{{giveawayIndex: '{giveawayIndex}', areaCode: '{areaCode}'}}", Encoding.UTF8, "application/json");
