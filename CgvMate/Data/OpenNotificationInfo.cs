@@ -11,7 +11,7 @@ public class OpenNotificationInfo
     public string ScreenType { get; set; }
     public string TheaterCode { get => Theater?.TheaterCode ?? theaterCode; set => theaterCode = value; }
     public TheaterGiveawayInfo Theater { get; set; }
-    public DateTime TargetDate { get; set; }
+    public DateOnly TargetDate { get; set; }
     public bool IsOpen { get; set; } = false;
     private bool canReservation = false;
     public bool CanReservation { get => IsOpen && canReservation; set => canReservation = value; }

@@ -19,7 +19,7 @@ public class CgvReservationService : CgvServiceBase
         _authHandler = authHandler;
     }
 
-    public async Task<TheaterScheduleListRoot> GetScheduleListAsync(string theaterCode, string? movieGroupCd, DateTime date, string screenTypeCode = "02")
+    public async Task<TheaterScheduleListRoot> GetScheduleListAsync(string theaterCode, string? movieGroupCd, DateOnly date, string screenTypeCode = "02")
     {
         var request = new HttpRequestMessage(HttpMethod.Get, "https://m.cgv.co.kr/WebApp/Reservation/Schedule.aspx");
         await _client.SendAsync(request);
