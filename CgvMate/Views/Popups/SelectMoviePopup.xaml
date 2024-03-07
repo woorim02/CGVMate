@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:cgv_data="clr-namespace:CgvMate.Data"
+               xmlns:cgv_popup="clr-namespace:CgvMate.Views.Popups"
+               xmlns:cgv_viewmodel="clr-namespace:CgvMate.ViewModels"
+               x:Class="CgvMate.Views.Popups.SelectMoviePopup"
+               x:DataType="cgv_viewmodel:SelectMovieViewModel"
+               Color="Transparent"
+               Opened="Popup_Opened">
+    <toolkit:Popup.Resources>
+        <LinearGradientBrush x:Key="DefaultBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#fb4357" Offset="0.1"></GradientStop>
+            <GradientStop Color="#ef642f" Offset="1"></GradientStop>
+        </LinearGradientBrush>
+    </toolkit:Popup.Resources>
+    <Border WidthRequest="300"
+            Stroke="Transparent"
+            BackgroundColor="White">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
+        <Grid RowDefinitions="*,30,400">
+            <Label Grid.Row="0" Margin="5" Text="영화 선택" TextColor="Black" FontAttributes="Bold"/>
+            <SearchBar Grid.Row="1" x:Name="MovieSearchBar" Placeholder="영화 검색" PlaceholderColor="White" TextColor="Black"
+                       Margin="-10,0,0,0" Background="{StaticResource DefaultBackgroundBrush}"
+                       SearchCommand="{Binding SearchMovieCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference MovieSearchBar}}"/>
+            <ScrollView Grid.Row="2" HorizontalOptions="Center">
+                <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start"
+                            HorizontalOptions="Center" BindableLayout.ItemsSource="{Binding Movies}" Background="White">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="cgv_data:Movie">
+                            <Border Stroke="{StaticResource DefaultBackgroundBrush}" Margin="3" Padding="0,-5,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Grid Margin="0" HeightRequest="97" WidthRequest="58" RowDefinitions="81,16" ColumnDefinitions="58">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding}">
+                                        </TapGestureRecognizer>
+                                    </Grid.GestureRecognizers>
+                                    <Image Source="{Binding ThumbnailSource}" WidthRequest="58" HeightRequest="81"/>
+                                    <Label Grid.Row="1" Text="{Binding Title}"
+                                           TextColor="Black" FontSize="12"
+                                           Padding="3,-0.5,0,0" VerticalTextAlignment="Center" VerticalOptions="Center"/>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </FlexLayout>
+            </ScrollView>
+        </Grid>
+    </Border>
+</toolkit:Popup>

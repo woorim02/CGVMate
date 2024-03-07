@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 
 namespace CgvMate
@@ -10,6 +11,7 @@ namespace CgvMate
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");

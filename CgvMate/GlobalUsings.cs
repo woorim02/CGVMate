@@ -1,6 +1,8 @@
-﻿global using CgvMate;
-global using CgvMate.Data;
+﻿global using CgvMate.Data;
 global using CgvMate.Data.Json;
 global using CgvMate.Service;
+global using CgvMate.ViewModels;
+global using CgvMate.Views;
+global using CgvMate.Views.Popups;
 global using HtmlAgilityPack;
 global using Newtonsoft.Json;
