@@ -2,6 +2,9 @@
 
 public class AsyncTaskExecutor
 {
+    /// <summary>
+    /// 작업 대기열에서 작업 실행 중 처리할 수 없는 오류가 발생했을때 발생하는 이벤트입니다.
+    /// </summary>
     public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurred;
 
     /// <summary>
@@ -102,7 +105,7 @@ public class AsyncTaskExecutor
     }
 
     /// <summary>
-    /// 작업을 정지합니다.
+    /// 작업 대기열을 정지합니다. 현재 실행중인 작업은 취소되지 않습니다.
     /// </summary>
     public void Stop()
     {
@@ -114,7 +117,6 @@ public class AsyncTaskExecutor
     /// <summary>
     /// 작업 대기열의 대기중인 모든 작업을 제거합니다. 현재 실행중인 작업은 취소되지 않습니다.
     /// </summary>
-    /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
     public void Clear() => _taskList.Clear();
 
     /// <summary>
@@ -142,26 +144,5 @@ public class AsyncTaskExecutor
         }
         _taskList.Add(task);
         return true;
-    }
-}
-/// <summary>
-/// AsyncTaskExecutor에서 발생한 예외 데이터를 제공합니다.
-/// </summary>
-public class ExceptionOccurredEventArgs : EventArgs
-{
-    /// <summary>
-    /// 예외가 발생한 Task
-    /// </summary>
-    public Task<Task> Task { get; private set; }
-
-    /// <summary>
-    /// AsyncTaskExecutor에서 처리되지 않은 예외
-    /// </summary>
-    public Exception Exception { get; private set; }
-
-    public ExceptionOccurredEventArgs(Task<Task> task, Exception exception)
-    {
-        Task = task;
-        Exception = exception;
     }
 }
