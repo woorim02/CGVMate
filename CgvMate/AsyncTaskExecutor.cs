@@ -20,7 +20,7 @@ public class AsyncTaskExecutor
     /// <summary>
     /// 작업이 진행중인지 나타냅니다.
     /// </summary>
-    public bool IsRunning { get => _token?.IsCancellationRequested ?? false; }
+    public bool IsRunning { get => !(_token?.IsCancellationRequested ?? true); }
 
     /// <summary>
     /// 작업 대기열 용량.
