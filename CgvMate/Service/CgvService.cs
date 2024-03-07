@@ -67,7 +67,7 @@ public class CgvService
         return areas;
     }
 
-    public async Task<List<TheaterGiveawayInfo>> GetTheatersAsync(string regionCode)
+    public async Task<List<Theater>> GetTheatersAsync(string regionCode)
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/WebApp/MyCgvV5/favoriteTheater.aspx/GetRegionTheaterList");
         request.Content = new StringContent($"{{ regionCode: '{regionCode}'}}", Encoding.UTF8, "application/json");
@@ -75,12 +75,12 @@ public class CgvService
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsStringAsync();
-        List<TheaterGiveawayInfo> theaters;
+        List<Theater> theaters;
         try
         {
             var obj = JObject.Parse(content);
             var arr = JArray.Parse(obj["d"].ToString());
-            theaters = arr.ToObject<List<TheaterGiveawayInfo>>();
+            theaters = arr.ToObject<List<Theater>>();
         }
         catch (Exception ex)
         {
