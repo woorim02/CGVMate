@@ -1,20 +1,23 @@
-using System.Diagnostics;
-
 namespace CgvMate.Service;
 
 public class OpenNotificationService
 {
     private readonly CgvService service;
     private readonly List<OpenNotificationInfo> infos;
-    private readonly Queue<Task<Task>> taskQueue = new Queue<Task<Task>>(30);
-    private readonly TimeSpan timeSpan = TimeSpan.FromSeconds(3);
+    private AsyncTaskExecutor executor;
+    private readonly TimeSpan interval = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// 서비스 실행 중 처리할 수 없는 예외가 발생했을때 발생하는 이벤트입니다.
+    /// </summary>
+    public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurred;
     public bool IsRunning = false;
 
     public OpenNotificationService(CgvService service, List<OpenNotificationInfo> infos)
     {
         this.service = service;
         this.infos = infos;
+        executor = new AsyncTaskExecutor(30, 1, TimeSpan.FromSeconds(3));
     }
 
     #region Public Methods
@@ -24,46 +27,34 @@ public class OpenNotificationService
             return;
 
         IsRunning = true;
-        infos.Clear();
-        taskQueue.Clear();
-        Task.Run(async () => await RunCheckOpenTaskGenerator(preCallback, openCallback));
-        Task.Run(RunTaskQueue);
-
+        Task.Run(async () => await RunService(preCallback, openCallback));
+        executor.Run(token);
         token.Register(Stop);
     }
 
     public void Stop()
     {
         IsRunning = false;
-        infos.Clear();
-        taskQueue.Clear();
+        executor.Stop();
+        executor.Clear();
     }
     #endregion
 
     #region Private Methods
-    private async Task RunCheckOpenTaskGenerator(Action<OpenNotificationInfo> preCallback, Action<OpenNotificationInfo> openCallback)
+    private async Task RunService(Action<OpenNotificationInfo> preCallback, Action<OpenNotificationInfo> openCallback)
     {
+        executor.ExceptionOccurred += Executor_ExceptionOccurred;
         while (IsRunning)
         {
-            if(taskQueue.Count >= 30)
+            for (int i = 0; i < infos.Count; i++)
             {
-                await Task.Delay(timeSpan);
-                continue;
-            }
-            for(int i = 0; i < infos.Count; i++)
-            {
-                if (taskQueue.Count >= 30)
+                var result = executor.TryAdd(async () => await CheckOpen(infos[i], preCallback, openCallback));
+                if (result is false)
                 {
-                    await Task.Delay(timeSpan);
                     i--;
+                    await Task.Delay(interval);
                     continue;
                 }
-                var asyncTask = new Task<Task>(async () =>
-                {
-                    await CheckOpen(infos[i], preCallback, openCallback);
-                });
-                taskQueue.Enqueue(asyncTask);
-                await Task.Delay(timeSpan);
             }
         }
     }
@@ -99,27 +90,12 @@ public class OpenNotificationService
         }
     }
 
-    private async Task RunTaskQueue()
-    {
-        while (IsRunning)
-        {
-            Task<Task>? task;
-            var isDequeued = taskQueue.TryDequeue(out task);
-            if (!isDequeued)
-            {
-                await Task.Delay(timeSpan);
-                continue;
-            }
-            task!.Start();
-            await task.Result;
-            await Task.Delay(timeSpan);
-        }
-    }
+    private void Executor_ExceptionOccurred(object? sender, ExceptionOccurredEventArgs e) => ExceptionOccurred?.Invoke(sender, e);
     #endregion
 
     #region Static Methods
-    /// <param name="movieType">��ũ��Ÿ��(2D, IMAX, 4DX....��)</param>
-    /// <returns>strScreenTypeCd</returns>
+    /// <param name="movieType">(2D, IMAX, 4DX....등등)</param>
+    /// <returns>movieTypeCd</returns>
     /// <exception cref="ArgumentOutOfRangeException"></exception>
     private static string GetMovieTypeCode(string movieType)
     {
