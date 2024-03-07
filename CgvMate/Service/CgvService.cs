@@ -117,6 +117,8 @@ public class CgvService
             var response = await _client.SendAsync(request);
             response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
+            if (content == "")
+                break;
             var list = ParseMovieList(content);
             movies.AddRange(list);
             if (list.Count < 20)
