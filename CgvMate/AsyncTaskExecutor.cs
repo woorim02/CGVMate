@@ -4,7 +4,11 @@ public class AsyncTaskExecutor
 {
     public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurred;
 
-    private readonly Queue<Task<Task>> _queue = new Queue<Task<Task>>();
+    /// <summary>
+    /// 작업 대기열
+    /// </summary>
+    private readonly List<Task<Task>> _taskList;
+
     /// <summary>
     /// Do Not Use It. IsRunning 사용. Run(CancellationToken token)을 위한 필드. 
     /// </summary>
@@ -16,29 +20,24 @@ public class AsyncTaskExecutor
     public bool IsRunning { get => _token?.IsCancellationRequested ?? false; }
 
     /// <summary>
-    /// 작업 큐 용량. //TODO
+    /// 작업 대기열 용량.
     /// </summary>
-    public int Capacity { get; set; } = 30;
+    public int Capacity { get; set; }
 
     /// <summary>
-    /// 최대 동시 작업 수
+    /// 최대 동시 작업 수 //TODO
     /// </summary>
-    public int ConcurrencyLimit { get; set; } = 1;
+    public int ConcurrencyLimit { get; set; }
 
     /// <summary>
     /// 작업 주기. 동시 작업 수가 n(n>=2)인 경우 주기마다 n개의 작업을 실행합니다.
     /// </summary>
-    public TimeSpan Interval { get; set; } = TimeSpan.FromSeconds(1);
+    public TimeSpan Interval { get; set; }
 
     /// <summary>
-    /// 기본값(30, 1, 1s)을 사용하여 클래스의 새 인스턴스를 초기화합니다. 
+    /// 작업 대기열 용량, 최대 동시 작업 수, 작업 주기를 사용하여 클래스의 새 인스턴스를 초기화합니다.
     /// </summary>
-    public AsyncTaskExecutor() { }
-
-    /// <summary>
-    /// 작업 큐 용량, 최대 동시 작업 수, 작업 주기를 사용자화 하여 클래스의 새 인스턴스를 초기화합니다.
-    /// </summary>
-    /// <param name="capacity">작업 큐 용량</param>
+    /// <param name="capacity">작업 대기열 용량</param>
     /// <param name="concurrencyLimit">최대 동시 작업 수</param>
     /// <param name="interval">작업 주기</param>
     public AsyncTaskExecutor(int capacity, int concurrencyLimit, TimeSpan interval)
@@ -46,15 +45,16 @@ public class AsyncTaskExecutor
         Capacity = capacity;
         ConcurrencyLimit = concurrencyLimit;
         Interval = interval;
+        _taskList = new List<Task<Task>>(Capacity);
     }
 
     /// <summary>
-    /// 작업 큐를 실행합니다.
+    /// 작업 대기열을 실행합니다.
     /// </summary>
     public void Run() => Run(new CancellationToken());
 
     /// <summary>
-    /// CancellationToken을 사용하여 작업 큐를 실행합니다.
+    /// CancellationToken을 사용하여 작업 대기열을 실행합니다.
     /// </summary>
     public void Run(CancellationToken token)
     {
@@ -63,15 +63,24 @@ public class AsyncTaskExecutor
         {
             while (IsRunning)
             {
-                // TODO 작업 동시진행 구현
-                Task<Task>? task = null;
-                var isDequeued = _queue.TryDequeue(out task);
-                if (!isDequeued)
+                Task<Task>? task;
+                lock (_taskList)
+                {
+                    if (_taskList.Count == 0)
+                    {
+                        task = null;
+                    }
+                    else
+                    {
+                        task = (Task<Task>?)_taskList[0];
+                        _taskList.RemoveAt(0);
+                    }
+                }
+                if (task == null)
                 {
                     await Task.Delay(Interval);
                     continue;
                 }
-
                 if (task!.IsCanceled)
                 {
                     continue;
@@ -93,7 +102,7 @@ public class AsyncTaskExecutor
     }
 
     /// <summary>
-    /// 작업 큐를 정지합니다.
+    /// 작업을 정지합니다.
     /// </summary>
     public void Stop()
     {
@@ -103,21 +112,37 @@ public class AsyncTaskExecutor
     }
 
     /// <summary>
-    /// 작업 큐의 대기중인 모든 작업을 제거합니다. 현재 실행중인 작업은 취소되지 않습니다.
+    /// 작업 대기열의 대기중인 모든 작업을 제거합니다. 현재 실행중인 작업은 취소되지 않습니다.
     /// </summary>
-    public void Clear() => _queue.Clear();
+    /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
+    public void Clear() => _taskList.Clear();
 
     /// <summary>
-    /// 작업 큐에 작업을 추가합니다.
+    /// 작업을 대기열에 추가하려고 시도합니다.
     /// </summary>
-    public void EnQueue(Func<Task> func) => EnQueue(new Task<Task>(func));
+    /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
+    public bool TryAdd(Func<Task> func) => TryAdd(new Task<Task>(func));
 
     /// <summary>
-    /// 작업 큐에 작업을 추가합니다. CancellationToken으로 작업 취소가 가능합니다.
+    /// 작업을 대기열에 추가하려고 시도합니다. CancellationToken으로 작업 취소가 가능합니다.
     /// </summary>
-    public void EnQueue(Func<Task> func, CancellationToken token) => EnQueue(new Task<Task>(func, token));
+    /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
+    public bool TryAdd(Func<Task> func, CancellationToken token)
+    {
+        var task = new Task<Task>(func, token);
+        token.Register(() => _taskList.Remove(task));
+        return TryAdd(task);
+    }
 
-    private void EnQueue(Task<Task> task) => _queue.Enqueue(task);
+    private bool TryAdd(Task<Task> task)
+    {
+        if (_taskList.Count > Capacity)
+        {
+            return false;
+        }
+        _taskList.Add(task);
+        return true;
+    }
 }
 /// <summary>
 /// AsyncTaskExecutor에서 발생한 예외 데이터를 제공합니다.
