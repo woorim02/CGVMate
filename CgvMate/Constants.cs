@@ -1,0 +1,13 @@
+﻿namespace CgvMate;
+
+public static class Constants
+{
+#if ANDROID
+    public const string FOREGROUND_CHANNEL_ID = "openNotification.foreground";
+    public const string FOREGROUND_CHANNEL_NAME = "오픈알림 활성화 알림";
+    public const string OPEN_CHANNEL_ID = "openNotification.channel";
+    public const string OPEN_CHANNEL_NAME = "오픈알림";
+    public const string OPEN_GROUP_KEY = "openNotification.group";
+    public const string OPEN_GROUP_NAME = "OpenNotification NotificationGroup";
+#endif
+}
