@@ -12,7 +12,7 @@ public static class Constants
 #endif
 
 	#region DataBase
-	public static string APP_DB_FILENAME => "app_database.sqlite";
+	public static string APP_DB_FILENAME => "app_database_v0.1.sqlite";
     public static string APP_DB_PATH => Path.Combine(FileSystem.AppDataDirectory, APP_DB_FILENAME);
 	#endregion
 }

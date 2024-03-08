@@ -36,6 +36,8 @@ namespace CgvMate
 
             builder.Services.AddSingleton<CgvService>(service);
 
+            using var db = new AppDbContext();
+            db.Database.EnsureCreated();
 
             return builder.Build();
         }

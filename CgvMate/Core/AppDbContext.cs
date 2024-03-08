@@ -18,7 +18,7 @@ namespace CgvMate.Core
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
-			optionsBuilder.UseSqlite(Constants.APP_DB_PATH);
+			optionsBuilder.UseSqlite($"Filename={Constants.APP_DB_PATH}");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
