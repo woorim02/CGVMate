@@ -61,6 +61,9 @@ public class TaskProcessor
     /// </summary>
     public void Start(CancellationToken token)
     {
+        if (IsRunning)
+            return;
+
         _token = token;
         Task.Run(async () =>
         {
@@ -76,20 +79,22 @@ public class TaskProcessor
                     else
                     {
                         task = (Task<Task>?)_taskList[0];
-                        _taskList.RemoveAt(0);
-                    }
+                        _taskList.RemoveAt(0); 
+					}
                 }
                 if (task == null)
                 {
                     await Task.Delay(Interval);
                     continue;
-                }
-                if (task!.IsCanceled)
+				}
+                lock (task)
                 {
-                    continue;
+                    if (task!.IsCanceled)
+                    {
+                        continue;
+                    }
                 }
-
-                task.Start();
+				task.Start();
                 try
                 {
                     await task.Result;
