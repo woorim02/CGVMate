@@ -19,9 +19,15 @@ public class OpenNotificationInfo
 
     public TheaterGiveawayInfo TheaterGiveawayInfo { get; set; }
     public DateOnly TargetDate { get; set; }
-    public bool IsOpen { get; set; } = false;
+    /// <summary>
+    ///  예매준비중 이후 상태라면 true
+    /// </summary>
+    public bool IsPreOpen { get; set; } = false;
     private bool canReservation = false;
-    public bool CanReservation { get => IsOpen && canReservation; set => canReservation = value; }
+    /// <summary>
+    /// 예매 스케쥴이 열리고 예매 가능한 상태면 true
+    /// </summary>
+    public bool IsOpen { get => IsPreOpen && canReservation; set => canReservation = value; }
 
     /// <summary>
     /// 빈 생성자를 직접 호출하지 마세요. json 직렬화 또는 ef core에서 사용하는 클래스입니다.
