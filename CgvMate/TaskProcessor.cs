@@ -1,6 +1,6 @@
 ﻿namespace CgvMate;
 
-public class AsyncTaskExecutor
+public class TaskProcessor
 {
     /// <summary>
     /// 작업 대기열에서 작업 실행 중 처리할 수 없는 오류가 발생했을때 발생하는 이벤트입니다.
@@ -13,7 +13,7 @@ public class AsyncTaskExecutor
     private readonly List<Task<Task>> _taskList;
 
     /// <summary>
-    /// Do Not Use It. IsRunning 사용. Run(CancellationToken token)을 위한 필드. 
+    /// Do Not Use It. IsRunning 사용. Start(CancellationToken token)을 위한 필드. 
     /// </summary>
     private CancellationToken? _token;
 
@@ -43,7 +43,7 @@ public class AsyncTaskExecutor
     /// <param name="capacity">작업 대기열 용량</param>
     /// <param name="concurrencyLimit">최대 동시 작업 수</param>
     /// <param name="interval">작업 주기</param>
-    public AsyncTaskExecutor(int capacity, int concurrencyLimit, TimeSpan interval)
+    public TaskProcessor(int capacity, int concurrencyLimit, TimeSpan interval)
     {
         Capacity = capacity;
         ConcurrencyLimit = concurrencyLimit;
@@ -54,12 +54,12 @@ public class AsyncTaskExecutor
     /// <summary>
     /// 작업 대기열을 실행합니다.
     /// </summary>
-    public void Run() => Run(new CancellationToken());
+    public void Start() => Start(new CancellationToken());
 
     /// <summary>
     /// CancellationToken을 사용하여 작업 대기열을 실행합니다.
     /// </summary>
-    public void Run(CancellationToken token)
+    public void Start(CancellationToken token)
     {
         _token = token;
         Task.Run(async () =>
@@ -123,20 +123,20 @@ public class AsyncTaskExecutor
     /// 작업을 대기열에 추가하려고 시도합니다.
     /// </summary>
     /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
-    public bool TryAdd(Func<Task> func) => TryAdd(new Task<Task>(func));
+    public bool TryEnqueue(Func<Task> func) => TryEnqueue(new Task<Task>(func));
 
     /// <summary>
     /// 작업을 대기열에 추가하려고 시도합니다. CancellationToken으로 작업 취소가 가능합니다.
     /// </summary>
     /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
-    public bool TryAdd(Func<Task> func, CancellationToken token)
+    public bool TryEnqueue(Func<Task> func, CancellationToken token)
     {
         var task = new Task<Task>(func, token);
         token.Register(() => _taskList.Remove(task));
-        return TryAdd(task);
+        return TryEnqueue(task);
     }
 
-    private bool TryAdd(Task<Task> task)
+    private bool TryEnqueue(Task<Task> task)
     {
         if (_taskList.Count > Capacity)
         {

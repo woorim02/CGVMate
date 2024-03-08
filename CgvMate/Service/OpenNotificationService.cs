@@ -4,7 +4,7 @@ public class OpenNotificationService
 {
     private readonly CgvService service;
     private readonly List<OpenNotificationInfo> infos;
-    private AsyncTaskExecutor executor;
+    private TaskProcessor executor;
     private readonly TimeSpan interval = TimeSpan.FromSeconds(3);
 
     /// <summary>
@@ -17,7 +17,7 @@ public class OpenNotificationService
     {
         this.service = service;
         this.infos = infos;
-        executor = new AsyncTaskExecutor(30, 1, TimeSpan.FromSeconds(3));
+        executor = new TaskProcessor(30, 1, TimeSpan.FromSeconds(3));
     }
 
     #region Public Methods
@@ -28,7 +28,7 @@ public class OpenNotificationService
 
         IsRunning = true;
         Task.Run(async () => await RunService(preCallback, openCallback));
-        executor.Run(token);
+        executor.Start(token);
         token.Register(Stop);
     }
 
@@ -48,7 +48,7 @@ public class OpenNotificationService
         {
             for (int i = 0; i < infos.Count; i++)
             {
-                var result = executor.TryAdd(async () => await CheckOpen(infos[i], preCallback, openCallback));
+                var result = executor.TryEnqueue(async () => await CheckOpen(infos[i], preCallback, openCallback));
                 if (result is false)
                 {
                     i--;
