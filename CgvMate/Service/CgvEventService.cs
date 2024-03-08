@@ -78,9 +78,13 @@ public class CgvEventService : CgvServiceBase
         var info = obj["d"]?.ToObject<GiveawayInfo>();
         if (info == null) { throw new InvalidDataException(content); }
 
-        foreach (var item in info.TheaterList)
+        foreach (var item in info.TheaterGiveawayInfos)
         {
             item.GiveawayRemainCount = Decrypt(item.EncCount);
+        }
+        foreach (var item in info.Areas)
+        {
+            item.IsGiveawayAreaCode = true;
         }
         return info;
     }

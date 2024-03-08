@@ -14,11 +14,11 @@
     <div class="content">
     @if (info is not null)
     {
-        if(info.AreaList.Select(x=>int.Parse(x.TheaterCount)).Sum() > 10)
+        if(info.Areas.Select(x=>int.Parse(x.TheaterCount)).Sum() > 10)
         {
             <div class="contentL">
                 <ul class="area-list">
-                    @foreach (var item in info.AreaList)
+                    @foreach (var item in info.Areas)
                     {
                         <li id="area-@item.AreaCode" class="@(item.AreaCode == "13" ? "active" : string.Empty)" style="display: block"
                             @onclick="async arg => await GetAreaTheaterList(item.AreaCode)">
@@ -33,7 +33,7 @@
         }
         <div class="contentR">
             <ui class="theater-list">
-                @foreach (var item in info.TheaterList)
+                @foreach (var item in info.TheaterGiveawayInfos)
                 {
                     <li class="theater">
                         <span class="theater-name">@item.TheaterName</span>

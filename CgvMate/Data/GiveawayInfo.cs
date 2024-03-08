@@ -4,6 +4,6 @@
 public partial class GiveawayInfo
 {
     public string GivewayIndex { get; init; }
-    public List<Area> AreaList { get; init; }
-    public List<TheaterGiveawayInfo> TheaterList { get; init; }
+    public List<Area> Areas { get; init; }
+    public List<TheaterGiveawayInfo> TheaterGiveawayInfos { get; init; }
 }
