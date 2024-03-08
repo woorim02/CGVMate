@@ -14,6 +14,9 @@ public class OpenNotificationInfo
     private string theaterCode;
     public string TheaterCode { get => TheaterGiveawayInfo?.TheaterCode ?? theaterCode; set => theaterCode = value; }
 
+    private string giveawayIndex;
+    public string GiveawayIndex { get => TheaterGiveawayInfo?.GiveawayIndex ?? giveawayIndex; set => giveawayIndex = value; }
+
     public TheaterGiveawayInfo TheaterGiveawayInfo { get; set; }
     public DateOnly TargetDate { get; set; }
     public bool IsOpen { get; set; } = false;
