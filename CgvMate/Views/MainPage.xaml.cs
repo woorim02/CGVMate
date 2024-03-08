@@ -1,4 +1,4 @@
-﻿namespace CgvMate
+﻿namespace CgvMate.Views
 {
     public partial class MainPage : ContentPage
     {

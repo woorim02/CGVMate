@@ -1,4 +1,5 @@
-﻿global using CgvMate.Data;
+﻿global using CgvMate.Core;
+global using CgvMate.Data;
 global using CgvMate.Data.Json;
 global using CgvMate.Service;
 global using CgvMate.ViewModels;

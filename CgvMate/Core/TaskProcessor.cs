@@ -1,4 +1,4 @@
-﻿namespace CgvMate;
+﻿namespace CgvMate.Core;
 
 public class TaskProcessor
 {

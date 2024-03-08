@@ -1,4 +1,4 @@
-﻿namespace CgvMate;
+﻿namespace CgvMate.Core;
 
 /// <summary>
 /// 비동기 래핑된 작업에서 발생한 예외 데이터를 제공합니다.
