@@ -42,6 +42,10 @@ namespace CgvMate.Core
 			modelBuilder.Entity<OpenNotificationInfo>()
 				.Property(x => x.Id)
 				.ValueGeneratedOnAdd();
+			modelBuilder.Entity<OpenNotificationInfo>()
+				.HasOne(x => x.Movie);
+			modelBuilder.Entity<OpenNotificationInfo>()
+				.HasOne(x => x.TheaterGiveawayInfo);
 		}
 	}
 }
