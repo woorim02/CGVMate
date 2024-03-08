@@ -1,5 +1,20 @@
 ﻿@page "/"
+@using CommunityToolkit.Maui.Views;
+@inject CgvService Service
 
-<h1>Hello, world!</h1>
+<article>
+	<div class="home-body">
+		<ul>
+			<li>
+				<button class="btn-link" onclick="location.href='/event/giveaway/list'">경품 이벤트 현황</button>
+			</li>
+		</ul>
+	</div>
+</article>
 
-Welcome to your new app.
+@code{
+	private void OpenPopup(){
+		var popup = new SelectMoviePopup(Service);
+		App.Current.MainPage.ShowPopup(popup);
+	}
+}
