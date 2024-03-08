@@ -10,4 +10,9 @@ public static class Constants
     public const string OPEN_GROUP_KEY = "openNotification.group";
     public const string OPEN_GROUP_NAME = "OpenNotification NotificationGroup";
 #endif
+
+	#region DataBase
+	public static string APP_DB_FILENAME => "app_database.sqlite";
+    public static string APP_DB_PATH => Path.Combine(FileSystem.AppDataDirectory, APP_DB_FILENAME);
+	#endregion
 }
