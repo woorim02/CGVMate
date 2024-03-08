@@ -11,9 +11,12 @@ public class GiveawayEventModel
     /// <summary>
     /// Please do not use it. This is a property for json serialization.
     /// </summary>
-    public GiveawayInfo[] GiveawayItemList { private get; set; }
+    public GiveawayItem[] GiveawayItemList { private get; set; }
 
-    public class GiveawayInfo
+	/// <summary>
+	/// Please do not use it. This is a property for json serialization.
+	/// </summary>
+	public class GiveawayItem
     {
         public string GiveawayItemCode { get; set; }
         public string GiveawayItemName { get; set; }
