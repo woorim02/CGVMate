@@ -52,12 +52,7 @@ public class CgvService
                 var count = innerText.Split("(")[1];
                 name = Regex.Replace(name, @"\s+", string.Empty);
                 count = Regex.Replace(count, @"\s+", string.Empty);
-                areas.Add(new Area
-                {
-                    AreaCode = regioncode,
-                    AreaName = name,
-                    TheaterCount = count
-                });
+                areas.Add(new Area(name, regioncode, false, count));
             }
             catch (Exception ex)
             {

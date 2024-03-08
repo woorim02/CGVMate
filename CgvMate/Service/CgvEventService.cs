@@ -37,13 +37,11 @@ public class CgvEventService : CgvServiceBase
         {
             foreach (var i in document.DocumentNode.ChildNodes)
             {
-                GiveawayEvent giveawayEvent = new GiveawayEvent()
-                {
-                    EventIndex = i.Attributes["data-eventIdx"].Value,
-                    Title = i.SelectSingleNode("div/strong[1]").InnerText,
-                    Period = i.SelectSingleNode("div/span[1]").InnerText,
-                    DDay = (i.SelectSingleNode("div/span[2]").InnerText)
-                };
+				GiveawayEvent giveawayEvent = new GiveawayEvent(
+                    title: i.SelectSingleNode("div/strong[1]").InnerText,
+                    period: i.SelectSingleNode("div/span[1]").InnerText,
+                    eventIndex: i.Attributes["data-eventIdx"].Value,
+					dDay: i.SelectSingleNode("div/span[2]").InnerText);
                 list.Add(giveawayEvent);
             }
         }

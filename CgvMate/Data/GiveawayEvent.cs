@@ -27,4 +27,18 @@ public class GiveawayEvent
             return endDate;
         }
     }
+
+	/// <summary>
+	/// 빈 생성자를 직접 호출하지 마세요. json 직렬화 또는 ef core에서 사용하는 클래스입니다.
+	/// </summary>
+	public GiveawayEvent()
+    {
+    }
+    public GiveawayEvent(string title, string eventIndex, string period, string dDay)
+	{
+		Title = title;
+		EventIndex = eventIndex;
+		Period = period;
+		DDay = dDay;
+	}
 }

@@ -7,4 +7,20 @@ public class Area
     public string AreaCode { get; set; }
     public bool IsGiveawayAreaCode { get; set; } = false;
     public string TheaterCount { get; set; }
+
+	/// <summary>
+	/// 빈 생성자를 직접 호출하지 마세요. json 직렬화 또는 ef core에서 사용하는 클래스입니다.
+	/// </summary>
+	public Area()
+	{
+
+	}
+
+    public Area(string areaName, string areaCode, bool isGiveawayAreaCode, string theaterCount)
+	{
+		AreaName = areaName;
+		AreaCode = areaCode;
+		IsGiveawayAreaCode = isGiveawayAreaCode;
+		TheaterCount = theaterCount;
+	}
 }

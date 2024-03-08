@@ -21,4 +21,12 @@ public class GiveawayEventModel
         public string GiveawayItemCode { get; set; }
         public string GiveawayItemName { get; set; }
     }
+
+	/// <summary>
+	/// 빈 생성자를 직접 호출하지 마세요. json 직렬화 또는 ef core에서 사용하는 클래스입니다.
+	/// </summary>
+	public GiveawayEventModel()
+	{
+
+	}
 }
