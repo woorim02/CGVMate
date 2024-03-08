@@ -79,6 +79,7 @@ public class CgvEventService : CgvServiceBase
         foreach (var item in info.TheaterGiveawayInfos)
         {
             item.GiveawayRemainCount = Decrypt(item.EncCount);
+            item.GiveawayIndex = giveawayIndex;
         }
         foreach (var item in info.Areas)
         {
