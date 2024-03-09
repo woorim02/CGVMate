@@ -1,4 +1,16 @@
-﻿.notification-header {
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    letter-spacing: normal;
+}
+
+ul, li {
+    list-style: none;
+}
+
+
+.notification-header {
     display: flex;
     align-items: center;
     justify-content: space-between;

@@ -1,17 +1,67 @@
 ﻿@page "/reservation/notification"
 @using CgvMate.Components.Custom
+@using Microsoft.EntityFrameworkCore
 
 <article>
-	<div class="notification-header">
-		<label id="toggle-switch-label" for="toggle_switch1">
-			<span>오픈 알림 받기</span>
-			<ToggleSwitch id="toggle_switch1" style="display: inline-flex; float:right" OnChangeCallback="OnChange"></ToggleSwitch>
-		</label>
-	</div>
+    <header class="notification-header">
+        <label id="toggle-switch-label" for="toggle_switch1">
+            <span>오픈 알림 받기</span>
+            <ToggleSwitch id="toggle_switch1" style="display: inline-flex; float:right" OnChangeCallback="OnChange"></ToggleSwitch>
+        </label>
+    </header>
+    <section class="notification-body">
+        <ul>
+            @if(Infos is not null)
+            {
+                @foreach(var item in Infos)
+                {
+                    if(item.Movie is not null)
+                    {
+                        <li>
+                            <div>
+                                <img src="@item.Movie.ThumbnailSource"/>
+                            </div>
+                            <p>@item.Movie.Title</p>
+                            <p>@item.ScreenType</p>
+                            <p>@item.Theater.TheaterName</p>
+                            <p>@item.TargetDate.ToString("yyyy-MM-dd")</p>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <div>
+                                <img src="/images/location.svg" />
+                            </div>
+                            <p>@item.Theater.TheaterName</p>
+                            <p>@item.ScreenType</p>
+                            <p>@item.TargetDate.ToString("yyyy-MM-dd")</p>
+                        </li>
+                    }
+                }
+            }
+        </ul>
+        <button></button>
+    </section>
 </article>
 @code {
-	private void OnChange(ChangeEventArgs args)
-	{
-		
-	}
+    private List<OpenNotificationInfo>? Infos{ get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var dbContext = new AppDbContext();
+        var infos = await dbContext.OpenNotificationInfos.Select(x => x).ToListAsync();
+        foreach(var item in infos)
+        {
+            if (item.MovieIndex is not null)
+                item.Movie = await dbContext.Movies.Where(x => x.Index == item.MovieIndex).FirstOrDefaultAsync();
+            item.Theater = await dbContext.Theaters.Where(x => x.TheaterCode == item.TheaterCode).FirstAsync();
+        }
+        Infos = infos.OrderBy(x => $"{(x.MovieIndex is null ? 0 : 1)}").ToList();
+    }
+
+    private void OnChange(ChangeEventArgs args)
+    {
+        
+    }
 }
