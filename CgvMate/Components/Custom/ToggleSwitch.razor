@@ -1,0 +1,14 @@
+﻿@namespace CgvMate.Components.Custom
+
+<span class="form-switch">
+	<input id="@Id" class="form-check-input" style="@Style" type="checkbox" role="switch" @onchange=OnChangeCallback>
+</span>
+
+@code {
+	[Parameter]
+	public string Id{ get; set; }
+	[Parameter]
+	public string Style{ get; set; }
+	[Parameter]
+	public EventCallback<ChangeEventArgs> OnChangeCallback { get; set; }
+}
