@@ -1,0 +1,14 @@
+﻿.notification-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 30px 5px 10px;
+}
+#toggle-switch-label {
+    display: inline-block;
+    width: 100%;
+}
+
+.notification-header p {
+    margin: 0px;
+}

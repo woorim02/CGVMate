@@ -1,0 +1,17 @@
+﻿@page "/reservation/notification"
+@using CgvMate.Components.Custom
+
+<article>
+	<div class="notification-header">
+		<label id="toggle-switch-label" for="toggle_switch1">
+			<span>오픈 알림 받기</span>
+			<ToggleSwitch id="toggle_switch1" style="display: inline-flex; float:right" OnChangeCallback="OnChange"></ToggleSwitch>
+		</label>
+	</div>
+</article>
+@code {
+	private void OnChange(ChangeEventArgs args)
+	{
+		
+	}
+}
