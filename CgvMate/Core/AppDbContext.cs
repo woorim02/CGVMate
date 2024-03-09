@@ -34,9 +34,6 @@ namespace CgvMate.Core
 			modelBuilder.Entity<Movie>()
 				.Ignore(x=>x.ScreenTypes);
 
-			modelBuilder.Entity<TheaterGiveawayInfo>()
-				.HasKey(x => new { x.TheaterCode, x.GiveawayIndex });
-
 			modelBuilder.Entity<OpenNotificationInfo>()
 				.HasKey(x => x.Id);
 			modelBuilder.Entity<OpenNotificationInfo>()
@@ -45,7 +42,7 @@ namespace CgvMate.Core
 			modelBuilder.Entity<OpenNotificationInfo>()
 				.HasOne(x => x.Movie);
 			modelBuilder.Entity<OpenNotificationInfo>()
-				.HasOne(x => x.TheaterGiveawayInfo);
+				.HasOne(x => x.Theater);
 		}
 	}
 }

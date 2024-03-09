@@ -12,12 +12,9 @@ public class OpenNotificationInfo
     public string ScreenType { get; set; }
 
     private string theaterCode;
-    public string TheaterCode { get => TheaterGiveawayInfo?.TheaterCode ?? theaterCode; set => theaterCode = value; }
+    public string TheaterCode { get => Theater?.TheaterCode ?? theaterCode; set => theaterCode = value; }
 
-    private string giveawayIndex;
-    public string GiveawayIndex { get => TheaterGiveawayInfo?.GiveawayIndex ?? giveawayIndex; set => giveawayIndex = value; }
-
-    public TheaterGiveawayInfo TheaterGiveawayInfo { get; set; }
+    public Theater Theater { get; set; }
     public DateOnly TargetDate { get; set; }
     /// <summary>
     ///  예매준비중 이후 상태라면 true
