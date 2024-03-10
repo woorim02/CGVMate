@@ -1,20 +1,68 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">CGV 도우미</a>
-    </div>
+﻿<div class="flex-shrink-0 p-3" style="width: 280px; height: 100%;">
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+        <svg class="bi pe-none me-2" width="10" height="24">
+            <use xlink:href="#bootstrap" />
+        </svg>
+        <span class="fs-5 fw-semibold">CGV 도우미</span>
+    </a>
+    <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                경품, 이벤트
+            </button>
+            <div class="collapse" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            이벤트 목록
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/event/giveaway" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            경품 이벤트 현황
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            자동 경품 신청
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                예매
+            </button>
+            <div class="collapse" id="dashboard-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            예매 오픈 알림
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            예매 매크로
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="border-top my-3"></li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                계정
+            </button>
+            <div class="collapse" id="account-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">로그인</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
 </div>
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
-
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="event/giveaway">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> 경품 이벤트 현황
-            </NavLink>
-            <NavLink class="nav-link" href="reservation/notification">
-                <span class="bi bi-list-nested-nav-menu" aria-hidden="true"></span> 예매 오픈 알림
-            </NavLink>
-        </div>
-    </nav>
-</div>
+@code{
+}

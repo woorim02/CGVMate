@@ -1,14 +1,12 @@
 ﻿@inherits LayoutComponentBase
+@using CgvMate.Components.Layout
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
 
+    <AppHeader/>
+
+    <NavMenu></NavMenu>
     <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
-        </div>
         @Body
     </main>
 </div>
