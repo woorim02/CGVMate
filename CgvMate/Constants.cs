@@ -14,5 +14,12 @@ public static class Constants
 	#region DataBase
 	public static string APP_DB_FILENAME => "app_database_v0.1.sqlite";
     public static string APP_DB_PATH => Path.Combine(FileSystem.AppDataDirectory, APP_DB_FILENAME);
-	#endregion
+    #endregion
+
+    #region Routes
+    public const string root = "/";
+    public const string event_giveaway = "/event/giveaway";
+    public const string event_giveaway_detail = "/event/giveaway/detail";
+    public const string reservation_notification = "/reservation/notification";
+    #endregion
 }
