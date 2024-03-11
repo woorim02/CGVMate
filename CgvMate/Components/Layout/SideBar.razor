@@ -1,0 +1,70 @@
+﻿@namespace CgvMate.Components.Layout
+
+<div>
+    <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                이벤트
+            </button>
+            <div class="collapse" id="home-collapse" onclick="document.querySelector('.btn-close').click()">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            이벤트 목록
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            서프라이즈 쿠폰 알림
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            스피드쿠폰 알림
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/event/giveaway" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            경품 이벤트 현황
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            자동 경품 신청
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                예매
+            </button>
+            <div class="collapse" id="dashboard-collapse" onclick="document.querySelector('.btn-close').click()">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            예매 오픈 알림
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            예매 매크로
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="border-top my-3"></li>
+        <li class="mb-1">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                계정
+            </button>
+            <div class="collapse" id="account-collapse" onclick="document.querySelector('.btn-close').click()">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">로그인</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>

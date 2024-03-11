@@ -1,0 +1,18 @@
+﻿.offcanvas {
+    width: 80%;
+    max-width: 200px;
+    min-width: 200px;
+}
+
+.offcanvas-title {
+    font: 0.9em
+}
+
+.offcanvas-header {
+    padding: 0.5rem 1rem;
+    border-color:lightgrey;
+    border-bottom: 1px;
+}
+.offcanvas-body{
+    padding:0.3rem
+}
