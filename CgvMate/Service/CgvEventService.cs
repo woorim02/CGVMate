@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CgvMate.Service;
 
@@ -14,7 +15,7 @@ public class CgvEventService : CgvServiceBase
         _client = client;
     }
 
-    #region Get
+    #region Giveaway
     public async Task<List<GiveawayEvent>> GetGiveawayEventsAsync()
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventList.aspx/GetGiveawayEventList");
@@ -86,6 +87,36 @@ public class CgvEventService : CgvServiceBase
             item.IsGiveawayAreaCode = true;
         }
         return info;
+    }
+    #endregion
+
+    #region Cupon
+    /// <summary>
+    /// 현재 진행중인 스피드쿠폰 이벤트 목록을 불러옵니다. 
+    /// </summary>
+    /// <returns>리스트. 이벤트 수가 0이면 Empty</returns>
+    public async Task<List<SpeedCupon>> GetSpeedCuponCountsAsync()
+    {
+        var msg = await _client.GetStringAsync($"https://m.cgv.co.kr/Event/2021/fcfs/default.aspx?idx=6");
+        var document = new HtmlDocument();
+        document.LoadHtml(msg);
+
+        var nameNodes = document.DocumentNode.SelectNodes("//*[@class='btn_reserve']");
+        var countNodes = document.DocumentNode.SelectNodes("//*[@class='progress-number']");
+
+        var list = new List<SpeedCupon>();
+        for (int i = 0; i < nameNodes.Count; i++)
+        {
+            string name = nameNodes[i].Attributes["href"].Value;
+            var splitValue = name.Split(',');
+            string movieIndex = Regex.Replace(splitValue[0], @"\D", "");
+            string movieGroupCd = Regex.Replace(splitValue[1], @"\D", "");
+            string movienTitle = splitValue[2].Replace("'", "");
+            string countStr = countNodes[i].Attributes["aria-valuenow"].Value;
+            int count = int.Parse(Regex.Replace(countStr, @"\D", ""));
+            list.Add(new SpeedCupon(movienTitle, movieIndex, movieGroupCd, count));
+        }
+        return list;
     }
     #endregion
 
