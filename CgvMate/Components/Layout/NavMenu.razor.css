@@ -1,13 +1,18 @@
 .navbar {
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 1rem 0.23rem 1rem;
     justify-content: flex-start;
 }
+
 .navbar-toggler {
     background-color: inherit;
+    display: contents;
 }
+
 .navbar-brand {
     margin-left: 1rem;
+    font-weight: 600;
 }
-.hamburger{
+
+.hamburger {
     color: white;
 }

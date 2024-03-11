@@ -6,3 +6,15 @@
 ul, li {
     list-style: none;
 }
+
+.cgv-gradient {
+    background-image: linear-gradient(to left, #ef642f, #fb4357);
+}
+
+.a-white {
+    color: white;
+}
+
+.a-black{
+    color: black;
+}

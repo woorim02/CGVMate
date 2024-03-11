@@ -1,4 +1,11 @@
-﻿
+﻿a {
+    color: grey;
+}
+
+.offcanvas {
+    transition: transform .1s ease;
+}
+
 .btn-toggle {
     padding: .25rem .5rem;
     font-weight: 600;
