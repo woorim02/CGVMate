@@ -1,26 +1,48 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    letter-spacing: normal;
+﻿.notification-page {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
-
-ul, li {
-    list-style: none;
-}
-
 
 .notification-header {
+    width: 100%;
+    height: 2.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 30px 5px 10px;
-}
-#toggle-switch-label {
-    display: inline-block;
-    width: 100%;
+    padding: 0.5rem 1rem;
+    border-color: lightgrey;
+    border: 0px;
+    border-bottom: 1px;
+    border-style: inset;
 }
 
-.notification-header p {
-    margin: 0px;
+    .notification-header p {
+        margin: 0px;
+    }
+
+#toggle-switch-label {
+    width: 100%;
+    height: 20px;
+    position: relative;
+}
+
+.notification-body {
+}
+
+.button-container {
+    width: 100%;
+    padding: 0.5rem;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    justify-content: center; /* 수평 중앙 정렬 */
+}
+
+.notification-add-button {
+    width: 100%;
+    max-width: 600px;
+    height: 2.5rem;
+    border: 0px;
+    border-radius: 30px;
 }

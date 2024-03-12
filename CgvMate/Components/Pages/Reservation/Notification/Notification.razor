@@ -1,12 +1,12 @@
-﻿@page "/reservation/notification"
+﻿@attribute [Route(Constants.reservation_notification)]
 @using CgvMate.Components.Custom
 @using Microsoft.EntityFrameworkCore
 
-<article>
+<article class="notification-page">
     <header class="notification-header">
         <label id="toggle-switch-label" for="toggle_switch1">
             <span>오픈 알림 받기</span>
-            <ToggleSwitch id="toggle_switch1" style="display: inline-flex; float:right" OnChangeCallback="OnChange"></ToggleSwitch>
+            <ToggleSwitch id="toggle_switch1" style="margin:auto; inline; float:right; width:40px; height:20px; " OnChangeCallback="OnChange"></ToggleSwitch>
         </label>
     </header>
     <section class="notification-body">
@@ -41,8 +41,13 @@
                 }
             }
         </ul>
-        <button></button>
     </section>
+    <div class="button-container">
+        <button class="notification-add-button cgv-gradient">
+            <span style="color:white">새 알림 추가</span>
+        </button>
+    </div>
+
 </article>
 @code {
     private List<OpenNotificationInfo>? Infos{ get; set; }
