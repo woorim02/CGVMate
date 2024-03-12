@@ -19,7 +19,7 @@ public class CgvEventService : CgvServiceBase
     public async Task<List<GiveawayEvent>> GetGiveawayEventsAsync()
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventList.aspx/GetGiveawayEventList");
-        request.Content = new StringContent("{theaterCode: '', pageNumber: '1', pageSize: '30'}", Encoding.UTF8, "application/json");
+        request.Content = new StringContent("{theaterCode: '', pageNumber: '1', pageSize: '50'}", Encoding.UTF8, "application/json");
         var response = await _client.SendAsync(request);
         response.EnsureSuccessStatusCode();
 
@@ -38,11 +38,11 @@ public class CgvEventService : CgvServiceBase
         {
             foreach (var i in document.DocumentNode.ChildNodes)
             {
-				GiveawayEvent giveawayEvent = new GiveawayEvent(
+                GiveawayEvent giveawayEvent = new GiveawayEvent(
                     title: i.SelectSingleNode("div/strong[1]").InnerText,
                     period: i.SelectSingleNode("div/span[1]").InnerText,
                     eventIndex: i.Attributes["data-eventIdx"].Value,
-					dDay: i.SelectSingleNode("div/span[2]").InnerText);
+                    dDay: i.SelectSingleNode("div/span[2]").InnerText);
                 list.Add(giveawayEvent);
             }
         }
