@@ -11,13 +11,14 @@ public static class Constants
     public const string OPEN_GROUP_NAME = "OpenNotification NotificationGroup";
 #endif
 
-	#region DataBase
-	public static string APP_DB_FILENAME => "app_database_v0.1.sqlite";
+    #region DataBase
+    public static string APP_DB_FILENAME => "app_database_v0.1.sqlite";
     public static string APP_DB_PATH => Path.Combine(FileSystem.AppDataDirectory, APP_DB_FILENAME);
     #endregion
 
     #region Routes
     public const string root = "/";
+    public const string event_cupon_speed = "/event/cupon/speed";
     public const string event_giveaway = "/event/giveaway";
     public const string event_giveaway_detail = "/event/giveaway/detail";
     public const string reservation_notification = "/reservation/notification";

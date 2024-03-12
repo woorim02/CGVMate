@@ -3,6 +3,17 @@
     padding: 0;
 }
 
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+#app {
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden
+}
+
 ul, li {
     list-style: none;
 }
@@ -15,6 +26,6 @@ ul, li {
     color: white;
 }
 
-.a-black{
+.a-black {
     color: black;
 }

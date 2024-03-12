@@ -1,10 +1,16 @@
 ﻿@inherits LayoutComponentBase
 @using CgvMate.Components.Layout
-<NavMenu />
-<Offcanvas></Offcanvas>
 
+<Offcanvas />
 <div class="page">
-    <main>
-        @Body
-    </main>
+    <NavMenu />
+    <div class="cgv-gradient"></div>
+    <div class="page-body">
+        <div class="desktop-sidebar shadow-sm">
+            <SideBar class="sidebar" IsOpen=true/>
+        </div>
+        <main>
+            @Body
+        </main>
+    </div>
 </div>
