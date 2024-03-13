@@ -26,30 +26,22 @@
             <SearchBar Grid.Row="1" x:Name="MovieSearchBar" Placeholder="영화 검색" PlaceholderColor="White" TextColor="Black"
                        Margin="-10,0,0,0" Background="{StaticResource DefaultBackgroundBrush}"
                        SearchCommand="{Binding SearchMovieCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference MovieSearchBar}}"/>
-            <ScrollView Grid.Row="2" HorizontalOptions="Center">
-                <FlexLayout Wrap="Wrap" AlignItems="Start" AlignContent="Start"
-                            HorizontalOptions="Center" BindableLayout.ItemsSource="{Binding Movies}" Background="White">
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="cgv_data:Movie">
+            <ListView ItemsSource="{Binding Movies}" Grid.Row="2">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="cgv_data:Movie">
+                        <ViewCell>
                             <Border Stroke="{StaticResource DefaultBackgroundBrush}" Margin="3" Padding="0,-5,0,0">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10"/>
-                                </Border.StrokeShape>
-                                <Grid Margin="0" HeightRequest="97" WidthRequest="58" RowDefinitions="81,16" ColumnDefinitions="58">
+                                <Grid>
                                     <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding}">
-                                        </TapGestureRecognizer>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" CommandParameter="{Binding}"/>
                                     </Grid.GestureRecognizers>
                                     <Image Source="{Binding ThumbnailSource}" WidthRequest="58" HeightRequest="81"/>
-                                    <Label Grid.Row="1" Text="{Binding Title}"
-                                           TextColor="Black" FontSize="12"
-                                           Padding="3,-0.5,0,0" VerticalTextAlignment="Center" VerticalOptions="Center"/>
                                 </Grid>
                             </Border>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
-                </FlexLayout>
-            </ScrollView>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
     </Border>
 </toolkit:Popup>
