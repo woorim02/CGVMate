@@ -26,6 +26,25 @@ ul {
             color: #fb4357;
         }
 
+.eventlist-search-form {
+    position:relative;
+    height: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+    .eventlist-search-form > input {
+        height: 2rem;
+        margin-right:1rem;
+    }
+
+    .eventlist-search-form .btn {
+        height: 2rem;
+        width: 6rem;
+        padding: .375rem .75rem
+
+    }
+
 .eventlist-body {
     font-size: 13px;
 }

@@ -12,6 +12,10 @@
             개
         </p>
     </div>
+    <form class="eventlist-search-form" onsubmit="return false;">
+        <input class="event-input form-control" @onchange=OnSearchBarChangeAsync placeholder="이벤트 검색">
+        <button class="btn btn-outline-success" type="button">검색</button>
+    </form>
     <ul class="eventlist-body">
         @if (EventList is not null) {
             @foreach (var item in EventList) {
@@ -27,10 +31,24 @@
 
 
 @code {
+    private List<GiveawayEvent>? eventList;
     private List<GiveawayEvent>? EventList;
 
     protected override async Task OnInitializedAsync()
     {
         EventList = await Service.Event.GetGiveawayEventsAsync();
+        eventList = EventList;
+    }
+
+    private void OnSearchBarChangeAsync(ChangeEventArgs args)
+    {
+        var text = args.Value as string;
+        if (eventList is null)
+            return;
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+        EventList = eventList.Where(x => x.Title.ToLower().Contains(text.ToLower())).ToList();
     }
 }
