@@ -1,5 +1,4 @@
 ﻿@attribute [Route(Constants.reservation_notification)]
-@using CgvMate.Components.Custom
 @using Microsoft.EntityFrameworkCore
 
 <article class="notification-page">
@@ -43,7 +42,7 @@
         </ul>
     </section>
     <div class="button-container">
-        <button class="notification-add-button cgv-gradient">
+        <button onclick="location.href='@Constants.reservation_notification_add'" class="notification-add-button cgv-gradient">
             <span style="color:white">새 알림 추가</span>
         </button>
     </div>

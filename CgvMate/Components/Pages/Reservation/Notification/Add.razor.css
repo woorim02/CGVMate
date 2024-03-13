@@ -1,0 +1,48 @@
+﻿img {
+    height: 2rem;
+    width: 2rem;
+}
+.add-page {
+    position:relative;
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+
+.add-page-body {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+    .add-page-body > * {
+        min-width: 13rem;
+        width: 30%;
+        margin: 0.5rem;
+        height: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 0.8em;
+    }
+
+.button-container {
+    width: 100%;
+    padding: 0.5rem;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    justify-content: center;
+}
+
+.save-button {
+    width: 100%;
+    max-width: 600px;
+    height: 2.5rem;
+    border: 0px;
+    border-radius: 30px;
+}

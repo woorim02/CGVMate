@@ -22,6 +22,18 @@ ul, li {
     background-image: linear-gradient(to left, #ef642f, #fb4357);
 }
 
+.cgv-button {
+    background-image: linear-gradient(to left, #ef642f, #fb4357);
+    border: 0px;
+    border-radius: 30px;
+}
+
+.cgv-border {
+    background-image: linear-gradient(to left, #ef642f, #fb4357);
+    border: 0px;
+    border-radius: 30px;
+}
+
 .a-white {
     color: white;
 }

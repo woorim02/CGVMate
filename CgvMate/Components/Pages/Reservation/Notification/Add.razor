@@ -1,0 +1,83 @@
+﻿@attribute [Route(Constants.reservation_notification_add)]
+@inject CgvService Service
+@using CommunityToolkit.Maui.Views;
+@using System.Diagnostics
+
+<article class="add-page">
+    <div class="add-page-body">
+        <button class="select-movie cgv-button" @onclick=OnClickSelectMovieButton>
+            <img class="movie-image" src="https://img.cgv.co.kr/WebApp/images/reservation/schedule/bg_quickReservationResult_movie_add.png" />
+            @if (Movie is not null)
+            {
+                <span class="movie-title">@Movie.Title</span>
+            }
+            else
+            {
+                <span class="movie-title">영화를 선택해 주세요.</span>
+            }
+        </button>
+        <div class="select-format cgv-button">
+            <InputSelect class="select-format-input" @bind-Value="@MovieTypeCD">
+                @foreach (var item in Enum.GetValues<MovieTypeCode>())
+                {
+                    <option value="@item">@item</option>
+                }
+            </InputSelect>
+        </div>
+        <button class="select-theater cgv-button" @onclick=OnClickSelectTheaterButton>
+            <img class="theater-image" src="https://img.cgv.co.kr/WebApp/images/reservation/schedule/bg_quickReservationResult_theater_add.png" />
+            @if (Theater is not null)
+            {
+                <span class="theater-name">@Theater.TheaterName</span>
+            }
+            else
+            {
+                <span class="theater-name">극장을 선택해 주세요.</span>
+            }
+        </button>
+        <div class="select-date cgv-button">
+            <input type="date" />
+        </div>
+    </div>
+    <div class="button-container">
+        <button class="save-button cgv-button">저장</button>
+    </div>
+</article>
+
+@code {
+    private MovieTypeCode MovieTypeCD { get; set; }
+    private Movie? Movie { get; set; }
+    private Theater? Theater { get; set; }
+
+    private async void OnClickSelectMovieButton(MouseEventArgs args)
+    {
+        var popup = new SelectMoviePopup(Service);
+        var movie = await App.Current.MainPage.ShowPopupAsync(popup) as CgvMate.Data.Movie;
+        if (movie is not null)
+        {
+            Movie = movie;
+            StateHasChanged();
+        }
+    }
+
+    private async void OnClickSelectTheaterButton(MouseEventArgs args)
+    {
+        var popup = new SelectTheaterPopup(Service);
+        var theater = await App.Current.MainPage.ShowPopupAsync(popup) as CgvMate.Data.Theater;
+        if (theater is not null)
+        {
+            Theater = theater;
+            StateHasChanged();
+        }
+    }
+
+    private enum MovieTypeCode
+    {
+        ALL = 0,
+        _2D = 1,
+        _4DX = 3,
+        _IMAX = 4,
+        _SCREENX = 5,
+        _ULTRA_4DX = 9
+    }
+}
