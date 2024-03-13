@@ -1,5 +1,6 @@
 ﻿@attribute [Route(Constants.reservation_notification_add)]
 @inject CgvService Service
+@inject IJSRuntime JSRuntime
 @using CommunityToolkit.Maui.Views;
 @using System.Diagnostics
 
@@ -20,11 +21,11 @@
             <InputSelect class="select-format-input" @bind-Value="@MovieTypeCD">
                 @foreach (var item in Enum.GetValues<MovieTypeCode>())
                 {
-                    <option value="@item">@item</option>
+                    <option value="@item">@item.ToString().Replace("_", "")</option>
                 }
             </InputSelect>
         </div>
-        <button class="select-theater cgv-button" @onclick=OnClickSelectTheaterButton>
+        <button class="select-theater cgv-button" @onclick=OnSelectTheaterButton_Clicked>
             <img class="theater-image" src="https://img.cgv.co.kr/WebApp/images/reservation/schedule/bg_quickReservationResult_theater_add.png" />
             @if (Theater is not null)
             {
@@ -35,19 +36,20 @@
                 <span class="theater-name">극장을 선택해 주세요.</span>
             }
         </button>
-        <div class="select-date cgv-button">
-            <input type="date" />
+        <div id ="datepicker" class="select-date cgv-button" onclick="document.getElementById('datepicker').click()">
+            <input type="date" class="form-control" @bind-value="Date"/>
         </div>
     </div>
     <div class="button-container">
-        <button class="save-button cgv-button">저장</button>
+        <button class="save-button cgv-button" @onclick=OnSaveButton_Clicked>저장</button>
     </div>
 </article>
 
 @code {
-    private MovieTypeCode MovieTypeCD { get; set; }
+    private MovieTypeCode MovieTypeCD { get; set; } = MovieTypeCode.ALL;
     private Movie? Movie { get; set; }
     private Theater? Theater { get; set; }
+    private DateOnly Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
 
     private async void OnClickSelectMovieButton(MouseEventArgs args)
     {
@@ -60,7 +62,7 @@
         }
     }
 
-    private async void OnClickSelectTheaterButton(MouseEventArgs args)
+    private async void OnSelectTheaterButton_Clicked(MouseEventArgs args)
     {
         var popup = new SelectTheaterPopup(Service);
         var theater = await App.Current.MainPage.ShowPopupAsync(popup) as CgvMate.Data.Theater;
@@ -70,14 +72,54 @@
             StateHasChanged();
         }
     }
+    private async void OnSaveButton_Clicked()
+    {
+        if (Theater is null)
+        {
+            await App.Current.MainPage.DisplayAlert("예매 오픈 알림", "극장을 선택해 주세요.", "확인");
+            return;
+        }
+        if (Date < DateOnly.FromDateTime(DateTime.Today).AddDays(1) || Date >= DateOnly.FromDateTime(DateTime.Today).AddDays(60))
+        {
+            await App.Current.MainPage.DisplayAlert("예매 오픈 알림", "날짜 설정은 D + 1 < Value < D + 60 사이여야 합니다.", "확인");
+            return;
+        }
+        var info = new OpenNotificationInfo()
+        {
+            IsOpen =false,
+            IsPreOpen = false,
+            Movie = Movie,
+            ScreenType = MovieTypeCD.ToString(),
+            Theater = Theater,
+            TargetDate = Date
+        };
+        using var db = new AppDbContext();
+        var count = db.OpenNotificationInfos
+        .Where(x => x.MovieIndex == info.MovieIndex
+                && x.TargetDate == info.TargetDate
+                && x.TheaterCode == info.TheaterCode
+                && x.ScreenType == info.ScreenType)
+        .Count();
+
+        if(count > 0)
+        {
+            await App.Current.MainPage.DisplayAlert("예매 오픈 알림", "이미 등록된 알림 정보입니다.", "확인");
+            return;
+        }
+
+        await db.OpenNotificationInfos.AddAsync(info);
+        await db.SaveChangesAsync();
+
+        await JSRuntime.InvokeVoidAsync("goBack");
+    }
 
     private enum MovieTypeCode
     {
-        ALL = 0,
-        _2D = 1,
-        _4DX = 3,
-        _IMAX = 4,
-        _SCREENX = 5,
-        _ULTRA_4DX = 9
+        ALL = 00,
+        _2D = 01,
+        _4DX = 03,
+        _IMAX = 04,
+        _SCREENX = 05,
+        _ULTRA_4DX = 09
     }
 }
