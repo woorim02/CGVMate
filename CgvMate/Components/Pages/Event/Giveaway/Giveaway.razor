@@ -1,32 +1,45 @@
 ﻿@attribute [Route(Constants.event_giveaway)]
 @inject CgvService Service
 
-<article class="eventlist">
-    <div class="eventlist-header">
-        <p>진행중인 경품 이벤트 
-            <strong>
-                @if(EventList is not null) {
-                    <span id="listcount">@EventList.Count</span>
-                }
-            </strong>
-            개
-        </p>
+<article class="article">
+    <div class="header">
+        <div class="title">
+            <p>
+                진행중인 경품 이벤트
+                <strong>
+                    @if (EventList is not null)
+                    {
+                        <span id="listcount">@EventList.Count</span>
+                    }
+                </strong>
+                개
+            </p>
+        </div>
+        <div class="search-bar">
+            <form class="search-form" onsubmit="return false;">
+                <input class="event-input form-control" @onchange=OnSearchBarChangeAsync placeholder="이벤트 검색">
+                <button class="btn btn-outline-success cgv-gradient" type="button">검색</button>
+            </form>
+        </div>
     </div>
-    <form class="eventlist-search-form" onsubmit="return false;">
-        <input class="event-input form-control" @onchange=OnSearchBarChangeAsync placeholder="이벤트 검색">
-        <button class="btn btn-outline-success cgv-gradient" type="button">검색</button>
-    </form>
-    <ul class="eventlist-body">
-        @if (EventList is not null) {
-            @foreach (var item in EventList) {
-                <li class="eventlist-item" style="cursor:pointer;" onclick="location.href='event/giveaway/detail?eventIndex=@item.EventIndex'">
-                    <strong class="eventlist-item-title">@item.Title</strong>
-                    <span class="eventlist-item-period">@item.Period</span>
-                    <span class="eventlist-item-dday">@item.DDay</span>
-                </li>
+
+    <div class="body">
+        <ul class="eventlist">
+            @if (EventList is not null)
+            {
+                @foreach (var item in EventList)
+                {
+                    <li class="item" style="cursor:pointer;" onclick="location.href='event/giveaway/detail?eventIndex=@item.EventIndex'">
+                        <div class="text-container">
+                            <strong class="item-title">@item.Title</strong>
+                            <span class="item-period">@item.Period</span>
+                        </div>
+                        <span class="item-dday">@item.DDay</span>
+                    </li>
+                }
             }
-        }
-    </ul>
+        </ul>
+    </div>
 </article>
 
 

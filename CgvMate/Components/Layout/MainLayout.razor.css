@@ -1,37 +1,46 @@
 .page {
-    display: flex;
-    flex-direction: column;
     width: 100%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.navbar-container {
+    z-index:20000;
+    background-color: white;
+    position: fixed;
+    width: 100%;
+    height: 3rem;
+}
+::deep .navbar{
+    width:100%;
 }
 
 .cgv-gradient {
     min-height: 2px;
 }
 
-.page-body {
+.body-container {
+    padding-top: 3rem;
+    height: 100%;
     display: flex;
     flex-direction: row;
-    height: calc(95% - 2px);
 }
 
-    .page-body main {
-        overflow-y:scroll;
+    .body-container .sidebar-container {
+        padding: 0.7rem;
+        height: 100%;
+        max-width: 200px;
+        min-width: 200px;
+        transition: transform .1s ease;
+    }
+
+    .body-container main {
         width: 100%;
         height: 100%
     }
 
-.desktop-sidebar {
-    padding: 0.7rem;
-    width: 20%;
-    height: 100%;
-    max-width: 200px;
-    min-width: 200px;
-    transition: transform .1s ease;
-}
-
 @media(max-width: 600px) {
-    .desktop-sidebar {
+    .sidebar-container {
         display: none;
     }
 }
