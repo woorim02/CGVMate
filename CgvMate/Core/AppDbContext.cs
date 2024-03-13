@@ -27,20 +27,25 @@ namespace CgvMate.Core
             modelBuilder.Entity<Theater>()
                 .HasKey(x=>x.TheaterCode);
 
-            modelBuilder.Entity<Movie>()
-                .HasKey(x => x.Index);
-            modelBuilder.Entity<Movie>()
-                .Ignore(x=>x.ScreenTypes);
+            modelBuilder.Entity<Movie>(x =>
+            {
+                x.HasKey(y => y.Index);
+                x.Ignore(a => a.ScreenTypes);
+            });
+            modelBuilder.Entity<OpenNotificationInfo>(x =>
+            {
+                x.HasKey(a => a.Id);
+                x.Property(a => a.Id)
+                 .ValueGeneratedOnAdd();
 
-            modelBuilder.Entity<OpenNotificationInfo>()
-                .HasKey(x => x.Id);
-            modelBuilder.Entity<OpenNotificationInfo>()
-                .Property(x => x.Id)
-                .ValueGeneratedOnAdd();
-            modelBuilder.Entity<OpenNotificationInfo>()
-                .HasOne(x => x.Movie);
-            modelBuilder.Entity<OpenNotificationInfo>()
-                .HasOne(x => x.Theater);
+                x.HasOne(a => a.Movie)
+                 .WithMany()
+                 .HasForeignKey(a => a.MovieIndex);
+
+                x.HasOne(a => a.Theater)
+                 .WithMany()
+                 .HasForeignKey(a => a.TheaterCode);
+            });
         }
     }
 }
