@@ -1,4 +1,6 @@
-﻿namespace CgvMate.Core;
+﻿using System.Threading.Tasks;
+
+namespace CgvMate.Core;
 
 public class TaskProcessor
 {
@@ -10,7 +12,7 @@ public class TaskProcessor
     /// <summary>
     /// 작업 대기열
     /// </summary>
-    private readonly List<Task<Task>> _taskList;
+    private readonly List<Func<Task>> _funcList;
 
     /// <summary>
     /// Do Not Use It. IsRunning 사용. Start(CancellationToken token)을 위한 필드. 
@@ -48,7 +50,7 @@ public class TaskProcessor
         Capacity = capacity;
         ConcurrencyLimit = concurrencyLimit;
         Interval = interval;
-        _taskList = new List<Task<Task>>(Capacity);
+        _funcList = new List<Func<Task>>(Capacity);
     }
 
     /// <summary>
@@ -69,35 +71,28 @@ public class TaskProcessor
         {
             while (IsRunning)
             {
-                Task<Task>? task;
-                lock (_taskList)
+                Func<Task>? func;
+                lock (_funcList)
                 {
-                    if (_taskList.Count == 0)
+                    if (_funcList.Count == 0)
                     {
-                        task = null;
+                        func = null;
                     }
                     else
                     {
-                        task = (Task<Task>?)_taskList[0];
-                        _taskList.RemoveAt(0); 
-					}
+                        func = (Func<Task>?)_funcList[0];
+                        _funcList.RemoveAt(0); 
+                    }
                 }
-                if (task == null)
+                if (func == null)
                 {
                     await Task.Delay(Interval);
                     continue;
-				}
-                lock (task)
-                {
-                    if (task!.IsCanceled)
-                    {
-                        continue;
-                    }
                 }
-				task.Start();
+                var task = func();
                 try
                 {
-                    await task.Result;
+                    await task;
                 }
                 catch (Exception ex)
                 {
@@ -122,13 +117,21 @@ public class TaskProcessor
     /// <summary>
     /// 작업 대기열의 대기중인 모든 작업을 제거합니다. 현재 실행중인 작업은 취소되지 않습니다.
     /// </summary>
-    public void Clear() => _taskList.Clear();
+    public void Clear() => _funcList.Clear();
 
     /// <summary>
     /// 작업을 대기열에 추가하려고 시도합니다.
     /// </summary>
     /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
-    public bool TryEnqueue(Func<Task> func) => TryEnqueue(new Task<Task>(func));
+    public bool TryEnqueue(Func<Task> func)
+    {
+        if (_funcList.Count > Capacity)
+        {
+            return false;
+        }
+        _funcList.Add(func);
+        return true;
+    }
 
     /// <summary>
     /// 작업을 대기열에 추가하려고 시도합니다. CancellationToken으로 작업 취소가 가능합니다.
@@ -136,18 +139,7 @@ public class TaskProcessor
     /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
     public bool TryEnqueue(Func<Task> func, CancellationToken token)
     {
-        var task = new Task<Task>(func, token);
-        token.Register(() => _taskList.Remove(task));
-        return TryEnqueue(task);
-    }
-
-    private bool TryEnqueue(Task<Task> task)
-    {
-        if (_taskList.Count > Capacity)
-        {
-            return false;
-        }
-        _taskList.Add(task);
-        return true;
+        token.Register(() => _funcList.Remove(func));
+        return TryEnqueue(func);
     }
 }

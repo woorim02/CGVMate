@@ -8,14 +8,14 @@ public class ExceptionOccurredEventArgs : EventArgs
     /// <summary>
     /// 예외가 발생한 Task
     /// </summary>
-    public Task<Task> Task { get; private set; }
+    public Task Task { get; private set; }
 
     /// <summary>
     /// 처리되지 않은 예외
     /// </summary>
     public Exception Exception { get; private set; }
 
-    public ExceptionOccurredEventArgs(Task<Task> task, Exception exception)
+    public ExceptionOccurredEventArgs(Task task, Exception exception)
     {
         Task = task;
         Exception = exception;
