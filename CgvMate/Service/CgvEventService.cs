@@ -15,6 +15,43 @@ public class CgvEventService : CgvServiceBase
         _client = client;
     }
 
+    public async Task<List<EventInfo>> GetEvents(EventType type)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/WebAPP/EventNotiV4/eventMain.aspx/getEventDataList");
+        var body = new
+        {
+            mC = ((int)type).ToString("D3"),
+            rC = "GEN",
+            tC = "",
+            iP = "1",
+            pRow = "100",
+            rnd6 = "0",
+            fList = ""
+        };
+        request.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+        var response = await _client.SendAsync(request);
+        var content = await response.Content.ReadAsStringAsync();
+        var document = new HtmlDocument();
+        document.LoadHtml(content);
+        var imageNodes = document.DocumentNode.SelectNodes("//img");
+        var periodNodes = document.DocumentNode.SelectNodes("//span[@class='sponsorFpPeriod']");
+
+
+        var list = new List<EventInfo>();
+        for ( var i = 0; i < imageNodes.Count; i++)
+        {
+            var title = imageNodes[i].Attributes["alt"].Value;
+            title = Regex.Replace(title, @"\t|\n|\r", "");
+            var imageSrc = imageNodes[i].Attributes["src"].Value;
+            var period = periodNodes[i].GetDirectInnerText();
+            var code = imageSrc.Replace("https://img.cgv.co.kr/WebApp/contents/eventV4/", "");
+            code = code.Split('/')[0];
+            var info = new EventInfo(code, title, imageSrc, period);
+            list.Add(info);
+        }
+        return list;
+    }
+
     #region Giveaway
     public async Task<List<GiveawayEvent>> GetGiveawayEventsAsync()
     {
@@ -88,6 +125,30 @@ public class CgvEventService : CgvServiceBase
         }
         return info;
     }
+
+    public async Task<bool> SignupGiveawayEvent(GiveawayEventModel model, TheaterGiveawayInfo info, string ticketNumber, string phoneNumber)
+    {
+        var payload = new
+        {
+            eventIdx = Uri.EscapeDataString(Encrypt(model.EventIndex)),
+            giveawayIdx = Uri.EscapeDataString(Encrypt(model.GiveawayIndex)),
+            giveawayNm = Uri.EscapeDataString(Encrypt(model.Title)),
+            ticketNum = Uri.EscapeDataString(Encrypt(ticketNumber)),
+            theaterCd = Uri.EscapeDataString(Encrypt(info.TheaterCode)),
+            theaterNm = Uri.EscapeDataString(Encrypt(info.TheaterName)),
+            mobileNum = Uri.EscapeDataString(Encrypt(phoneNumber)),
+            remainCnt = Uri.EscapeDataString(info.EncCount),
+            totalCnt = Uri.EscapeDataString(info.EncCount),
+        };
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventSignup.aspx/SignGiveawayNum");
+        request.Content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+        var response = await _client.SendAsync(request);
+        var obj = JObject.Parse(await response.Content.ReadAsStringAsync());
+        var resultCd = obj["d"][0].ToString();
+        if (resultCd == "00")
+            return true;
+        return false;
+    }
     #endregion
 
     #region Cupon
@@ -119,28 +180,14 @@ public class CgvEventService : CgvServiceBase
         return list;
     }
     #endregion
+}
 
-    public async Task<bool> SignupGiveawayEvent(GiveawayEventModel model, TheaterGiveawayInfo info, string ticketNumber, string phoneNumber)
-    {
-        var payload = new
-        {
-            eventIdx = Uri.EscapeDataString(Encrypt(model.EventIndex)),
-            giveawayIdx = Uri.EscapeDataString(Encrypt(model.GiveawayIndex)),
-            giveawayNm = Uri.EscapeDataString(Encrypt(model.Title)),
-            ticketNum = Uri.EscapeDataString(Encrypt(ticketNumber)),
-            theaterCd = Uri.EscapeDataString(Encrypt(info.TheaterCode)),
-            theaterNm = Uri.EscapeDataString(Encrypt(info.TheaterName)),
-            mobileNum = Uri.EscapeDataString(Encrypt(phoneNumber)),
-            remainCnt = Uri.EscapeDataString(info.EncCount),
-            totalCnt = Uri.EscapeDataString(info.EncCount),
-        };
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventSignup.aspx/SignGiveawayNum");
-        request.Content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-        var response = await _client.SendAsync(request);
-        var obj = JObject.Parse(await response.Content.ReadAsStringAsync());
-        var resultCd = obj["d"][0].ToString();
-        if (resultCd == "00")
-            return true;
-        return false;
-    }
+public enum EventType
+{
+    Special = 001,
+    Movie = 004,
+    Theater = 005,
+    Affiliate = 006,
+    Membership_Club = 008,
+    Past = 100
 }
