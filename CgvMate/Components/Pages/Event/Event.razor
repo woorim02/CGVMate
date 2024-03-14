@@ -1,0 +1,12 @@
+﻿@attribute [Route(Constants.event_)]
+@inject CgvService Service
+
+<article class="article">
+</article>
+
+@code{
+    private List<EventInfo>? Events;
+    protected override async Task OnInitializedAsync(){
+        var events = await Service.Event.GetEvents(EventType.Movie);
+    }
+}

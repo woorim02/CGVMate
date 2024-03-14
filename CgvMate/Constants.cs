@@ -18,6 +18,7 @@ public static class Constants
 
     #region Routes
     public const string root = "/";
+    public const string event_ = "/event";
     public const string event_cupon_speed = "/event/cupon/speed";
     public const string event_giveaway = "/event/giveaway";
     public const string event_giveaway_detail = "/event/giveaway/detail";
