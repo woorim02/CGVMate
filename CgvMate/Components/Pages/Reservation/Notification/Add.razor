@@ -93,22 +93,33 @@
             Theater = Theater,
             TargetDate = Date
         };
-        using var db = new AppDbContext();
-        var count = db.OpenNotificationInfos
-        .Where(x => x.MovieIndex == info.MovieIndex
-                && x.TargetDate == info.TargetDate
-                && x.TheaterCode == info.TheaterCode
-                && x.ScreenType == info.ScreenType)
-        .Count();
-
-        if(count > 0)
+        using (var db = new AppDbContext())
         {
-            await App.Current.MainPage.DisplayAlert("예매 오픈 알림", "이미 등록된 알림 정보입니다.", "확인");
-            return;
-        }
+            var count = db.OpenNotificationInfos
+                .Where(x => x.MovieIndex == info.MovieIndex
+                         && x.TargetDate == info.TargetDate
+                         && x.TheaterCode == info.TheaterCode
+                         && x.ScreenType == info.ScreenType)
+                .Count();
 
-        await db.OpenNotificationInfos.AddAsync(info);
-        await db.SaveChangesAsync();
+            if (count > 0)
+            {
+                await App.Current.MainPage.DisplayAlert("예매 오픈 알림", "이미 등록된 알림 정보입니다.", "확인");
+                return;
+            }
+            if (info.Movie is not null && db.Movies.Where(x => x.Index == info.MovieIndex).Count() > 0)
+            {
+                info.MovieIndex = info.Movie.Index;
+                info.Movie = null;
+            }
+            if (db.Theaters.Where(x => x.TheaterCode == info.TheaterCode).Count() > 0)
+            {
+                info.TheaterCode = info.Theater.TheaterCode;
+                info.Theater = null;
+            }
+            await db.OpenNotificationInfos.AddAsync(info);
+            await db.SaveChangesAsync();
+        }
 
         await JSRuntime.InvokeVoidAsync("goBack");
     }
