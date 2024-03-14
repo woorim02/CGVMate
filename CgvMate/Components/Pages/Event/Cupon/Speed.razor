@@ -1,1 +1,94 @@
 ﻿@attribute [Route(Constants.event_cupon_speed)]
+@inject CgvService Service
+
+<article class="article">
+    <header class="article-header">
+        <label id="toggle-switch-label" for="toggle_switch1">
+            <span>스피드쿠폰 자동 확인</span>
+            <ToggleSwitch id="toggle_switch1" style="margin:auto; inline; float:right; width:40px; height:20px; " OnChangeCallback="OnChange"></ToggleSwitch>
+        </label>
+    </header>
+    <section class="article-body">
+        <ul>
+            @foreach (var item in ProcessTexts)
+            {
+                <li>@((MarkupString)item)</li>
+            }
+        </ul>
+    </section>
+</article>
+
+@code{
+    private bool IsRunning { get; set; } = false;
+    private List<SpeedCupon> Cupons { get; set; } = new List<SpeedCupon>(100);
+    private List<string> ProcessTexts = new List<string>(100);
+    private TaskProcessor Processor = new TaskProcessor(100, 1, TimeSpan.FromSeconds(0.5));
+
+    public Speed()
+    {
+        Processor.ExceptionOccurred += OnExceptionOccurred;
+    }
+
+    ~Speed()
+    {
+        IsRunning = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Cupons = await Service.Event.GetSpeedCuponCountsAsync();
+    }
+
+    private void OnChange(ChangeEventArgs args)
+    {
+        if (!IsRunning)
+        {
+            IsRunning = true;
+            Task.Run(CheckCupon);
+            Processor.Start();
+        }
+        else
+        {
+            IsRunning = false;
+            Processor.Stop();
+            Processor.Clear();
+        }
+    }
+
+    private async Task CheckCupon()
+    {
+        while (IsRunning)
+        {
+            Processor.TryEnqueue(async () =>
+            {
+                var cupons = await Service.Event.GetSpeedCuponCountsAsync();
+                foreach (var cupon in cupons)
+                {
+                    if (cupon.Count % 10 != 0)
+                    {
+                        ProcessTexts.Add($"[{cupon.MovieTitle}] 수량: <span class='count' style='color:lawngreen;'>{cupon.Count}</span>");
+                    }
+                    else
+                    {
+                        ProcessTexts.Add($"[{cupon.MovieTitle}] 수량: {cupon.Count}");
+                    }
+                    await InvokeAsync(() => StateHasChanged());
+                }
+            });
+        }
+    }
+
+    int errorCount = 0;
+    private async void OnExceptionOccurred(object? sender, ExceptionOccurredEventArgs args)
+    {
+        if(errorCount > 5)
+        {
+            Processor.Stop();
+            Processor.Clear();
+            ProcessTexts.Add("오류 발생 횟수 초과로 종료합니다.");
+            return;
+        }
+        await App.Current.MainPage.DisplayAlert("스피드쿠폰", $"오류가 발생했습니다.\n{args.Exception}", "확인");
+        errorCount++;
+    }
+}
