@@ -1,5 +1,6 @@
 ﻿@attribute [Route(Constants.event_cupon_speed)]
 @inject CgvService Service
+@inject NavigationManager Navigation
 
 <article class="article">
     <header class="article-header">
@@ -24,10 +25,7 @@
     private List<string> ProcessTexts = new List<string>(100);
     private TaskProcessor Processor = new TaskProcessor(100, 1, TimeSpan.FromSeconds(0.5));
 
-    public Speed()
-    {
-        Processor.ExceptionOccurred += OnExceptionOccurred;
-    }
+    private CancellationTokenSource cts;
 
     ~Speed()
     {
@@ -36,7 +34,26 @@
 
     protected override async Task OnInitializedAsync()
     {
+        cts = new CancellationTokenSource();
         Cupons = await Service.Event.GetSpeedCuponCountsAsync();
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (!firstRender)
+        {
+            return;
+        }
+        Processor.ExceptionOccurred += OnExceptionOccurred;
+
+        Navigation.RegisterLocationChangingHandler((args) =>
+        {
+            cts.Cancel();
+            IsRunning = false;
+            Processor.Stop();
+            Processor.Clear();
+            return ValueTask.CompletedTask;
+        });
     }
 
     private void OnChange(ChangeEventArgs args)
@@ -66,11 +83,15 @@
                 {
                     if (cupon.Count % 10 != 0)
                     {
-                        ProcessTexts.Add($"[{cupon.MovieTitle}] 수량: <span class='count' style='color:lawngreen;'>{cupon.Count}</span>");
+                        ProcessTexts.Add($"[{DateTime.Now:yy-MM-dd hh:mm:ss.f}] "+
+                                         $"[{cupon.MovieTitle}] : "+
+                                         $"<span class='count' style='color:lawngreen;'>{cupon.Count}</span>");
                     }
                     else
                     {
-                        ProcessTexts.Add($"[{cupon.MovieTitle}] 수량: {cupon.Count}");
+                        ProcessTexts.Add($"[{DateTime.Now:yy-MM-dd hh:mm:ss.f}] " +
+                                         $"[{cupon.MovieTitle}] : " +
+                                         $"<span class='count'>{cupon.Count}</span>");
                     }
                     await InvokeAsync(() => StateHasChanged());
                 }
@@ -81,14 +102,14 @@
     int errorCount = 0;
     private async void OnExceptionOccurred(object? sender, ExceptionOccurredEventArgs args)
     {
+        errorCount++;
+        ProcessTexts.Add($"<span style='color:red;'>오류 발생: {args.Exception}</span>");
         if(errorCount > 5)
         {
             Processor.Stop();
             Processor.Clear();
-            ProcessTexts.Add("오류 발생 횟수 초과로 종료합니다.");
+            ProcessTexts.Add($"<span style='color:red;'>오류 발생: {args.Exception}</span>");
             return;
         }
-        await App.Current.MainPage.DisplayAlert("스피드쿠폰", $"오류가 발생했습니다.\n{args.Exception}", "확인");
-        errorCount++;
     }
 }

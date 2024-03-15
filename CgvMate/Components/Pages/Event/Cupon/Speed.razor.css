@@ -29,5 +29,7 @@
 .article-body{
     width:100%;
     height:95%;
-    overflow-y:scroll;
+    overflow-y:auto;
+    display:flex;
+    flex-direction:column-reverse;
 }
