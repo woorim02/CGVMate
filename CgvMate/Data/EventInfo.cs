@@ -29,8 +29,10 @@ public class EventInfo
         {
             if (startDate == null)
             {
+                if (Period == "상시진행")
+                    return DateOnly.MinValue;
                 var startDateText = Period.Split('~')[0].Split('(')[0];
-                startDate = DateOnly.ParseExact(startDateText, "yy.MM.dd ");
+                startDate = DateOnly.ParseExact(startDateText.Trim(), "yy.MM.dd");
             }
             return startDate.Value;
         }
@@ -41,8 +43,10 @@ public class EventInfo
         {
             if (endDate == null)
             {
+                if (Period == "상시진행")
+                    return DateOnly.MaxValue;
                 var endDateText = Period.Split('~')[1].Split('(')[0];
-                endDate = DateOnly.ParseExact(endDateText, "yy.MM.dd ");
+                endDate = DateOnly.ParseExact(endDateText.Trim(), "yy.MM.dd");
             }
             return endDate.Value;
         }
