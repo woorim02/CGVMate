@@ -6,22 +6,22 @@
     <header class="header">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="#">Special</a>
+                <button class="nav-link active" @onclick="(args)=>ToggleNavItem(EventType.Special)" data-bs-toggle="tab" type="button" role="tab" aria-selected="true">Special</button>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">영화</a>
+                <button class="nav-link" @onclick="(args)=>ToggleNavItem(EventType.Movie)" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">영화</button>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">멤버십/클럽</a>
+                <button class="nav-link" @onclick="(args)=>ToggleNavItem(EventType.Membership_Club)" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">멤버십/클럽</button>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">극장</a>
+                <button class="nav-link" @onclick="(args)=>ToggleNavItem(EventType.Theater)" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">극장</button>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">제휴</a>
+                <button class="nav-link" @onclick="(args)=>ToggleNavItem(EventType.Affiliate)" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">제휴</button>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">지난이벤트</a>
+                <button class="nav-link" @onclick="(args)=>ToggleNavItem(EventType.Past)" data-bs-toggle="tab" type="button" role="tab" aria-selected="false">지난이벤트</button>
             </li>
         </ul>
         <div class="search-bar">
@@ -40,8 +40,15 @@
                     <div class="card" @onclick=@(a=>Card_OnClicked(item)) >
                         <img src="@item.ImageSource" />
                         <div class="card-body">
-                            <p class="card-title">@item.EventName</p>
-                            <p class="card-text">@($"{item.StartDate:MM/dd} ~ {item.EndDate:MM/dd}")</p>
+                            <p class="card-title">@((MarkupString)item.EventName)</p>
+                            @if (item.Period != "상시진행")
+                            {
+                                <p class="card-text">@($"{item.StartDate:MM/dd} ~ {item.EndDate:MM/dd}")</p>
+                            }
+                            else
+                            {
+                                <p class="card-text">상시진행</p>
+                            }
                         </div>
                     </div>
                 }
@@ -55,8 +62,15 @@
     private List<EventInfo>? Events;
 
     protected override async Task OnInitializedAsync(){
-        events = await Service.Event.GetEvents(EventType.Movie);
+        events = await Service.Event.GetEvents(EventType.Special);
         Events = events;
+    }
+
+    private async void ToggleNavItem(EventType type)
+    {
+        events = await Service.Event.GetEvents(type);
+        Events = events;
+        StateHasChanged();
     }
 
     private void SearchBar_OnChange(ChangeEventArgs args)

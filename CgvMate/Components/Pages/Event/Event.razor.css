@@ -2,6 +2,10 @@
     padding: 0.3rem;
 }
 
+.nav-link {
+    padding: 0.3rem;
+}
+
 .header .search-bar {
     width: 100%;
 }
