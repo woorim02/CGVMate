@@ -11,9 +11,11 @@ public static class Constants
     public const string OPEN_GROUP_NAME = "OpenNotification NotificationGroup";
 #endif
 
-    #region DataBase
-    public static string APP_DB_FILENAME => "app_database_v0.1.sqlite";
-    public static string APP_DB_PATH => Path.Combine(FileSystem.AppDataDirectory, APP_DB_FILENAME);
+    #region Paths
+    public static string AUTH_COOKIE_FILE_NAME = "cookies.json";
+    public static string AUTH_COOKIE_FILE_PATH = Path.Combine(FileSystem.AppDataDirectory, AUTH_COOKIE_FILE_NAME);
+    public static string APP_DB_FILE_NAME = "app_database_v0.1.sqlite";
+    public static string APP_DB_PATH = Path.Combine(FileSystem.AppDataDirectory, APP_DB_FILE_NAME);
     #endregion
 
     #region Routes
