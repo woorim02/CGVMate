@@ -1,4 +1,6 @@
 ﻿@namespace CgvMate.Components.Layout
+@using CommunityToolkit.Maui.Views;
+@inject CgvService Service
 
 <div class="@Class">
     <ul class="list-unstyled ps-0">
@@ -62,7 +64,17 @@
             </button>
             <div class=@(IsOpen ? "collapse show" :"collapse") id="account-collapse" onclick="document.querySelector('.btn-close').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-body-emphasis d-inline-flex text-decoration-none rounded">로그인</a></li>
+                    <li><a href="" @onclick="@ToggleLogin" class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            @if (IsLogined)
+                            {
+                                <span>로그아웃</span>
+                            }
+                            else
+                            {
+                                <span>로그인</span>
+                            }
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -74,4 +86,46 @@
     public bool IsOpen { get; set; } = false;
     [Parameter]
     public string Class { get; set; } = "sidebar";
+
+    private bool IsLogined { get; set; } = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsLogined = await Service.Auth.GetLoginStateAsync();
+    }
+
+    private async Task ToggleLogin()
+    {
+        if (IsLogined)
+        {
+            Logout();
+        }
+        else
+        {
+            await Login();
+        }
+
+    }
+
+    private async Task Login()
+    {
+        LoginPopup popup = new LoginPopup(Service);
+        bool? isSuccess = (bool?) await App.Current.MainPage.ShowPopupAsync(popup);
+        if (isSuccess is null)
+            return;
+        if (isSuccess.Value)
+        {
+            await InvokeAsync(async () => await App.Current.MainPage.DisplayAlert("로그인", "로그인 성공", "확인"));
+            IsLogined = true;
+        }
+        else
+        {
+            IsLogined = false;
+        }
+    }
+
+    private void Logout()
+    {
+        
+    }
 }

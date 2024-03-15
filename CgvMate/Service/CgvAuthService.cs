@@ -47,9 +47,31 @@ public class CgvAuthService : CgvServiceBase
         return true;
     }
 
+    public async Task Logout()
+    {
+        await _authClient.GetAsync("https://m.cgv.co.kr/WebApp/Member/Logout.aspx");
+        await _authClient.GetAsync("https://m.cgv.co.kr/WebApp/Member/ssoLogout.aspx");
+    }
+
+    public async Task<bool> GetLoginStateAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://m.cgv.co.kr/WebAPP/MyCgvV4/Manage_PersonalInfo.aspx?check=N");
+        var response = await _authClient.SendAsync(request);
+        var content = await response.Content.ReadAsStringAsync();
+        if (content.Contains("CGV아이디를 입력해주세요."))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    #region Cookies
     public IEnumerable<Cookie> GetAuthCookies()
     {
-        return SelectAuthCookies(_authHandler.CookieContainer.GetAllCookies()); 
+        return SelectAuthCookies(_authHandler.CookieContainer.GetAllCookies());
     }
 
     public void SetAuthCookies(IEnumerable<Cookie> cookies)
@@ -87,4 +109,5 @@ public class CgvAuthService : CgvServiceBase
             return Enumerable.Empty<Cookie>();
         return selectedCookies;
     }
+    #endregion
 }

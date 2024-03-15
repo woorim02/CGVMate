@@ -70,6 +70,9 @@
     </ItemGroup>
 
     <ItemGroup>
+      <MauiXaml Update="Views\Popups\LoginPopup.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </MauiXaml>
       <MauiXaml Update="Views\Popups\SelectMoviePopup.xaml">
         <Generator>MSBuild:Compile</Generator>
       </MauiXaml>

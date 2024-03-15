@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+               xmlns:cgv_data="clr-namespace:CgvMate.Data"
+               xmlns:cgv_popup="clr-namespace:CgvMate.Views.Popups"
+               xmlns:cgv_viewmodel="clr-namespace:CgvMate.ViewModels"
+               x:Class="CgvMate.Views.Popups.LoginPopup"
+               Color="Transparent">
+    <toolkit:Popup.Resources>
+        <LinearGradientBrush x:Key="DefaultBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#fb4357" Offset="0.1"></GradientStop>
+            <GradientStop Color="#ef642f" Offset="1"></GradientStop>
+        </LinearGradientBrush>
+    </toolkit:Popup.Resources>
+    <VerticalStackLayout WidthRequest="300" HeightRequest="150" Spacing="5" Padding="10">
+        <Entry x:Name="IdEntry" Placeholder="ID"/>
+        <Entry x:Name="PasswordEntry" Placeholder="비밀번호" IsPassword="True"/>
+        <Button Background="{StaticResource DefaultBackgroundBrush}" Text="로그인" Clicked="Button_Clicked"></Button>
+    </VerticalStackLayout>
+</toolkit:Popup>
