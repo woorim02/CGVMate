@@ -1,12 +1,79 @@
 ﻿@attribute [Route(Constants.event_)]
 @inject CgvService Service
+@inject NavigationManager Navigation
 
 <article class="article">
+    <header class="header">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Special</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">영화</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">멤버십/클럽</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">극장</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">제휴</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">지난이벤트</a>
+            </li>
+        </ul>
+        <div class="search-bar">
+            <form class="search-form" onsubmit="return false;">
+                <input class="event-input form-control" @onchange=SearchBar_OnChange placeholder="이벤트 검색">
+                <button class="btn btn-outline-success cgv-gradient" type="button">검색</button>
+            </form>
+        </div>
+    </header>
+    <div class="container">
+        <div class="wrap">
+            @if (Events is not null)
+            {
+                @foreach (var item in Events)
+                {
+                    <div class="card" @onclick=@(a=>Card_OnClicked(item)) >
+                        <img src="@item.ImageSource" />
+                        <div class="card-body">
+                            <p class="card-title">@item.EventName</p>
+                            <p class="card-text">@($"{item.StartDate:MM/dd} ~ {item.EndDate:MM/dd}")</p>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </article>
 
 @code{
+    private List<EventInfo>? events;
     private List<EventInfo>? Events;
+
     protected override async Task OnInitializedAsync(){
-        var events = await Service.Event.GetEvents(EventType.Movie);
+        events = await Service.Event.GetEvents(EventType.Movie);
+        Events = events;
+    }
+
+    private void SearchBar_OnChange(ChangeEventArgs args)
+    {
+        var text = args.Value as string;
+        if (events is null)
+            return;
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+        Events = events.Where(x => x.EventName.ToLower().Contains(text.ToLower())).ToList();
+        StateHasChanged();
+    }
+
+    private void Card_OnClicked(EventInfo info)
+    {
+        Navigation.NavigateTo($"https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq={info.EventId}");
     }
 }
