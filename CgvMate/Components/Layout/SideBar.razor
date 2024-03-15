@@ -1,5 +1,6 @@
 ﻿@namespace CgvMate.Components.Layout
 @using CommunityToolkit.Maui.Views;
+@using System.Net
 @inject CgvService Service
 
 <div class="@Class">
@@ -87,10 +88,18 @@
     [Parameter]
     public string Class { get; set; } = "sidebar";
 
-    private bool IsLogined { get; set; } = false;
+    public static bool IsLogined { get; private set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
+        if (File.Exists(Constants.AUTH_COOKIE_FILE_PATH))
+        {
+            var cookies = JsonConvert.DeserializeObject<IEnumerable<Cookie>>(await File.ReadAllTextAsync(Constants.AUTH_COOKIE_FILE_PATH));
+
+            if (cookies is null)
+                throw new Exception("Cookie is null");
+            Service.Auth.SetAuthCookies(cookies);
+        }
         IsLogined = await Service.Auth.GetLoginStateAsync();
     }
 
@@ -117,6 +126,7 @@
         {
             await InvokeAsync(async () => await App.Current.MainPage.DisplayAlert("로그인", "로그인 성공", "확인"));
             IsLogined = true;
+            await File.WriteAllTextAsync(Constants.AUTH_COOKIE_FILE_PATH, JsonConvert.SerializeObject(Service.Auth.GetAuthCookies()));
         }
         else
         {
