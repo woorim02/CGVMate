@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text;
 
 namespace CgvMate.Service;
 
@@ -17,9 +18,10 @@ public class CgvAuthService : CgvServiceBase
     {
         var getCookieResponse = await _authClient.GetAsync("https://m.cgv.co.kr/Webapp/Member/Login.aspx");
         getCookieResponse.EnsureSuccessStatusCode();
-        var checkIpResponse = await _authClient.GetAsync("https://m.cgv.co.kr/WebAPP/Member/Login.aspx/CheckIP");
+        var checkIpResponse = await _authClient.SendAsync(new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/WebAPP/Member/Login.aspx/CheckIP"));
         checkIpResponse.EnsureSuccessStatusCode();
-        var captchaResponse = await _authClient.GetAsync("https://m.cgv.co.kr/WebAPP/Member/Login.aspx/InputCheckCaptcha");
+        var captchaResponse = await _authClient.PostAsync("https://m.cgv.co.kr/WebAPP/Member/Login.aspx/InputCheckCaptcha",
+            new StringContent($"{{inputNum:'undefined', userId:'{Uri.UnescapeDataString(Encrypt(id))}'}}", Encoding.UTF8, "application/json"));
         captchaResponse.EnsureSuccessStatusCode();
 
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Webapp/Member/Login.aspx");
@@ -97,10 +99,6 @@ public class CgvAuthService : CgvServiceBase
                 case "AUTOLOGIN":
                     return true;
                 case ".ASPXAUTH":
-                    return true;
-                case "URL_PREV_COMMON":
-                    return true;
-                case "REURL":
                     return true;
                 default: return false;
             }
