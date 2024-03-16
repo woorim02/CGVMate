@@ -1,3 +1,7 @@
 ﻿ul, li {
     list-style: none;
 }
+
+article{
+    height:100%;
+}
