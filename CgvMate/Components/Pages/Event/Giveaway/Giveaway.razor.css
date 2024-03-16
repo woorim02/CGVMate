@@ -4,13 +4,15 @@ ul {
 }
 
 .article {
+    display: block;
     padding: 0.5rem 0.7rem;
-    max-height:100%;
-    overflow:unset;
+    height: 100%;
+    width: 100%;
 }
 /*헤더*/
 .header {
     height: 4.375rem;
+    width: 100%;
     padding: 0px 0px 0px 10px;
     display: flex;
     align-items: flex-start;
@@ -59,7 +61,8 @@ ul {
 
 /*본문*/
 .body {
-    height: 100%;
+    height: calc(100% - 4.375rem);
+    overflow-y: auto;
 }
 
 .eventlist {
