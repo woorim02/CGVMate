@@ -1,0 +1,68 @@
+﻿@attribute [Route(Constants.event_giveaway_autosignup)]
+@inject CgvService Service
+@implements IDisposable
+
+<article class="article d-flex flex-column">
+    <p class="line">
+        <span class="line-val">상영 종료 시간</span>
+        <div id="timepicker" class="select-date" onclick="document.getElementById('time-input').click()">
+            <input type="time" id="time-input" class="form-control" @bind-value="Time" />
+        </div>
+    </p>
+    <p class="line">
+        <span class="line-val">잔여 시간</span>
+        <span>@TimeSpan.ToString("hh\\:mm\\:ss\\.f")</span>
+    </p>
+    <p class="input-title">선착순 경품 지급 발행 정보</p>
+    <input class="input-number" placeholder="예매번호(15자리) 또는 판매번호(16자리) 입력" />
+    <input class="input-number" placeholder="알림톡을 받을 연락처 입력" />
+</article>
+<!--
+@if (!IsSet)
+{
+}
+else
+{
+    <article class="article">
+        <h4>자동 경품 신청 기능 사용 방법</h4>
+        <p>1. 경품 이벤트 페이지에서 자동 경품 신청 링크 클릭</p>
+        <p>2. 티켓 정보 입력(예매번호, 상영 종료 시간)</p>
+        <p>3. CGV 알림톡을 받을 전화번호 입력</p>
+    </article>
+}
+-->
+@code {
+    private bool IsSet => (EventIndex is not null) && (TheaterCd is not null) && (TheaterNm is not null) && (RemainCd is not null);
+
+    [Parameter]
+    public string? EventIndex{ get; set; }
+    [Parameter]
+    public string? TheaterCd{ get; set; }
+    [Parameter]
+    public string? TheaterNm { get; set; }
+    [Parameter]
+    public string? RemainCd{ get; set; }
+
+    private TimeOnly? Time{ get; set; }
+    private TimeSpan TimeSpan{ get; set; }
+    private Timer timer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        timer = new Timer(async (state) =>
+        {
+            if (Time is null)
+                return;
+            TimeSpan = Time.Value - TimeOnly.FromDateTime(DateTime.Now);
+            if (TimeSpan < TimeSpan.FromMicroseconds(100))
+                return;
+            await InvokeAsync(StateHasChanged);
+        },null, 0, 100);
+    }
+
+    private bool isDisposed = false;
+    public void Dispose()
+    {
+        timer.Dispose();
+    }
+}

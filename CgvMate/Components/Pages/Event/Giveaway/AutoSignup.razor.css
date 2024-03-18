@@ -1,0 +1,20 @@
+﻿.article{
+    padding:0.5rem;
+}
+.line {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.line-val{
+    width:9rem;
+    padding-right:2rem;
+}
+
+.input-title{
+    margin-bottom:0.5rem;
+}
+.input-number {
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}

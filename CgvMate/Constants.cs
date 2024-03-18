@@ -24,6 +24,7 @@ public static class Constants
     public const string event_cupon_speed = "/event/cupon/speed";
     public const string event_giveaway = "/event/giveaway";
     public const string event_giveaway_detail = "/event/giveaway/detail";
+    public const string event_giveaway_autosignup = "/event/giveaway/autosignup";
     public const string reservation_notification = "/reservation/notification";
     public const string reservation_notification_add = "/reservation/notification/add";
     #endregion
