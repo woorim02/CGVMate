@@ -54,7 +54,7 @@ public class OpenNotificationService
                 }
             }
         });
-        executor.Start(token);
+        executor.Start();
         token.Register(Stop);
     }
     // 외부에서 호출과 동시에 token에 register된 stop이 실행될 경우 방지.

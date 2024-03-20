@@ -5,24 +5,20 @@ namespace CgvMate.Core;
 public class TaskProcessor
 {
     /// <summary>
+    /// 작업 대기열
+    /// </summary>
+    private readonly List<Func<Task>> _funcList;
+    private Timer? _timer;
+
+    /// <summary>
     /// 작업 대기열에서 작업 실행 중 처리할 수 없는 오류가 발생했을때 발생하는 이벤트입니다.
     /// </summary>
     public event EventHandler<ExceptionOccurredEventArgs>? ExceptionOccurred;
 
     /// <summary>
-    /// 작업 대기열
-    /// </summary>
-    private readonly List<Func<Task>> _funcList;
-
-    /// <summary>
-    /// Do Not Use It. IsRunning 사용. Start(CancellationToken token)을 위한 필드. 
-    /// </summary>
-    private CancellationToken? _token;
-
-    /// <summary>
     /// 작업이 진행중인지 나타냅니다.
     /// </summary>
-    public bool IsRunning { get => !(_token?.IsCancellationRequested ?? true); }
+    public bool IsRunning { get; private set; }
 
     /// <summary>
     /// 작업 대기열 용량.
@@ -37,7 +33,16 @@ public class TaskProcessor
     /// <summary>
     /// 작업 주기. 동시 작업 수가 n(n>=2)인 경우 주기마다 n개의 작업을 실행합니다.
     /// </summary>
-    public TimeSpan Interval { get; set; }
+    public TimeSpan Interval
+    {
+        get => _interval;
+        set
+        {
+            _interval = value;
+            _timer?.Change(TimeSpan.Zero, _interval);
+        }
+    }
+    private TimeSpan _interval;
 
     /// <summary>
     /// 작업 대기열 용량, 최대 동시 작업 수, 작업 주기를 사용하여 클래스의 새 인스턴스를 초기화합니다.
@@ -56,52 +61,12 @@ public class TaskProcessor
     /// <summary>
     /// 작업 대기열을 실행합니다.
     /// </summary>
-    public void Start() => Start(new CancellationToken());
-
-    /// <summary>
-    /// CancellationToken을 사용하여 작업 대기열을 실행합니다.
-    /// </summary>
-    public void Start(CancellationToken token)
+    public void Start()
     {
         if (IsRunning)
             return;
-
-        _token = token;
-        Task.Run(async () =>
-        {
-            while (IsRunning)
-            {
-                Func<Task>? func;
-                lock (_funcList)
-                {
-                    if (_funcList.Count == 0)
-                    {
-                        func = null;
-                    }
-                    else
-                    {
-                        func = (Func<Task>?)_funcList[0];
-                        _funcList.RemoveAt(0); 
-                    }
-                }
-                if (func == null)
-                {
-                    await Task.Delay(Interval);
-                    continue;
-                }
-                var task = func();
-                try
-                {
-                    await task;
-                }
-                catch (Exception ex)
-                {
-                    ExceptionOccurred?.Invoke(this, new ExceptionOccurredEventArgs(task, ex));
-                }
-                await Task.Delay(Interval);
-            }
-        });
-
+        IsRunning = true;
+        _timer = new Timer(TimerCallback, this, TimeSpan.Zero, Interval);
     }
 
     /// <summary>
@@ -111,7 +76,13 @@ public class TaskProcessor
     {
         if (!IsRunning)
             return;
-        _token = null;
+        if (_timer == null)
+        {
+            throw new Exception("예상치 못한 동작: Timer가 null이었습니다.");
+        }
+        IsRunning = false;
+        _timer.Dispose();
+        _timer = null;
     }
 
     /// <summary>
@@ -133,13 +104,38 @@ public class TaskProcessor
         return true;
     }
 
-    /// <summary>
-    /// 작업을 대기열에 추가하려고 시도합니다. CancellationToken으로 작업 취소가 가능합니다.
-    /// </summary>
-    /// <returns>작업 추가가 성공하면 True, 실패하면 False</returns>
-    public bool TryEnqueue(Func<Task> func, CancellationToken token)
+    private async void TimerCallback(object? sender)
     {
-        token.Register(() => _funcList.Remove(func));
-        return TryEnqueue(func);
-    }
+        if (!IsRunning)
+        {
+            return;
+        }
+
+        Func<Task>? func;
+        lock (_funcList)
+        {
+            if (_funcList.Count == 0)
+            {
+                func = null;
+            }
+            else
+            {
+                func = (Func<Task>?)_funcList[0];
+                _funcList.RemoveAt(0);
+            }
+        }
+        if (func == null)
+        {
+            return;
+        }
+        var task = func();
+        try
+        {
+            await task;
+        }
+        catch (Exception ex)
+        {
+            ExceptionOccurred?.Invoke(this, new ExceptionOccurredEventArgs(task, ex));
+        }
+    } 
 }
