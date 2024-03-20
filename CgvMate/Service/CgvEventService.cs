@@ -126,7 +126,7 @@ public class CgvEventService : CgvServiceBase
         return info;
     }
 
-    public async Task<bool> SignupGiveawayEvent(GiveawayEventModel model, TheaterGiveawayInfo info, string ticketNumber, string phoneNumber)
+    public async Task<bool> SignupGiveawayEvent(GiveawayEventModel model, string theaterCode, string theaterName, string encCount, string ticketNumber, string phoneNumber)
     {
         var payload = new
         {
@@ -134,11 +134,11 @@ public class CgvEventService : CgvServiceBase
             giveawayIdx = Uri.EscapeDataString(Encrypt(model.GiveawayIndex)),
             giveawayNm = Uri.EscapeDataString(Encrypt(model.Title)),
             ticketNum = Uri.EscapeDataString(Encrypt(ticketNumber)),
-            theaterCd = Uri.EscapeDataString(Encrypt(info.TheaterCode)),
-            theaterNm = Uri.EscapeDataString(Encrypt(info.TheaterName)),
+            theaterCd = Uri.EscapeDataString(Encrypt(theaterCode)),
+            theaterNm = Uri.EscapeDataString(Encrypt(theaterName)),
             mobileNum = Uri.EscapeDataString(Encrypt(phoneNumber)),
-            remainCnt = Uri.EscapeDataString(info.EncCount),
-            totalCnt = Uri.EscapeDataString(info.EncCount),
+            remainCnt = Uri.EscapeDataString(encCount),
+            totalCnt = Uri.EscapeDataString(encCount),
         };
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventSignup.aspx/SignGiveawayNum");
         request.Content = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
