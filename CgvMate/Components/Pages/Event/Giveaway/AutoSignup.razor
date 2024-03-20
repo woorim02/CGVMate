@@ -1,25 +1,24 @@
 ﻿@attribute [Route(Constants.event_giveaway_autosignup)]
 @inject CgvService Service
-@implements IDisposable
 
-<article class="article d-flex flex-column">
-    <p class="line">
-        <span class="line-val">상영 종료 시간</span>
-        <div id="timepicker" class="select-date" onclick="document.getElementById('time-input').click()">
-            <input type="time" id="time-input" class="form-control" @bind-value="Time" />
-        </div>
-    </p>
-    <p class="line">
-        <span class="line-val">잔여 시간</span>
-        <span>@TimeSpan.ToString("hh\\:mm\\:ss\\.f")</span>
-    </p>
-    <p class="input-title">선착순 경품 지급 발행 정보</p>
-    <input class="input-number" placeholder="예매번호(15자리) 또는 판매번호(16자리) 입력" />
-    <input class="input-number" placeholder="알림톡을 받을 연락처 입력" />
-</article>
-<!--
-@if (!IsSet)
+<!---->
+@if (IsSet)
 {
+    <article class="article d-flex flex-column">
+        <p class="line">
+            <span class="line-val">상영 종료 시간</span>
+            <div id="timepicker" class="select-date" onclick="document.getElementById('time-input').click()">
+                <input type="time" id="time-input" class="form-control" @bind-value="Time" />
+            </div>
+        </p>
+        <p class="line">
+            <span class="line-val">잔여 시간</span>
+            <span>@TimeSpan.ToString("hh\\:mm\\:ss\\.f")</span>
+        </p>
+        <p class="input-title">선착순 경품 지급 발행 정보</p>
+        <input class="input-number" @bind-value="TicketNumber" placeholder="예매번호(15자리) 또는 판매번호(16자리) 입력" />
+        <input class="input-number" @bind-value="PhoneNumber" placeholder="알림톡을 받을 연락처 입력" />
+    </article>
 }
 else
 {
@@ -30,9 +29,9 @@ else
         <p>3. CGV 알림톡을 받을 전화번호 입력</p>
     </article>
 }
--->
+<!---->
 @code {
-    private bool IsSet => (EventIndex is not null) && (TheaterCd is not null) && (TheaterNm is not null) && (RemainCd is not null);
+    private bool IsSet => (EventIndex is not null) && (TheaterCd is not null) && (TheaterNm is not null) && (EncCount is not null);
 
     [Parameter]
     public string? EventIndex{ get; set; }
@@ -41,28 +40,34 @@ else
     [Parameter]
     public string? TheaterNm { get; set; }
     [Parameter]
-    public string? RemainCd{ get; set; }
+    public string? EncCount{ get; set; }
 
+    private Timer? timer;
+    private GiveawayEventModel? model;
     private TimeOnly? Time{ get; set; }
-    private TimeSpan TimeSpan{ get; set; }
-    private Timer timer;
+    private TimeSpan TimeSpan { get; set; }
+    private string? TicketNumber{ get; set; }
+    private string? PhoneNumber{ get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        timer = new Timer(async (state) =>
+        if (!((EventIndex is not null) && (TheaterCd is not null) && (TheaterNm is not null) && (EncCount is not null)))
+            return;
+        model = await Service.Event.GetGiveawayEventModelAsync(EventIndex);
+        if (timer is null)
         {
-            if (Time is null)
-                return;
-            TimeSpan = Time.Value - TimeOnly.FromDateTime(DateTime.Now);
-            if (TimeSpan < TimeSpan.FromMicroseconds(100))
-                return;
-            await InvokeAsync(StateHasChanged);
-        },null, 0, 100);
-    }
+            timer = new Timer(async (state) =>
+            {
+                TimeSpan = Time.Value - TimeOnly.FromDateTime(DateTime.Now);
+                if (TimeSpan < TimeSpan.FromSeconds(1.3) && (TicketNumber is not null) && (PhoneNumber is not null))
+                {
+                    await Service.Event.SignupGiveawayEvent(model, TheaterCd, TheaterNm, EncCount,
+                    TicketNumber.Replace("-", "").Trim(),
+                    PhoneNumber.Replace("-", "").Trim());
+                }
+                await InvokeAsync(StateHasChanged);
+            }, null, 0, 100);
+        }
 
-    private bool isDisposed = false;
-    public void Dispose()
-    {
-        timer.Dispose();
     }
 }
