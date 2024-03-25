@@ -2,6 +2,7 @@
 @inject CgvService Service
 
 <!---->
+<div aria-valuetext="@($"{EventIndex} {TheaterCd} {TheaterNm} {EncCount}")"></div>
 @if (IsSet)
 {
     <article class="article d-flex flex-column">
@@ -18,6 +19,7 @@
         <p class="input-title">선착순 경품 지급 발행 정보</p>
         <input class="input-number" @bind-value="TicketNumber" placeholder="예매번호(15자리) 또는 판매번호(16자리) 입력" />
         <input class="input-number" @bind-value="PhoneNumber" placeholder="알림톡을 받을 연락처 입력" />
+        <button class="cgv-button">신청</button>
     </article>
 }
 else
@@ -33,13 +35,13 @@ else
 @code {
     private bool IsSet => (EventIndex is not null) && (TheaterCd is not null) && (TheaterNm is not null) && (EncCount is not null);
 
-    [Parameter]
+    [SupplyParameterFromQuery]
     public string? EventIndex{ get; set; }
-    [Parameter]
+    [SupplyParameterFromQuery]
     public string? TheaterCd{ get; set; }
-    [Parameter]
+    [SupplyParameterFromQuery]
     public string? TheaterNm { get; set; }
-    [Parameter]
+    [SupplyParameterFromQuery]
     public string? EncCount{ get; set; }
 
     private Timer? timer;
@@ -51,12 +53,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        TheaterNm = TheaterNm is null ? null : Uri.UnescapeDataString(TheaterNm);
+        EncCount = EncCount is null ? null : Uri.UnescapeDataString(EncCount);
+
         if (!((EventIndex is not null) && (TheaterCd is not null) && (TheaterNm is not null) && (EncCount is not null)))
             return;
         model = await Service.Event.GetGiveawayEventModelAsync(EventIndex);
+    }
+
+    private void StartTimer()
+    {
         if (timer is null)
-        {
-            timer = new Timer(async (state) =>
+            return;
+        timer = new Timer(async (state) =>
             {
                 TimeSpan = Time.Value - TimeOnly.FromDateTime(DateTime.Now);
                 if (TimeSpan < TimeSpan.FromSeconds(1.3) && (TicketNumber is not null) && (PhoneNumber is not null))
@@ -67,7 +76,6 @@ else
                 }
                 await InvokeAsync(StateHasChanged);
             }, null, 0, 100);
-        }
 
     }
 }

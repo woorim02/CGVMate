@@ -1,6 +1,7 @@
 ﻿@attribute [Route(Constants.event_giveaway_detail)]
 @inject CgvService Service
 @inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
 
 <article class="tl">
     <div class="header">
@@ -36,7 +37,15 @@
                 @foreach (var item in info.TheaterGiveawayInfos)
                 {
                     <li class="theater">
-                        <span class="theater-name">@item.TheaterName</span>
+                        <div class="theater-name">
+                            <span class="theater-name">@item.TheaterName</span>
+                            @if ((item.TheaterCode == "0013" || item.TheaterCode == "0059" || item.TheaterCode == "0074") && item.CountTypeCode != "type4")
+                            {
+                                <a class="autosignup" @onclick="(args) => GoToAutoSignupPage(item)">
+                                    자동 선착순 경품 신청
+                                </a>
+                            }
+                        </div>
                         <div>
                             <span class="theater-count" style="background-color: @CountTypeCodeToColor(item.CountTypeCode);">
                                 @item.GiveawayRemainCount
@@ -71,6 +80,13 @@
             return;
         info = await Service.Event.GetGiveawayInfoAsync(model.GiveawayIndex, areaCode);
         StateHasChanged();
+    }
+
+    private void GoToAutoSignupPage(TheaterGiveawayInfo item)
+    {
+        Navigation.NavigateTo($"{Constants.event_giveaway_autosignup}?EventIndex={EventIndex}&TheaterCd={item.TheaterCode}"
+        + $"&TheaterNm={Uri.EscapeDataString(item.TheaterName)}"
+        + $"&EncCount={Uri.EscapeDataString(item.EncCount)}", true);
     }
 
     private static string CountTypeCodeToText(string type)

@@ -68,7 +68,9 @@ a {
     position: relative;
     width: 100%;
     padding-top: 6px;
-    padding-bottom: 6px
+    padding-bottom: 6px ;
+    display: flex;
+    flex-direction: column;
 }
 
     .theater:after {
@@ -111,4 +113,8 @@ a {
     color: #666;
     line-height: 1.167em;
     align-items: start;
+}
+
+.autosignup{
+    font-size:0.8rem;
 }
