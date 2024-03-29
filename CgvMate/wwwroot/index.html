@@ -36,6 +36,12 @@
         function goBack() {
             history.back()
         }
+        function checkCheckbox(id, value) {
+            document.getElementById(id).checked = value;
+        }
+        function getCheckboxValue(id) {
+            return document.getElementById(id).checked;
+        }
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
