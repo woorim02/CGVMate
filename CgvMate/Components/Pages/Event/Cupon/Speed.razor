@@ -3,7 +3,7 @@
 @inject NavigationManager Navigation
 @inject IJSRuntime Runtime
 
-<article class="article">
+<article class="article" id="speed-cupon-article">
     <header class="article-header">
         <div class="switch-container">
             <label id="toggle-switch-label" for="toggle_switch1">
@@ -14,8 +14,19 @@
             </label>
         </div>
         <div class="select-container border-top">
-            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind=selectedMovieIndex>
-                <option value="@selectedMovieIndex_default" selected>전체 스피드쿠폰 확인</option>
+            <select class="form-select" style="padding-left:0.5rem; width:9rem;" @onchange=OnChangeInterval>
+                <option value="500" selected>500ms(기본값)</option>
+                @for (int i = 100; i < 1100; i+=100)
+                {
+                    if(i == 500)
+                    {
+                        continue;
+                    }
+                    <option value=@($"{i}")>@($"{i}ms")</option>
+                }
+            </select>
+            <select class="form-select" style="padding-left:0.5rem; margin-left:0.5rem" @bind=selectedMovieIndex>
+                <option value="@selectedMovieIndex_default" selected>All</option>
                 @for (int i = 0; i < Cupons.Count; i++)
                 {
                     <option value="@Cupons[i].MovieIndex">@Cupons[i].MovieTitle</option>
@@ -107,20 +118,30 @@
                 {
                     if (cupon.Count % 10 != 0)
                     {
-                        ProcessTexts.Add($"[{DateTime.Now:yy-MM-dd hh:mm:ss.f}] "+
+                        ProcessTexts.Add($"[{DateTime.Now:hh:mm:ss.ff}] "+
                                          $"[{cupon.MovieTitle}] : "+
                                          $"<span class='count' style='color:lawngreen;'>{cupon.Count}</span>");
                     }
                     else
                     {
-                        ProcessTexts.Add($"[{DateTime.Now:yy-MM-dd hh:mm:ss.f}] " +
+                        ProcessTexts.Add($"[{DateTime.Now:hh:mm:ss.ff}] " +
                                          $"[{cupon.MovieTitle}] : " +
                                          $"<span class='count'>{cupon.Count}</span>");
                     }
-                    await InvokeAsync(() => StateHasChanged());
+                    await InvokeAsync(async () =>
+                    {
+                        StateHasChanged();
+                        await Runtime.InvokeVoidAsync("scrollBottom", "speed-cupon-article");
+                    });
                 }
             });
         }
+    }
+
+    private void OnChangeInterval(ChangeEventArgs args)
+    {
+        int val = int.Parse(args.Value.ToString());
+        Processor.Interval = TimeSpan.FromMilliseconds(val);
     }
 
     int errorCount = 0;
