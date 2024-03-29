@@ -57,12 +57,29 @@
     </div>
 </article>
 
-@code{
-    private List<EventInfo>? events;
-    private List<EventInfo>? Events;
+@code {
+    private List<EventInfo>? _events;// 프로퍼티용 리스트
+    private List<EventInfo>? events// 검색용 수정된 프로퍼티
+    {
+        get => _events;
+        set
+        {
+            foreach (var item in value)
+            {
+                if (item.EventName.Contains("선착순 무료 쿠폰"))
+                {
+                    item.EventName = item.EventName.Replace("선착순 무료 쿠폰", "서프라이즈 쿠폰");
+                }
+            }
+            _events = value;
+        }
+    }
+    private List<EventInfo>? Events; // 바인딩 프로퍼티
+
 
     protected override async Task OnInitializedAsync(){
         events = await Service.Event.GetEvents(EventType.Special);
+
         Events = events;
     }
 
@@ -82,7 +99,7 @@
         {
             return;
         }
-        Events = events.Where(x => x.EventName.ToLower().Contains(text.ToLower())).ToList();
+        Events = events.Where(x => x.EventName.ToLower().Trim().Contains(text.ToLower().Trim())).ToList();
         StateHasChanged();
     }
 
