@@ -11,12 +11,10 @@
     width: 100%;
     height: 3rem;
 }
-::deep .navbar{
-    width:100%;
-}
 
 .cgv-gradient {
     min-height: 2px;
+    height:2px;
 }
 
 .body-container {

@@ -1,6 +1,12 @@
+.navbar-wrap {
+    width: 100%;
+    height: 100%
+}
+
 .navbar {
-    padding: 0.3rem 1rem 0.23rem 1rem;
+    padding: 0.3rem 1rem 0.3rem 1rem;
     justify-content: flex-start;
+    min-width: 13rem;
 }
 
 .navbar-toggler {
