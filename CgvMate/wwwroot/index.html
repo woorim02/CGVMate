@@ -42,6 +42,10 @@
         function getCheckboxValue(id) {
             return document.getElementById(id).checked;
         }
+        function scrollBottom(id) {
+            let box = document.getElementById(id);
+            box.scrollTop = box.scrollHeight;
+        }
     </script>
     <script src="js/bootstrap.bundle.min.js"></script>
 </body>
