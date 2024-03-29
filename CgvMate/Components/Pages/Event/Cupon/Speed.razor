@@ -1,19 +1,34 @@
 ﻿@attribute [Route(Constants.event_cupon_speed)]
 @inject CgvService Service
 @inject NavigationManager Navigation
+@inject IJSRuntime Runtime
 
 <article class="article">
     <header class="article-header">
         <label id="toggle-switch-label" for="toggle_switch1">
             <span>스피드쿠폰 자동 확인</span>
-            <ToggleSwitch id="toggle_switch1" style="margin:auto; inline; float:right; width:40px; height:20px; " OnChangeCallback="OnChange"></ToggleSwitch>
+            <span class="switch-wrap">
+                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind=selectedMovieIndex>
+                    <option value="@selectedMovieIndex_default" selected>전체 스피드쿠폰 확인</option>
+                    @for (int i = 0; i < Cupons.Count; i++)
+                    {
+                        <option value="@Cupons[i].MovieIndex">@Cupons[i].MovieTitle</option>
+                    }
+                </select>
+                <ToggleSwitch id="toggle_switch1" style="padding-left: 1rem; margin:auto; inline; float:right; width:40px; height:20px; " OnChangeCallback="OnChange"></ToggleSwitch>
+            </span>
         </label>
     </header>
+
     <section class="article-body">
-        <ul>
+        <ul class="list-group">
             @foreach (var item in ProcessTexts)
             {
-                <li>@((MarkupString)item)</li>
+                <li>
+                    <p class="list-group-item">
+                        @((MarkupString)item)
+                    </p>
+                </li>
             }
         </ul>
     </section>
@@ -24,6 +39,9 @@
     private List<SpeedCupon> Cupons { get; set; } = new List<SpeedCupon>(100);
     private List<string> ProcessTexts = new List<string>(100);
     private TaskProcessor Processor = new TaskProcessor(100, 1, TimeSpan.FromSeconds(0.5));
+
+    private const string selectedMovieIndex_default = "nullmoviewqwegv";
+    private string? selectedMovieIndex = selectedMovieIndex_default;
 
     private CancellationTokenSource cts;
 
@@ -79,7 +97,9 @@
             Processor.TryEnqueue(async () =>
             {
                 var cupons = await Service.Event.GetSpeedCuponCountsAsync();
-                foreach (var cupon in cupons)
+                var selectedCupons = selectedMovieIndex == selectedMovieIndex_default ? cupons : cupons.Where(x => x.MovieIndex == selectedMovieIndex);
+
+                foreach (var cupon in selectedCupons)
                 {
                     if (cupon.Count % 10 != 0)
                     {
