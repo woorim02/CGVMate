@@ -5,19 +5,23 @@
 
 <article class="article">
     <header class="article-header">
-        <label id="toggle-switch-label" for="toggle_switch1">
-            <span>스피드쿠폰 자동 확인</span>
-            <span class="switch-wrap">
-                <select class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind=selectedMovieIndex>
-                    <option value="@selectedMovieIndex_default" selected>전체 스피드쿠폰 확인</option>
-                    @for (int i = 0; i < Cupons.Count; i++)
-                    {
-                        <option value="@Cupons[i].MovieIndex">@Cupons[i].MovieTitle</option>
-                    }
-                </select>
-                <ToggleSwitch id="toggle_switch1" style="padding-left: 1rem; margin:auto; inline; float:right; width:40px; height:20px; " OnChangeCallback="OnChange"></ToggleSwitch>
-            </span>
-        </label>
+        <div class="switch-container">
+            <label id="toggle-switch-label" for="toggle_switch1">
+                <span>스피드쿠폰 자동 확인</span>
+                <span class="switch-wrap">
+                    <ToggleSwitch id="toggle_switch1" style="padding-left: 1rem; margin:auto; inline; float:right; width:40px; height:20px; " OnChangeCallback="OnChange"></ToggleSwitch>
+                </span>
+            </label>
+        </div>
+        <div class="select-container border-top">
+            <select class="form-select" id="floatingSelect" aria-label="Floating label select example" @bind=selectedMovieIndex>
+                <option value="@selectedMovieIndex_default" selected>전체 스피드쿠폰 확인</option>
+                @for (int i = 0; i < Cupons.Count; i++)
+                {
+                    <option value="@Cupons[i].MovieIndex">@Cupons[i].MovieTitle</option>
+                }
+            </select>
+        </div>
     </header>
 
     <section class="article-body">
