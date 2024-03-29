@@ -28,6 +28,8 @@ namespace CgvMate
             client.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0;) Chrome/120.0.0.0 Safari/537.36");
             client.DefaultRequestHeaders.Host = "m.cgv.co.kr";
 
+            builder.Services.AddSingleton<HttpClient>(client);
+
             var authHandler = new SocketsHttpHandler() { CookieContainer = new CookieContainer() };
             var authClient = new HttpClient(authHandler);
             authClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0;) Chrome/120.0.0.0 Safari/537.36");
