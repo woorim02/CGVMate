@@ -179,6 +179,36 @@ public class CgvEventService : CgvServiceBase
         }
         return list;
     }
+
+    public async Task<SurpriseCupon> GetSurpriseCuponCountAsync(string index)
+    {
+        var request = new HttpRequestMessage(HttpMethod.Get, $"https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq={index}");
+        var response = await _client.SendAsync(request);
+        var msg = await response.Content.ReadAsStringAsync();
+        string url = null;
+        foreach(var s in msg.Split("\n"))
+        {
+            if(s.Contains("https://m.cgv.co.kr/Event/2021/fcfs/default.aspx"))
+            {
+                url = Regex.Replace(s.Trim(), @"\t|\n|\r", "").Replace("window.location.href = \"", "").Replace("\";", "");
+                break;
+            }
+        }
+        var document = new HtmlDocument();
+        document.LoadHtml(await _client.GetStringAsync(url));
+
+        var titleAttr = document.DocumentNode.SelectSingleNode("//*[@property='og:title']").Attributes["content"];
+        var titleStr = titleAttr.Value.ToString();
+
+        var countAttr = document.DocumentNode.SelectSingleNode("//*[@class='progress-number']").Attributes["aria-valuenow"];
+        var countStr = countAttr.Value.ToString().Trim().Replace(",", "").Replace("쿠폰 사용 수량", "");
+        var count = int.Parse(countStr);
+
+        var avaAttr = document.DocumentNode.SelectSingleNode("//*[@class='btn_reserve']").Attributes["href"];
+        bool ava = !avaAttr.Value.ToString().Contains("소진되었습니다");
+
+        return new SurpriseCupon(index, titleStr, count, ava);
+    }
     #endregion
 }
 
