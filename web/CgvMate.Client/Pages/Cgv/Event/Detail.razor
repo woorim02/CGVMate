@@ -1,0 +1,33 @@
+﻿@using CgvMate.Services
+@page "/cgv/event/{eventId}"
+@inject NavigationManager Navigation
+@inject CgvMateApi api
+<PageTitle>이벤트 상세보기</PageTitle>
+@if (imgSrcs is not null)
+{
+    <div class="img-wrap">
+    @foreach (var src in imgSrcs)
+        {
+            <img src=@src alt=@src />
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string? eventId { get; set; }
+
+    public List<string>? imgSrcs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            imgSrcs = await api.GetEventImgSrcAsync(eventId);
+        }
+        catch
+        {
+            Navigation.NavigateTo($"https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq={eventId}");
+        }
+    }
+}

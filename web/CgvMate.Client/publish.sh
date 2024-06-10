@@ -1,0 +1,1 @@
+dotnet publish --configuration Release -o /mnt/bind_mount/cgvmate.com

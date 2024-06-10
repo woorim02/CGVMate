@@ -1,0 +1,1 @@
+dotnet publish --configuration Debug -o ../../../docker/data/nginx/bind_mount/test.cloudot.kr

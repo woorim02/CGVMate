@@ -12,8 +12,8 @@ namespace CgvMate.Service
         static CgvServiceBase()
         {
             _aes = Aes.Create();
-            _aes.IV = Convert.FromBase64String("YjUxMWM3MWI5M2E3NDhmNA==");
-            _aes.Key = Convert.FromBase64String("YjUxMWM3MWI5M2E3NDhmNDc1YzM5YzY1ZGQwZTFlOTQ=");
+            _aes.IV = Convert.FromBase64String(Environment.GetEnvironmentVariable("AES_IV"));
+            _aes.Key = Convert.FromBase64String(Environment.GetEnvironmentVariable("AES_KEY"));
             _sha256 = SHA256.Create();
             _md5 = MD5.Create();
         }

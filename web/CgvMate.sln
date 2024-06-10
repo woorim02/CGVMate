@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Api", "CgvMate.Api\CgvMate.Api.csproj", "{50D34840-F317-4063-8138-35AAB4D265CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4} = {1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Client", "CgvMate.Client\CgvMate.Client.csproj", "{3C2F91CB-48D7-48A5-9618-C048263FD543}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4} = {1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate", "CgvMate\CgvMate.csproj", "{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotteMate", "LotteMate\LotteMate.csproj", "{4739F999-411E-4164-913B-708946A7D5FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{50D34840-F317-4063-8138-35AAB4D265CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50D34840-F317-4063-8138-35AAB4D265CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50D34840-F317-4063-8138-35AAB4D265CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50D34840-F317-4063-8138-35AAB4D265CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4739F999-411E-4164-913B-708946A7D5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4739F999-411E-4164-913B-708946A7D5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4739F999-411E-4164-913B-708946A7D5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4739F999-411E-4164-913B-708946A7D5FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A9E9AFD3-B01B-4571-989C-7732CE809112}
+	EndGlobalSection
+EndGlobal

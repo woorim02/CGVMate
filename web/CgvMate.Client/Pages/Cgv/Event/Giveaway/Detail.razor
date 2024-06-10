@@ -1,0 +1,158 @@
+﻿@attribute [Route(Constants.event_giveaway_detail)]
+@inject CgvMateApi api
+@inject IJSRuntime JSRuntime
+
+<PageTitle>@model?.Title 경품 수량 확인</PageTitle>
+<HeadContent>
+    <meta name="keywords" content="CGV 경품 수량 확인" />
+    <meta name="keywords" content="CGV 특전 수량 확인" />
+    <meta name="description" content="CGV 경품, 특전 수량 확인" />
+</HeadContent>
+
+<article class="tl">
+    <div class="header">
+        <div class="header-title">
+            <p id="header-text">
+                잔여 수량 확인
+            </p>
+        </div>
+    </div>
+
+    <div class="content-wrap">
+        <div class="header-title2">
+            <p class="header-content">
+                @if (model is not null)
+                {
+                    @model.Contents
+                }
+            </p>
+        </div>
+        <div style="height: 50px;">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2422895337222657"
+     crossorigin="anonymous"></script>
+<!-- 상단 배너 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2422895337222657"
+     data-ad-slot="3730871491"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+        <div class="content">
+            @if (info is not null)
+            {
+                if (info.Areas.Select(x => int.Parse(x.TheaterCount)).Sum() > 10)
+                {
+                    <div class="contentL">
+                        <ul class="area-list">
+                            @foreach (var item in info.Areas)
+                            {
+                                <li id="area-@item.AreaCode" class="@(item.AreaCode == currentArea ? "active" : string.Empty)"
+                                    style="display: block" @onclick="async arg => await SelectAreaTheaterList(item.AreaCode)">
+                                    <a href=@($"{Constants.event_giveaway_detail}?eventIndex={EventIndex}&areaCode={item.AreaCode}")>
+                                        @item.AreaName
+                                        <span>(@item.TheaterCount)</span>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+                <div class="contentR">
+                    <ul class="theater-list">
+                        @for (int i = 0; i < info.TheaterGiveawayInfos.Count; i++)
+                        {
+                            var item = info.TheaterGiveawayInfos[i];
+                            <li class="theater">
+                                <div class="theater-name">
+                                    <span class="theater-name">@item.TheaterName</span>
+                                </div>
+                                <div>
+                                    <span class="theater-count"
+                                        style="background-color: @CountTypeCodeToColor(item.CountTypeCode);">
+                                        @item.GiveawayRemainCount
+                                    </span>
+                                    <span class="theater-state">@CountTypeCodeToText(item.CountTypeCode)</span>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <div class="contentL">
+                    <ul class="area-list">
+                        @for (int i = 0; i < 10; i++)
+                        {
+                            <li class="theater" style="display: block">
+                                <a href="javascript:void(0)">
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="contentR">
+                <ui class="theater-list">
+                    @for (int i = 0; i < 15; i++)
+                        {
+                            <li class="theater" style="display: block; color:white">
+                                ...
+                            </li>
+                        }
+                    </ui>
+                </div>
+            }
+        </div>
+        <CgvMate.Client.Components.FooterAd></CgvMate.Client.Components.FooterAd>
+    </div>
+</article>
+
+@code {
+    [SupplyParameterFromQuery(Name = "eventIndex")]
+    public string? EventIndex { get; set; }
+    [SupplyParameterFromQuery(Name = "areaCode")]
+    private string? currentArea { get; set; }
+
+    private GiveawayEventModel? model;
+    private GiveawayInfo? info;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (currentArea is null)
+            currentArea = "13";
+        model = await api.GetGiveawayEventModelAsync(EventIndex!);
+        info = await api.GetGiveawayInfoAsync(model.GiveawayIndex, currentArea);
+    }
+
+    private async Task SelectAreaTheaterList(string areaCode)
+    {
+        info = await api.GetGiveawayInfoAsync(model.GiveawayIndex, areaCode);
+        StateHasChanged();
+    }
+
+    private static string CountTypeCodeToText(string type)
+    {
+        switch (type)
+        {
+            case "type4": return "마감 되었습니다.";
+            case "type3": return "재고 소진 임박 입니다.";
+            case "type2": return "재고 보유 가능성이 높습니다.";
+            default: return "unknown";
+        }
+    }
+
+    private static string CountTypeCodeToColor(string type)
+    {
+        switch (type)
+        {
+            case "type4": return "#d3d3d3";
+            case "type3": return "#fb4357";
+            case "type2": return "#25c326";
+            default: return "unknown";
+        }
+    }
+}

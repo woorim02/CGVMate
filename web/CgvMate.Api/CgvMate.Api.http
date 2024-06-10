@@ -1,0 +1,6 @@
+@CgvMate.Api_HostAddress = http://localhost:5286
+
+GET {{CgvMate.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
