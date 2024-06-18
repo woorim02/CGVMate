@@ -66,17 +66,6 @@ namespace CgvMate.Api
             });
             #endregion
 
-            // CORS
-            var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                  policy =>
-                                  {
-                                      policy.WithOrigins("https://cgvmate.com",
-                                                          "https://localhost:7067");
-                                  });
-            });
 
             var app = builder.Build();
 
@@ -95,8 +84,6 @@ namespace CgvMate.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseAuthorization();
 
