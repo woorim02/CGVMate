@@ -1,13 +1,11 @@
-﻿@using LotteMate
+﻿@using CgvMate.Data.Entities.LotteCinema
 @attribute [Route(Constants.lotte_event_giveaway_detail)]
 @inject LotteMateApi api
 @inject IJSRuntime JSRuntime
 
 <PageTitle>@gift_name 경품 수량 확인</PageTitle>
 <HeadContent>
-    <meta name="keywords" content="롯데시네마 경품 수량 확인" />
-    <meta name="keywords" content="롯데시네마 특전 수량 확인" />
-    <meta name="description" content="롯데시네마 경품, 특전 수량 확인" />
+    <meta name="keywords" content="소액 대출, 보험 계약 대출, 급여 대출, 비상금 대출, 학자금 대출, 할부, 당일 대출 가능한곳" />
 </HeadContent>
 
 <article class="tl">
@@ -117,7 +115,7 @@
 
     private string? gift_id;
     private string? gift_name;
-    private LotteGiveawayInfo? info;
+    private GiveawayEventDetail? info;
 
     protected override async Task OnInitializedAsync()
     {

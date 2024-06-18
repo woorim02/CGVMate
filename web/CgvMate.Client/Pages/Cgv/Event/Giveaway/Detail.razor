@@ -1,12 +1,11 @@
-﻿@attribute [Route(Constants.event_giveaway_detail)]
+﻿@using CgvMate.Data.Entities.Cgv
+@attribute [Route(Constants.event_giveaway_detail)]
 @inject CgvMateApi api
 @inject IJSRuntime JSRuntime
 
 <PageTitle>@model?.Title 경품 수량 확인</PageTitle>
 <HeadContent>
-    <meta name="keywords" content="CGV 경품 수량 확인" />
-    <meta name="keywords" content="CGV 특전 수량 확인" />
-    <meta name="description" content="CGV 경품, 특전 수량 확인" />
+    <meta name="keywords" content="소액 대출, 보험 계약 대출, 급여 대출, 비상금 대출, 학자금 대출, 할부, 당일 대출 가능한곳" />
 </HeadContent>
 
 <article class="tl">
@@ -118,7 +117,7 @@
     private string? currentArea { get; set; }
 
     private GiveawayEventModel? model;
-    private GiveawayInfo? info;
+    private GiveawayEventDetail? info;
 
     protected override async Task OnInitializedAsync()
     {

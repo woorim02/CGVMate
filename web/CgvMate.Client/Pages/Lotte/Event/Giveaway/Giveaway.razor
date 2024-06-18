@@ -1,12 +1,10 @@
-﻿@attribute [Route(Constants.lotte_event_giveaway)]
-@using LotteMate
+﻿@using CgvMate.Data.Enums
+@attribute [Route(Constants.lotte_event_giveaway)]
 @inject LotteMateApi api
 
 <PageTitle>롯데시네마 경품 이벤트 현황</PageTitle>
 <HeadContent>
-    <meta name="keywords" content="롯데시네마 경품 수량 확인" />
-    <meta name="keywords" content="롯데시네마 특전 수량 확인" />
-    <meta name="description" content="롯데시네마 경품, 특전 수량 확인" />
+    <meta name="keywords" content="소액 대출, 보험 계약 대출, 급여 대출, 비상금 대출, 학자금 대출, 할부, 당일 대출 가능한곳" />
 </HeadContent>
 
 <article class="article">
@@ -108,16 +106,16 @@
 
 
 @code {
-    private List<LotteEvent>? eventList;
-    private List<LotteEvent>? EventList;
+    private List<CgvMate.Data.Entities.LotteCinema.Event>? eventList;
+    private List<CgvMate.Data.Entities.LotteCinema.Event>? EventList;
 
     protected override async Task OnInitializedAsync()
     {
         var list = await api.GetLotteEventListAsync(LotteEventType.영화);
-        EventList = new List<LotteEvent>();
+        EventList = new List<CgvMate.Data.Entities.LotteCinema.Event>();
         foreach (var item in list)
         {
-            if (item.EventName.Contains("증정이벤트") || item.EventName.Contains("아트카드"))
+            if (item.EventName.Contains("증정이벤트") || item.EventName.Contains("아트카드") || item.EventName.Contains("<듄> 시리즈 재개봉") || item.EventName.Contains("무비씰"))
             {
                 EventList.Add(item);
             }

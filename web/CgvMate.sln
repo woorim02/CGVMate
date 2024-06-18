@@ -1,21 +1,29 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.9.34728.123
+VisualStudioVersion = 17.10.34928.147
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Api", "CgvMate.Api\CgvMate.Api.csproj", "{50D34840-F317-4063-8138-35AAB4D265CE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Api", "CgvMate.Api\CgvMate.Api.csproj", "{57E7074E-8402-4A41-8508-1251FEA5785A}"
 	ProjectSection(ProjectDependencies) = postProject
-		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4} = {1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}
+		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7} = {8AD96776-D309-4509-A5F4-0CB7AC6C78B7}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Client", "CgvMate.Client\CgvMate.Client.csproj", "{3C2F91CB-48D7-48A5-9618-C048263FD543}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Data", "CgvMate.Data\CgvMate.Data.csproj", "{8599A02A-A3D9-4BD0-A166-026F676AD313}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Client", "CgvMate.Client\CgvMate.Client.csproj", "{8B71AB0F-0C49-4AF5-912B-F8740B32B4C4}"
 	ProjectSection(ProjectDependencies) = postProject
-		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4} = {1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}
+		{8599A02A-A3D9-4BD0-A166-026F676AD313} = {8599A02A-A3D9-4BD0-A166-026F676AD313}
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate", "CgvMate\CgvMate.csproj", "{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{A729ECD6-3C4C-4537-855D-8C3E093016BD}"
+	ProjectSection(SolutionItems) = preProject
+		env.example = env.example
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LotteMate", "LotteMate\LotteMate.csproj", "{4739F999-411E-4164-913B-708946A7D5FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CgvMate.Services", "CgvMate.Services\CgvMate.Services.csproj", "{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8599A02A-A3D9-4BD0-A166-026F676AD313} = {8599A02A-A3D9-4BD0-A166-026F676AD313}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,27 +31,27 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{50D34840-F317-4063-8138-35AAB4D265CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50D34840-F317-4063-8138-35AAB4D265CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50D34840-F317-4063-8138-35AAB4D265CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50D34840-F317-4063-8138-35AAB4D265CE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C2F91CB-48D7-48A5-9618-C048263FD543}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1AE82294-33F6-45BE-B58D-AC1DAEFA42A4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4739F999-411E-4164-913B-708946A7D5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4739F999-411E-4164-913B-708946A7D5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4739F999-411E-4164-913B-708946A7D5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4739F999-411E-4164-913B-708946A7D5FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57E7074E-8402-4A41-8508-1251FEA5785A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57E7074E-8402-4A41-8508-1251FEA5785A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57E7074E-8402-4A41-8508-1251FEA5785A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57E7074E-8402-4A41-8508-1251FEA5785A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8599A02A-A3D9-4BD0-A166-026F676AD313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8599A02A-A3D9-4BD0-A166-026F676AD313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8599A02A-A3D9-4BD0-A166-026F676AD313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8599A02A-A3D9-4BD0-A166-026F676AD313}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B71AB0F-0C49-4AF5-912B-F8740B32B4C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B71AB0F-0C49-4AF5-912B-F8740B32B4C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B71AB0F-0C49-4AF5-912B-F8740B32B4C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B71AB0F-0C49-4AF5-912B-F8740B32B4C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A9E9AFD3-B01B-4571-989C-7732CE809112}
+		SolutionGuid = {E0C6B8B3-1FC4-4FC8-82AF-3A478EABB1CF}
 	EndGlobalSection
 EndGlobal

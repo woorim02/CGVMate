@@ -18,8 +18,8 @@ public static class Constants
     #endregion
 
     #if DEBUG
-    public const string API_HOST = "api.cgvmate.com";
+    public const string API_HOST = "http://192.168.0.51:8080";
     #else
-    public const string API_HOST = "api.cgvmate.com";
+    public const string API_HOST = "https://api.cgvmate.com";
     #endif
 }

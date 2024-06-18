@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using CgvMate.Services;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System;
 
 namespace CgvMate.Api.Controllers;
 
@@ -13,100 +10,59 @@ namespace CgvMate.Api.Controllers;
 [Route("cgv/event")]
 public class CgvEventController : ControllerBase
 {
-    private CgvService _service;
-    private AppDbContext db;
+    private CgvEventService _service;
 
-    public CgvEventController(CgvService service, AppDbContext dbContext)
+    public CgvEventController(CgvEventService service)
     {
         _service = service;
-        db = dbContext;
     }
 
     [HttpGet("list")]
-    public async Task<string> GetEventList([FromQuery] int? type)
+    public async Task<IActionResult> GetEventList([FromQuery] int? type)
     {
         if (type == null)
         {
             type = 1;
         }
-        if (!Enum.IsDefined(typeof(EventType), type))
+        if (!Enum.IsDefined(typeof(CgvEventType), type))
         {
-            Console.WriteLine($"404 out of enum range");
-            Response.StatusCode = 404;
-            return $"404 not found {JsonConvert.SerializeObject(EventType.Special)}";
+            return BadRequest();
         }
-        var events = await _service.Event.GetEvents((EventType)type);
-        return JsonConvert.SerializeObject(events, Formatting.Indented);
-    }
-
-    [HttpGet("detail/{eventId}")]
-    public async Task<string> GetEventDetailAsync([FromRoute] string eventId)
-    {
-        var images = await _service.Event.GetEventImgSrcAsync(eventId);
-        return JsonConvert.SerializeObject(images, Formatting.Indented);
+        var events = await _service.GetEvents((CgvEventType)type);
+        return Ok(events);
     }
 
     [HttpGet("giveaway/list")]
-    public async Task<string> GetGiveawayEventList()
+    public async Task<IActionResult> GetGiveawayEventList()
     {
-        var events = await _service.Event.GetGiveawayEventsAsync();
-        var eventIndexes = events.Select(item => Int64.Parse(item.EventIndex)).ToList();
+        var events = await _service.GetGiveawayEventsAsync();
 
-        // DB에서 한 번에 모든 viewItem 조회
-        var viewItems = await db.Views
-            .Where(x => eventIndexes.Contains(x.EventIndex))
-            .ToDictionaryAsync(x => x.EventIndex, x => x.Count);
-
-        foreach (var item in events)
-        {
-            if (viewItems.TryGetValue(Int64.Parse(item.EventIndex), out var count))
-                item.Views = count;
-            else
-                item.Views = 0;
-        }
-        return JsonConvert.SerializeObject(events, Formatting.Indented);
+        return Ok(events);
     }
 
     [HttpGet("giveaway/model")]
-    public async Task<string> GetGiveawayEventModel([FromQuery] string? eventIndex)
+    public async Task<IActionResult> GetGiveawayEventModel([FromQuery] string? eventIndex)
     {
         if (eventIndex == null)
         {
             Response.StatusCode = 404;
-            return "404 not found";
+            return BadRequest();
         }
 
-        var viewItem = await db.Views.FirstOrDefaultAsync(x => x.EventIndex == Int64.Parse(eventIndex));
-        if (viewItem == null)
-        {
-            var item = new Views()
-            {
-                EventIndex = long.Parse(eventIndex),
-                Count = 1
-            };
-            await db.Views.AddAsync(item);
-        }
-        else
-        {
-            viewItem.Count++;
-            db.Views.Update(viewItem);
-        }
-        await db.SaveChangesAsync();
-
-        var model = await _service.Event.GetGiveawayEventModelAsync(eventIndex);
-        return JsonConvert.SerializeObject(model, Formatting.Indented);
+        var model = await _service.GetGiveawayEventModelAsync(eventIndex);
+        return Ok(model);
     }
 
     [HttpGet("giveaway/info")]
-    public async Task<string> GetGiveawayInfoAsync([FromQuery] string? giveawayIndex,
-                                                   [FromQuery] string? areaCode)
+    public async Task<IActionResult> GetGiveawayInfoAsync([FromQuery] string? giveawayIndex,
+                                                         [FromQuery] string? areaCode)
     {
         if (giveawayIndex == null)
         {
             Response.StatusCode = 404;
-            return "404 not found";
+            return BadRequest();
         }
-        var info = await _service.Event.GetGiveawayInfoAsync(giveawayIndex, areaCode ?? "");
-        return JsonConvert.SerializeObject(info, Formatting.Indented);
+        var info = await _service.GetGiveawayInfoAsync(giveawayIndex, areaCode ?? "");
+        return Ok(JsonConvert.SerializeObject(info));
     }
 }

@@ -23,6 +23,18 @@
                             경품 이벤트 현황
                         </a>
                     </li>
+                    <li>
+                        <a href="@Constants.event_cupon_speed"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            스피드쿠폰 조회
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Constants.event_cupon_surprise"
+                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            서프라이즈 쿠폰 조회
+                        </a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -78,11 +90,41 @@
 @code {
     [Parameter]
 
+
+
+
+
+
+
     public bool IsOpen { get; set; } = false;
+
+
+
+
+
+
 
     [Parameter]
 
+
+
+
+
+
+
     public string Class { get; set; } = "sidebar";
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,9 +132,39 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     protected override async Task OnInitializedAsync()
 
+
+
+
+
+
+
     {
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -100,9 +172,39 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
     private async Task ToggleLogin()
 
+
+
+
+
+
+
     {
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

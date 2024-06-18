@@ -1,19 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CgvMate.Data.Entities.LotteCinema;
+using CgvMate.Data.Entities.Cgv;
+using Microsoft.EntityFrameworkCore;
+using LotteEvent = CgvMate.Data.Entities.LotteCinema.Event;
 
-namespace CgvMate.Api;
+namespace CgvMate.Api.Data;
 
 public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
-    }
-    public DbSet<Views> Views { get; set; }
-    public DbSet<User> Users { get; set; }
 
+    }
+    public DbSet<GiveawayEvent> GiveawayEvents { get; set; }
+    public DbSet<LotteEvent> Events { get; set; }
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<User>()
-            .Property(x => x.Id)
-            .ValueGeneratedOnAdd();
+        modelBuilder.Entity<GiveawayEvent>()
+            .HasKey(x => x.EventIndex);
+        modelBuilder.Entity<LotteEvent>()
+            .HasKey(x => x.EventID);
     }
 }
