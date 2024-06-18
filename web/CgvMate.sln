@@ -17,10 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Client", "CgvMate.C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{A729ECD6-3C4C-4537-855D-8C3E093016BD}"
 	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
 		env.example = env.example
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CgvMate.Services", "CgvMate.Services\CgvMate.Services.csproj", "{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Services", "CgvMate.Services\CgvMate.Services.csproj", "{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8599A02A-A3D9-4BD0-A166-026F676AD313} = {8599A02A-A3D9-4BD0-A166-026F676AD313}
 	EndProjectSection

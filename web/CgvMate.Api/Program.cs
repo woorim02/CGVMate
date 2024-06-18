@@ -21,7 +21,7 @@ namespace CgvMate.Api
 #if DEBUG
             string? IV = "";
             string? KEY = "";
-            string? CONNECTION_STRING = "Server=192.168.0.51;Port=13306;Database=cgvmate;User=root;Password=password;";
+            string? CONNECTION_STRING = "Server=192.168.0.51;Port=13306;Database=cgvmate;User=root;Password=password; ";
 #else
             string? IV = Environment.GetEnvironmentVariable("IV");
             string? KEY = Environment.GetEnvironmentVariable("KEY");
