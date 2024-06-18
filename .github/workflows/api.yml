@@ -1,0 +1,19 @@
+name: CgvMate.Api
+
+on:
+  push:
+    paths:
+      - 'web/**'  # web 폴더에 푸시될 때 실행되도록 설정
+jobs:
+  deploy:
+    runs-on: [self-hosted, linux, x64]
+    
+    steps:
+    - name: 코드 체크아웃
+      uses: actions/checkout@v2
+
+    - name: 환경변수 파일 생성
+      run: touch .env && echo ${{ secrets.DotEnv }} >> .env
+      
+    - name: 도커 컴포즈 실행
+      run: docker compose up -d 
