@@ -96,7 +96,7 @@ public class CgvMateApi
             }
         }
         var document = new HtmlDocument();
-        document.LoadHtml(await _client.GetStringAsync(url.Replace("m.cgv.co.kr",$"{Constants.API_HOST}/proxy")));
+        document.LoadHtml(await _client.GetStringAsync(url.Replace("m.cgv.co.kr",$"api.cgvmate.com/proxy")));
 
         var titleAttr = document.DocumentNode.SelectSingleNode("//*[@property='og:title']").Attributes["content"];
         var titleStr = titleAttr.Value.ToString();
