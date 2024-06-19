@@ -32,16 +32,16 @@ internal class MegaboxApi
         {
             var areaGiveawayInfo = new AreaGiveawayInfo();
             areaGiveawayInfo.Code = areaNode.Attributes["id"].Value;
-            areaGiveawayInfo.Name = areaNode.SelectSingleNode("//button[@class='btn']").InnerText;
+            areaGiveawayInfo.Name = areaNode.SelectSingleNode(".//button[@class='btn']").InnerText;
             areaGiveawayInfo.Infos = new List<TheaterGiveawayInfo>();
 
-            var theaterNodes = areaNode.SelectNodes("//li[@class='brch']");
+            var theaterNodes = areaNode.SelectNodes(".//li[@class='brch']");
             foreach (var theaterNode in theaterNodes)
             {
                 var theaterGiveawayInfo = new TheaterGiveawayInfo();
                 theaterGiveawayInfo.ID = theaterNode.Attributes["id"].Value;
-                theaterGiveawayInfo.Name = theaterNode.SelectSingleNode("//a").InnerText;
-                theaterGiveawayInfo.fAc = theaterNode.SelectSingleNode("//span").InnerText;
+                theaterGiveawayInfo.Name = theaterNode.SelectSingleNode(".//a").InnerText;
+                theaterGiveawayInfo.fAc = theaterNode.SelectSingleNode(".//span").InnerText;
                 areaGiveawayInfo.Infos.Add(theaterGiveawayInfo);
             }
             detail.Areas.Add(areaGiveawayInfo);
