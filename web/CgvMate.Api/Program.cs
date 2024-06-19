@@ -76,6 +76,15 @@ namespace CgvMate.Api
             });
             #endregion
 
+            #region Log
+            // 기존 로깅 제공자를 제거하고 콘솔 로깅을 추가
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+            builder.Logging.SetMinimumLevel(LogLevel.Information);
+
+            // EF Core 로깅 끄기
+            builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.None);
+            #endregion
 
             var app = builder.Build();
 
