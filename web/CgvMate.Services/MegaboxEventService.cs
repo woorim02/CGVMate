@@ -2,9 +2,9 @@
 
 namespace CgvMate.Services;
 
-public class MegaboxService
+public class MegaboxEventService
 {
-    public MegaboxService(HttpClient httpClient, IMegaboxGiveawayEventRepository giveawayEventRepository)
+    public MegaboxEventService(HttpClient httpClient, IMegaboxGiveawayEventRepository giveawayEventRepository)
     {
         _api = new MegaboxApi(httpClient);
         _giveawayEventRepository = giveawayEventRepository;
