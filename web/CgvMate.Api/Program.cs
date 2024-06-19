@@ -100,6 +100,7 @@ namespace CgvMate.Api
             else
             {
                 app.UseSwagger();
+                app.UseSwaggerUI();
                 app.UseHsts();
             }
 
