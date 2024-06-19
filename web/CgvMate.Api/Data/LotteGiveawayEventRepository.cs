@@ -15,29 +15,29 @@ internal class LotteGiveawayEventRepository : ILotteGiveawayEventRepository
 
     public async Task AddAsync(Event lotteEvent)
     {
-        await _context.Events.AddAsync(lotteEvent);
+        await _context.LotteEvents.AddAsync(lotteEvent);
         await _context.SaveChangesAsync();
     }
 
     public async Task AddAsync(IEnumerable<Event> lotteEvent)
     {
-        await _context.Events.AddRangeAsync(lotteEvent);
+        await _context.LotteEvents.AddRangeAsync(lotteEvent);
         await _context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(int id)
     {
-        var giveawayEvent = await _context.GiveawayEvents.FindAsync(id);
+        var giveawayEvent = await _context.CgvGiveawayEvents.FindAsync(id);
         if (giveawayEvent != null)
         {
-            _context.GiveawayEvents.Remove(giveawayEvent);
+            _context.CgvGiveawayEvents.Remove(giveawayEvent);
             await _context.SaveChangesAsync();
         }
     }
 
     public async Task DeleteAsync(IEnumerable<Event> lotteEvent)
     {
-        _context.Events.RemoveRange(lotteEvent);
+        _context.LotteEvents.RemoveRange(lotteEvent);
         await _context.SaveChangesAsync();
     }
 
@@ -48,17 +48,17 @@ internal class LotteGiveawayEventRepository : ILotteGiveawayEventRepository
 
     public async Task<IEnumerable<Event>> GetAllAsync()
     {
-        return await _context.Events.ToListAsync();
+        return await _context.LotteEvents.ToListAsync();
     }
 
     public async Task<Event> GetByIdAsync(string eventID)
     {
-        return await _context.Events.SingleOrDefaultAsync(e => e.EventID == eventID);
+        return await _context.LotteEvents.SingleOrDefaultAsync(e => e.EventID == eventID);
     }
 
     public async Task<Dictionary<string, int>> GetViewsAsync(IEnumerable<string> eventIDs)
     {
-        var views = await _context.Events
+        var views = await _context.LotteEvents
                                   .Where(e => eventIDs.Contains(e.EventID))
                                   .ToDictionaryAsync(e => e.EventID, e => e.Views);
         return views;
@@ -66,23 +66,23 @@ internal class LotteGiveawayEventRepository : ILotteGiveawayEventRepository
 
     public async Task UpdateAsync(Event lotteEvent)
     {
-        _context.Events.Update(lotteEvent);
+        _context.LotteEvents.Update(lotteEvent);
         await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(IEnumerable<Event> lotteEvent)
     {
-        _context.Events.UpdateRange(lotteEvent);
+        _context.LotteEvents.UpdateRange(lotteEvent);
         await _context.SaveChangesAsync();
     }
 
     public async Task UpdateViewAsync(string eventID)
     {
-        var giveawayEvent = await _context.Events.SingleOrDefaultAsync(e => e.EventID == eventID);
+        var giveawayEvent = await _context.LotteEvents.SingleOrDefaultAsync(e => e.EventID == eventID);
         if (giveawayEvent != null)
         {
             giveawayEvent.Views++;
-            _context.Events.Update(giveawayEvent);
+            _context.LotteEvents.Update(giveawayEvent);
             await _context.SaveChangesAsync();
         }
     }

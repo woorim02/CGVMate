@@ -11,8 +11,8 @@ public class AppDbContext : DbContext
     {
 
     }
-    public DbSet<GiveawayEvent> GiveawayEvents { get; set; }
-    public DbSet<LotteEvent> Events { get; set; }
+    public DbSet<GiveawayEvent> CgvGiveawayEvents { get; set; }
+    public DbSet<LotteEvent> LotteEvents { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
