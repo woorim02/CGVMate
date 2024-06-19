@@ -1,4 +1,5 @@
 using System.Net;
+using CgvMate.Client.Api;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -14,6 +15,7 @@ namespace CgvMate.Client
             var client = new HttpClient();
             builder.Services.AddSingleton(new CgvMateApi(client));
             builder.Services.AddSingleton(new LotteMateApi(client));
+            builder.Services.AddSingleton(new MegaboxMateApi(client));
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();
