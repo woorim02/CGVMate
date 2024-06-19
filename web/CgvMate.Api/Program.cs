@@ -1,5 +1,6 @@
 
 using CgvMate.Api.Data;
+using CgvMate.Api.Middleware;
 using CgvMate.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -38,7 +39,8 @@ namespace CgvMate.Api
             // Add DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseMySql(CONNECTION_STRING, ServerVersion.AutoDetect(CONNECTION_STRING));
+                options.UseMySql(CONNECTION_STRING, ServerVersion.AutoDetect(CONNECTION_STRING))
+                       .LogTo(Console.WriteLine, LogLevel.None);
             });
 
             // Add repositories
@@ -77,6 +79,8 @@ namespace CgvMate.Api
 
             var app = builder.Build();
 
+            app.UseMiddleware<ExceptionMiddleware>();
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -86,6 +90,7 @@ namespace CgvMate.Api
             }
             else
             {
+                app.UseSwagger();
                 app.UseHsts();
             }
 
