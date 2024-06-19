@@ -3,7 +3,7 @@ name: CgvMate.Api
 on:
   push:
     paths:
-      - 'web/CgvMate.Api/**'  # web 폴더에 푸시될 때 실행되도록 설정
+      - 'web/docker-compose.yml'
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64]
