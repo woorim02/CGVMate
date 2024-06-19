@@ -15,9 +15,12 @@ public static class Constants
     public const string lotte_event = "/lotte/event";
     public const string lotte_event_giveaway = "/lotte/event/giveaway";
     public const string lotte_event_giveaway_detail = "/lotte/event/giveaway/detail";
+
+    public const string megabox_event_giveaway = "/megabox/event/giveaway";
+    public const string megabox_event_giveaway_detail = "/megabox/event/giveaway/detail";
     #endregion
 
-    #if DEBUG
+#if DEBUG
     public const string API_HOST = "http://192.168.0.51:8080";
     #else
     public const string API_HOST = "https://api.cgvmate.com";
