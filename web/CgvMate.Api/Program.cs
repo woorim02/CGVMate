@@ -39,8 +39,7 @@ namespace CgvMate.Api
             // Add DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseMySql(CONNECTION_STRING, ServerVersion.AutoDetect(CONNECTION_STRING))
-                       .LogTo(Console.WriteLine, LogLevel.None);
+                options.UseMySql(CONNECTION_STRING, ServerVersion.AutoDetect(CONNECTION_STRING));
             });
 
             // Add repositories
@@ -82,8 +81,9 @@ namespace CgvMate.Api
             builder.Logging.AddConsole();
             builder.Logging.SetMinimumLevel(LogLevel.Information);
 
-            // EF Core ·Î±ë ²ô±â
+            // ·Î±ë ²ô±â
             builder.Logging.AddFilter("Microsoft.EntityFrameworkCore", LogLevel.None);
+            builder.Logging.AddFilter("System.Net.Http.HttpClient", LogLevel.Warning);
             #endregion
 
             var app = builder.Build();
