@@ -24,7 +24,7 @@ public class MegaboxEventService
         var asd = events.OrderBy(x => x.ID);
         foreach(var item in asd)
         {
-            var detail = GetGiveawayEventDetail(item.ID);
+            var detail = await _api.GetGiveawayEventDetailAsync(item.ID);
             if (detail != null)
             {
                 break;
@@ -32,16 +32,11 @@ public class MegaboxEventService
             await _giveawayEventRepository.DeleteAsync(item.ID);
         }
 
-        var dsc = events.OrderByDescending(x => x.ID);
-        foreach (var item in dsc)
+        var latestItem = events.OrderByDescending(x => x.ID).FirstOrDefault();
+        var latestItemId = int.Parse(latestItem.ID.Replace("FG", ""));
+        while(true)
         {
-            int id;
-            bool parseResult = int.TryParse(item.ID.Replace("FG", ""), out id);
-            if (!parseResult)
-            {
-                throw new Exception("메가박스 웹 구조 변경으로 파싱 실패");
-            }
-            var detail = await GetGiveawayEventDetail($"FG{id:D6}");
+            var detail = await _api.GetGiveawayEventDetailAsync($"FG{++latestItemId:D6}");
             if (detail != null)
             {
                 await _giveawayEventRepository.AddAsync(new GiveawayEvent()
