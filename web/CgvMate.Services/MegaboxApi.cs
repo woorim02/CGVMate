@@ -21,7 +21,7 @@ internal class MegaboxApi
         var detail = new GiveawayEventDetail();
         detail.ID = goodsNo;
         detail.Title = document.DocumentNode.SelectSingleNode("//div[@class='tit']").InnerText;
-        if (detail.Title == null)
+        if (string.IsNullOrEmpty(detail.Title))
         {
             return null;
         }
