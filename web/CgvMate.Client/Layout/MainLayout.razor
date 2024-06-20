@@ -1,12 +1,13 @@
 ﻿@namespace CgvMate.Client.Layout
 @inherits LayoutComponentBase
 @using CgvMate.Client.Layout
+@inject NavigationManager Navigation
 
 <Offcanvas />
 <div class="page">
     <div class="navbar-container">
         <NavMenu />
-        <div class="cgv-gradient"></div>
+        <div class="cgv-gradient" style="background-image: @(SetGradient())"></div>
     </div>
     <div class="body-container">
         <div class="sidebar-container shadow-sm">
@@ -17,3 +18,38 @@
         </main>
     </div>
 </div>
+@code {
+    protected override void OnInitialized()
+    {
+        Navigation.LocationChanged += OnLocationChanged;
+        SetGradient();
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        SetGradient();
+        InvokeAsync(StateHasChanged);
+    }
+
+    private string SetGradient()
+    {
+        var uri = Navigation.ToBaseRelativePath(Navigation.Uri).ToLower();
+        if (uri.Contains("megabox"))
+        {
+            return "linear-gradient(to left, #503396, #503396)"; // 파란색
+        }
+        else if (uri.Contains("lotte"))
+        {
+            return "linear-gradient(to left, #FF1744, #FF1744)"; // 예시로 초록색
+        }
+        else
+        {
+            return "linear-gradient(to left, #ef642f, #fb4357)"; // 예시로 주황색
+        }
+    }
+
+    public void Dispose()
+    {
+        Navigation.LocationChanged -= OnLocationChanged;
+    }
+}
