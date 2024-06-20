@@ -64,7 +64,7 @@
                             var item = cinemaItems[i];
                             <li class="theater">
                                 <div class="theater-name">
-                                    <b class="theater-name">@item.Name</b>
+                                    <b class="theater-name">@((MarkupString)item.Name)</b>
                                 </div>
                                 <div>
                                     <b class="theater-state @item.fAc">@item.fAc</b>
@@ -126,27 +126,5 @@
     private async Task SelectAreaTheaterList(string areaCode)
     {
         StateHasChanged();
-    }
-
-    private static string CountTypeCodeToText(string type)
-    {
-        switch (type)
-        {
-            case "type4": return "마감 되었습니다.";
-            case "type3": return "재고 소진 임박 입니다.";
-            case "type2": return "재고 보유 가능성이 높습니다.";
-            default: return "unknown";
-        }
-    }
-
-    private static string CountTypeCodeToColor(string type)
-    {
-        switch (type)
-        {
-            case "type4": return "#d3d3d3";
-            case "type3": return "#fb4357";
-            case "type2": return "#25c326";
-            default: return "unknown";
-        }
     }
 }
