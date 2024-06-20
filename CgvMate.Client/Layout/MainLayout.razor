@@ -2,6 +2,7 @@
 @inherits LayoutComponentBase
 @using CgvMate.Client.Layout
 @inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
 
 <Offcanvas />
 <div class="page">
@@ -19,10 +20,13 @@
     </div>
 </div>
 @code {
-    protected override void OnInitialized()
+    private bool isWebView;
+    protected override async Task OnInitializedAsync()
     {
         Navigation.LocationChanged += OnLocationChanged;
         SetGradient();
+        var environment = await JSRuntime.InvokeAsync<string>("detectEnvironment");
+        isWebView = environment == "WebView";
     }
 
     private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
@@ -36,15 +40,15 @@
         var uri = Navigation.ToBaseRelativePath(Navigation.Uri).ToLower();
         if (uri.Contains("megabox"))
         {
-            return "linear-gradient(to left, #503396, #503396)"; // 파란색
+            return "linear-gradient(to left, #503396, #503396)";
         }
         else if (uri.Contains("lotte"))
         {
-            return "linear-gradient(to left, #FF1744, #FF1744)"; // 예시로 초록색
+            return "linear-gradient(to left, #FF1744, #FF1744)";
         }
         else
         {
-            return "linear-gradient(to left, #ef642f, #fb4357)"; // 예시로 주황색
+            return "linear-gradient(to left, #ef642f, #fb4357)";
         }
     }
 
