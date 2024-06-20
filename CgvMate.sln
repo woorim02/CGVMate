@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CgvMate.Services", "CgvMate
 		{8599A02A-A3D9-4BD0-A166-026F676AD313} = {8599A02A-A3D9-4BD0-A166-026F676AD313}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CgvMate.App", "CgvMate.App\CgvMate.App.csproj", "{33612EDC-AEAC-4175-A0E6-3BE62F07C514}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CgvMate.App", "CgvMate.App\CgvMate.App.csproj", "{28F74CF4-E794-4344-B460-ACC119A72BA9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,12 +50,12 @@ Global
 		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AD96776-D309-4509-A5F4-0CB7AC6C78B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33612EDC-AEAC-4175-A0E6-3BE62F07C514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33612EDC-AEAC-4175-A0E6-3BE62F07C514}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33612EDC-AEAC-4175-A0E6-3BE62F07C514}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{33612EDC-AEAC-4175-A0E6-3BE62F07C514}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33612EDC-AEAC-4175-A0E6-3BE62F07C514}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33612EDC-AEAC-4175-A0E6-3BE62F07C514}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{28F74CF4-E794-4344-B460-ACC119A72BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F74CF4-E794-4344-B460-ACC119A72BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F74CF4-E794-4344-B460-ACC119A72BA9}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{28F74CF4-E794-4344-B460-ACC119A72BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F74CF4-E794-4344-B460-ACC119A72BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F74CF4-E794-4344-B460-ACC119A72BA9}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
