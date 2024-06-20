@@ -3,7 +3,7 @@ name: CgvMate.Api
 on:
   push:
     paths:
-      - './docker-compose.yml'
+      - 'docker-compose.yml'
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64]
