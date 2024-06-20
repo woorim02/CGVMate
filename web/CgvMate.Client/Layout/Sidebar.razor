@@ -63,8 +63,26 @@
             </div>
         </li>
         <li class="border-top my-3"></li>
-        <li class="mb-3">
+        <li class="mb-1">
             <button id="mb-3" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#home-collapse4" aria-expanded="@IsOpen.ToString()">
+                메가박스
+            </button>
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse4"
+                 onclick="document.getElementById('mb-4').click()">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li>
+                        <a href="@Constants.megabox_event_giveaway"
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                            경품 이벤트 현황
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </li>
+        <li class="border-top my-3"></li>
+        <li class="mb-3">
+            <button id="mb-4" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
                 data-bs-toggle="collapse" data-bs-target="#home-collapse3" aria-expanded="@IsOpen.ToString()">
                 Github
             </button>
