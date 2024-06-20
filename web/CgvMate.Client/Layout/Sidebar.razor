@@ -4,12 +4,12 @@
 <div class="@Class sidebar-body">
     <ul class="list-unstyled ps-0">
         <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="@IsOpen.ToString()">
+            <button id="mb-1" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#home-collapse1" aria-expanded="@IsOpen.ToString()">
                 CGV
             </button>
-            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse"
-                onclick="document.querySelector('.btn-close').click()">
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse1"
+                 onclick="document.getElementById('mb-1').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="@Constants.event_"
@@ -40,12 +40,12 @@
         </li>
         <li class="border-top my-3"></li>
         <li class="mb-1">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="@IsOpen.ToString()">
+            <button id="mb-2" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#home-collapse2" aria-expanded="@IsOpen.ToString()">
                 롯데시네마
             </button>
-            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse"
-                onclick="document.querySelector('.btn-close').click()">
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse2"
+                 onclick="document.getElementById('mb-2').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="@Constants.lotte_event"
@@ -64,12 +64,12 @@
         </li>
         <li class="border-top my-3"></li>
         <li class="mb-3">
-            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="@IsOpen.ToString()">
+            <button id="mb-3" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                data-bs-toggle="collapse" data-bs-target="#home-collapse3" aria-expanded="@IsOpen.ToString()">
                 Github
             </button>
-            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse"
-                onclick="document.querySelector('.btn-close').click()">
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse3"
+                 onclick="document.getElementById('mb-3').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="https://github.com/woorim02/CGVMate"
@@ -89,124 +89,10 @@
 
 @code {
     [Parameter]
-
-
-
-
-
-
-
     public bool IsOpen { get; set; } = false;
 
-
-
-
-
-
-
     [Parameter]
-
-
-
-
-
-
-
     public string Class { get; set; } = "sidebar";
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static bool IsLogined { get; private set; } = false;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    protected override async Task OnInitializedAsync()
-
-
-
-
-
-
-
-    {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private async Task ToggleLogin()
-
-
-
-
-
-
-
-    {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
 }
