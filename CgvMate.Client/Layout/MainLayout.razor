@@ -5,20 +5,28 @@
 @inject IJSRuntime JSRuntime
 
 <Offcanvas />
-<div class="page">
-    <div class="navbar-container">
-        <NavMenu />
-        <div class="cgv-gradient" style="background-image: @(SetGradient())"></div>
-    </div>
-    <div class="body-container">
-        <div class="sidebar-container shadow-sm">
-            <Sidebar class="sidebar" IsOpen=true />
+@if (isWebView)
+{
+    @Body
+}
+else
+{
+    <div class="page">
+        <div class="navbar-container">
+            <NavMenu />
+            <div class="cgv-gradient" style="background-image: @(SetGradient())"></div>
         </div>
-        <main>
-            @Body
-        </main>
+        <div class="body-container">
+            <div class="sidebar-container shadow-sm">
+                <Sidebar class="sidebar" IsOpen=true />
+            </div>
+            <main>
+                @Body
+            </main>
+        </div>
     </div>
-</div>
+}
+
 @code {
     private bool isWebView;
     protected override async Task OnInitializedAsync()
