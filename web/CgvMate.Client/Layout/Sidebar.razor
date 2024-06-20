@@ -4,34 +4,34 @@
 <div class="@Class sidebar-body">
     <ul class="list-unstyled ps-0">
         <li class="mb-1">
-            <button id="mb-1" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse" data-bs-target="#home-collapse1" aria-expanded="@IsOpen.ToString()">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="@IsOpen.ToString()">
                 CGV
             </button>
-            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse1"
-                 onclick="document.getElementById('mb-1').click()">
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse"
+                 onclick="document.querySelector('.btn-close').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="@Constants.event_"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             이벤트 목록
                         </a>
                     </li>
                     <li>
                         <a href="@Constants.event_giveaway"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             경품 이벤트 현황
                         </a>
                     </li>
                     <li>
                         <a href="@Constants.event_cupon_speed"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             스피드쿠폰 조회
                         </a>
                     </li>
                     <li>
                         <a href="@Constants.event_cupon_surprise"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             서프라이즈 쿠폰 조회
                         </a>
                     </li>
@@ -40,22 +40,22 @@
         </li>
         <li class="border-top my-3"></li>
         <li class="mb-1">
-            <button id="mb-2" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse" data-bs-target="#home-collapse2" aria-expanded="@IsOpen.ToString()">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="@IsOpen.ToString()">
                 롯데시네마
             </button>
-            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse2"
-                 onclick="document.getElementById('mb-2').click()">
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse"
+                 onclick="document.querySelector('.btn-close').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="@Constants.lotte_event"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             이벤트 목록
                         </a>
                     </li>
                     <li>
                         <a href="@Constants.lotte_event_giveaway"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             경품 이벤트 현황
                         </a>
                     </li>
@@ -64,12 +64,12 @@
         </li>
         <li class="border-top my-3"></li>
         <li class="mb-1">
-            <button id="mb-3" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                    data-bs-toggle="collapse" data-bs-target="#home-collapse4" aria-expanded="@IsOpen.ToString()">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="@IsOpen.ToString()">
                 메가박스
             </button>
-            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse4"
-                 onclick="document.getElementById('mb-4').click()">
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse"
+                 onclick="document.querySelector('.btn-close').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="@Constants.megabox_event_giveaway"
@@ -82,16 +82,16 @@
         </li>
         <li class="border-top my-3"></li>
         <li class="mb-3">
-            <button id="mb-4" class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
-                data-bs-toggle="collapse" data-bs-target="#home-collapse3" aria-expanded="@IsOpen.ToString()">
+            <button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed"
+                    data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="@IsOpen.ToString()">
                 Github
             </button>
-            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse3"
-                 onclick="document.getElementById('mb-3').click()">
+            <div class=@(IsOpen ? "collapse show" :"collapse") id="home-collapse"
+                 onclick="document.querySelector('.btn-close').click()">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
                         <a href="https://github.com/woorim02/CGVMate"
-                            class="link-body-emphasis d-inline-flex text-decoration-none rounded">
+                           class="link-body-emphasis d-inline-flex text-decoration-none rounded">
                             woorim02/CGVMate
                         </a>
                     </li>
@@ -112,5 +112,4 @@
     [Parameter]
     public string Class { get; set; } = "sidebar";
 
-    public static bool IsLogined { get; private set; } = false;
 }
