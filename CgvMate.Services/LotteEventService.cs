@@ -3,7 +3,6 @@ using CgvMate.Data.Enums;
 using CgvMate.Services.DTOs.LotteCinema;
 using CgvMate.Services.Repos;
 using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Text;
 
 namespace CgvMate.Services;
@@ -12,11 +11,13 @@ public class LotteService
 {
     private readonly HttpClient _client;
     private readonly ILotteGiveawayEventRepository _giveawayEventRepository;
+    private readonly ILotteGiveawayEventKeywordRepository _giveawayEventKeywordRepository;
 
-    public LotteService(HttpClient client, ILotteGiveawayEventRepository giveawayEventRepository)
+    public LotteService(HttpClient client, ILotteGiveawayEventRepository giveawayEventRepository, ILotteGiveawayEventKeywordRepository giveawayEventKeywordRepository)
     {
         _client = client;
         _giveawayEventRepository = giveawayEventRepository;
+        _giveawayEventKeywordRepository = giveawayEventKeywordRepository;
     }
 
     public async Task<List<Event>> GetEventsAsync(LotteEventType type)
@@ -46,6 +47,19 @@ public class LotteService
         }
         await _giveawayEventRepository.AddAsync(updateList);
         return kvp.Values.ToList();
+    }
+
+    public async Task<List<Event>> GetGiveawayEventsAsync()
+    {
+        var events = await GetEventsAsync(LotteEventType.영화);
+        var keywords = await _giveawayEventKeywordRepository.GetAllKeywordsAsync();
+        var keywordSet = new HashSet<string>(keywords);
+
+        var list = events
+            .Where(e => keywordSet.Any(k => e.EventName.Contains(k)))
+            .ToList();
+
+        return list;
     }
 
     public async Task<LotteGiveawayEventModel> GetLotteGiveawayEventModelAsync(string eventID)

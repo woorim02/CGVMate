@@ -1,4 +1,5 @@
 ﻿using CgvMate.Data.Entities.Cgv;
+using CgvMate.Data.Entities.LotteCinema;
 using CgvMate.Data.Entities.Megabox;
 using Microsoft.EntityFrameworkCore;
 using CgvGiveawayEvent = CgvMate.Data.Entities.Cgv.GiveawayEvent;
@@ -16,6 +17,7 @@ public class AppDbContext : DbContext
 
     public DbSet<CgvGiveawayEvent> CgvGiveawayEvents { get; set; }
     public DbSet<LotteEvent> LotteEvents { get; set; }
+    public DbSet<GiveawayEventKeyword> LotteGiveawayEventKeywords { get; set; }
     public DbSet<MegaboxGiveawayEvent> MegaboxGiveawayEvents { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,5 +28,14 @@ public class AppDbContext : DbContext
             .HasKey(x => x.EventID);
         modelBuilder.Entity<MegaboxGiveawayEvent>()
             .HasKey(x => x.ID);
+
+        modelBuilder.Entity<GiveawayEventKeyword>(entity =>
+        {
+            entity.HasKey(x => x.Id);
+            entity.Property(x => x.Id)
+                  .ValueGeneratedOnAdd();
+            entity.HasIndex(x => x.Keyword)
+                  .IsUnique();
+        });
     }
 }

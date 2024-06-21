@@ -28,7 +28,14 @@ public class LotteEventController : ControllerBase
             return BadRequest();
         }
         var events = await _service.GetEventsAsync((LotteEventType)type);
-        var eventIDs = events.Select(item => Int64.Parse(item.EventID)).ToList();
+        return Ok(events);
+    }
+
+
+    [HttpGet("giveaway/list")]
+    public async Task<IActionResult> GetGiveawayEventList()
+    {
+        var events = await _service.GetGiveawayEventsAsync();
         return Ok(events);
     }
 
