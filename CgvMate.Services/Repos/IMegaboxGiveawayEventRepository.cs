@@ -1,6 +1,6 @@
 ﻿using CgvMate.Data.Entities.Megabox;
 
-namespace CgvMate.Services;
+namespace CgvMate.Services.Repos;
 
 public interface IMegaboxGiveawayEventRepository
 {

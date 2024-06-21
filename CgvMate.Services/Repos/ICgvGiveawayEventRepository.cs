@@ -1,6 +1,6 @@
 ﻿using CgvMate.Data.Entities.Cgv;
 
-namespace CgvMate.Services;
+namespace CgvMate.Services.Repos;
 
 public interface ICgvGiveawayEventRepository
 {

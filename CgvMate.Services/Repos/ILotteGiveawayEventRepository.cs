@@ -1,6 +1,6 @@
 ﻿using CgvMate.Data.Entities.LotteCinema;
 
-namespace CgvMate.Services;
+namespace CgvMate.Services.Repos;
 
 public interface ILotteGiveawayEventRepository
 {

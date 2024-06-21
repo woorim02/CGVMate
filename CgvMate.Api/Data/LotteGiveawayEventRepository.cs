@@ -1,5 +1,5 @@
 ﻿using CgvMate.Data.Entities.LotteCinema;
-using CgvMate.Services;
+using CgvMate.Services.Repos;
 using Microsoft.EntityFrameworkCore;
 
 namespace CgvMate.Api.Data;

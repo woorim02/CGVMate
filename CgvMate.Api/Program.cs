@@ -2,6 +2,7 @@
 using CgvMate.Api.Data;
 using CgvMate.Api.Middleware;
 using CgvMate.Services;
+using CgvMate.Services.Repos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Net;

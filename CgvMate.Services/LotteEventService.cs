@@ -1,6 +1,7 @@
 ﻿using CgvMate.Data.Entities.LotteCinema;
 using CgvMate.Data.Enums;
 using CgvMate.Services.DTOs.LotteCinema;
+using CgvMate.Services.Repos;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Text;

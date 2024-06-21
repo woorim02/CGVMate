@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using CgvMate.Services.DTOs.Cgv;
 using System.Data;
+using CgvMate.Services.Repos;
 
 namespace CgvMate.Services;
 
