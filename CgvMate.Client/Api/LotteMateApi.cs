@@ -19,6 +19,13 @@ public class LotteMateApi
         return infos;
     }
 
+    public async Task<List<Event>> GetLotteGiveawayEventListAsync()
+    {
+        var json = await _client.GetStringAsync($"{Constants.API_HOST}/lotte/event/giveaway/list");
+        var infos = JsonConvert.DeserializeObject<List<Event>>(json);
+        return infos;
+    }
+
     public async Task<LotteGiveawayEventModel> GetLotteGiveawayEventModelAsync(string eventID)
     {
         var json = await _client.GetStringAsync($"{Constants.API_HOST}/lotte/event/giveaway/model?event_id={eventID}");

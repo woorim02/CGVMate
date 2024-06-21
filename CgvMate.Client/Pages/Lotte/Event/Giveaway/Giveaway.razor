@@ -33,34 +33,34 @@
         <ul class="eventlist">
             @if (EventList is not null)
             {
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2422895337222657"
-     crossorigin="anonymous"></script>
-<!-- 상단 배너 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2422895337222657"
-     data-ad-slot="3730871491"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2422895337222657"
+                        crossorigin="anonymous"></script>
+                <!-- 상단 배너 -->
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-2422895337222657"
+                     data-ad-slot="3730871491"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
                 @for (int i = 0; i < EventList.Count; i++)
                 {
                     if (i == EventList.Count / 2)
                     {
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2422895337222657"
-     crossorigin="anonymous"></script>
-<!-- 중간 광고 -->
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-2422895337222657"
-     data-ad-slot="1843074752"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+                        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2422895337222657"
+                                crossorigin="anonymous"></script>
+                        <!-- 중간 광고 -->
+                        <ins class="adsbygoogle"
+                             style="display:block"
+                             data-ad-client="ca-pub-2422895337222657"
+                             data-ad-slot="1843074752"
+                             data-ad-format="auto"
+                             data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
                     }
                     var item = EventList[i];
                     <li class="item" style="cursor:pointer;">
@@ -72,11 +72,11 @@
                                         @($"{item.ProgressStartDate} ~ {item.ProgressEndDate}")
                                     </span>
                                     <svg width="13px" height="13px" viewBox="0 0 16 16" class="bi bi-eye" fill="currentColor"
-                                        xmlns="http://www.w3.org/2000/svg">
+                                         xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd"
-                                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
+                                              d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
                                         <path fill-rule="evenodd"
-                                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                              d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                                     </svg>
                                     <span class="item-views">
                                         @item.Views
@@ -111,15 +111,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var list = await api.GetLotteEventListAsync(LotteEventType.영화);
-        EventList = new List<CgvMate.Data.Entities.LotteCinema.Event>();
-        foreach (var item in list)
-        {
-            if (item.EventName.Contains("증정이벤트") || item.EventName.Contains("아트카드") || item.EventName.Contains("<듄> 시리즈 재개봉") || item.EventName.Contains("무비씰") || item.EventName.Contains("少年少女"))
-            {
-                EventList.Add(item);
-            }
-        }
+        EventList = await api.GetLotteGiveawayEventListAsync();
         eventList = EventList;
     }
 
