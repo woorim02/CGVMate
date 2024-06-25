@@ -27,6 +27,8 @@ internal class MegaboxApi
         }
         detail.Areas = new List<AreaGiveawayInfo>();
         var areaNodes = document.DocumentNode.SelectNodes("//li[contains(@class, 'area-cont')]");
+        if(areaNodes == null)
+            return null;
 
         foreach (var areaNode in areaNodes)
         {
