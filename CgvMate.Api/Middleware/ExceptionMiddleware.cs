@@ -31,6 +31,7 @@ public class ExceptionMiddleware
                 _logger.LogWarning("The response has already started, the exception middleware will not be executed.");
                 throw;
             }
+            _logger.LogWarning($"{ex}");
 
             ex = GetActualException(ex);
 

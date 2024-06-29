@@ -108,6 +108,8 @@ public class LotteService
         var root = JsonConvert.DeserializeObject<InfomationDeliveryEventDetailResDTO>(json);
         if (root.IsOK != "true")
             return null;
+        if (root.InfomationDeliveryEventDetail.Count == 0)
+            return null;
         if (root.InfomationDeliveryEventDetail[0].GoodsGiftItems.Count == 0)
             return null;
         model = root.InfomationDeliveryEventDetail[0].GoodsGiftItems[0];
