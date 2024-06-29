@@ -48,6 +48,7 @@ namespace CgvMate.Api
             builder.Services.AddScoped<ILotteGiveawayEventRepository, LotteGiveawayEventRepository>();
             builder.Services.AddScoped<ILotteGiveawayEventKeywordRepository, LotteGiveawayEventKeywordRepository>();
             builder.Services.AddScoped<IMegaboxGiveawayEventRepository, MegaboxGiveawayEventRepository>();
+            builder.Services.AddScoped<ILotteGiveawayEventModelRepository, LotteGiveawayEventModelRepository>();
 
             // Add HttpClient
             builder.Services.AddHttpClient();
@@ -67,7 +68,8 @@ namespace CgvMate.Api
                 var httpClient = httpClientFactory.CreateClient();
                 var giveawayEventRepository = provider.GetRequiredService<ILotteGiveawayEventRepository>();
                 var lotteGiveawayEventKeywordRepository = provider.GetRequiredService<ILotteGiveawayEventKeywordRepository>();
-                return new LotteService(httpClient, giveawayEventRepository, lotteGiveawayEventKeywordRepository);
+                var lotteGiveawayEventModelRepository = provider.GetRequiredService<ILotteGiveawayEventModelRepository>();
+                return new LotteService(httpClient, giveawayEventRepository, lotteGiveawayEventKeywordRepository, lotteGiveawayEventModelRepository);
             });
             builder.Services.AddScoped(provider =>
             {

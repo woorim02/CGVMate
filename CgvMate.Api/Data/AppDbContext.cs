@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     public DbSet<CgvGiveawayEvent> CgvGiveawayEvents { get; set; }
     public DbSet<LotteEvent> LotteEvents { get; set; }
     public DbSet<GiveawayEventKeyword> LotteGiveawayEventKeywords { get; set; }
+    public DbSet<LotteGiveawayEventModel> LotteGiveawayEventModels { get; set; }
     public DbSet<MegaboxGiveawayEvent> MegaboxGiveawayEvents { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,6 +37,11 @@ public class AppDbContext : DbContext
                   .ValueGeneratedOnAdd();
             entity.HasIndex(x => x.Keyword)
                   .IsUnique();
+        });
+
+        modelBuilder.Entity<LotteGiveawayEventModel>(entity =>
+        {
+            entity.HasKey(x => x.EventID);
         });
     }
 }
