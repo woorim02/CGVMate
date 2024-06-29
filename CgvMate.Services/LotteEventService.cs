@@ -32,26 +32,7 @@ public class LotteService
         var json = await SendForm(request, JsonConvert.SerializeObject(body));
         var root = JsonConvert.DeserializeObject<EventsResDTO>(json);
 
-        var kvp = new Dictionary<string, Event>();
-        foreach (var item in root.Items)
-        {
-            kvp.Add(item.EventID, item);
-        }
-        var views = await _giveawayEventRepository.GetViewsAsync(kvp.Select(x => x.Value.EventID));
-        foreach (var view in views)
-        {
-            kvp[view.Key].Views = view.Value;
-        }
-        var updateList = new List<Event>();
-        foreach (var item in kvp)
-        {
-            if (!views.Keys.Contains(item.Key))
-            {
-                updateList.Add(item.Value);
-            }
-        }
-        await _giveawayEventRepository.AddAsync(updateList);
-        return kvp.Values.ToList();
+        return root.Items;
     }
 
     public async Task<List<Event>> GetGiveawayEventsAsync()
@@ -91,6 +72,27 @@ public class LotteService
             nextEvent.EventName = nextModel.FrGiftNm;
             finalList.Add(nextEvent);
         }
+
+        var kvp = new Dictionary<string, Event>();
+        foreach (var item in finalList)
+        {
+            kvp.Add(item.EventID, item);
+        }
+        var views = await _giveawayEventRepository.GetViewsAsync(kvp.Select(x => x.Value.EventID));
+        foreach (var view in views)
+        {
+            kvp[view.Key].Views = view.Value;
+        }
+        var updateList = new List<Event>();
+        foreach (var item in kvp)
+        {
+            if (!views.Keys.Contains(item.Key))
+            {
+                updateList.Add(item.Value);
+            }
+        }
+        await _giveawayEventRepository.AddAsync(updateList);
+
         return finalList;
     }
 
@@ -99,7 +101,12 @@ public class LotteService
         // 데이터베이스에서 모델 정보 가져오기
         var model = await _giveawayEventModelRepository.GetAsync(eventID);
         if (model != null)
+        {
+            // 조회수 올리기
+            if (updateView)
+                await _giveawayEventRepository.UpdateViewAsync(eventID);
             return model;// 존재하면 리턴
+        }
 
         //존재하지 않으면 서버에서 불러오기
         var request = new HttpRequestMessage(HttpMethod.Post, "https://event.lottecinema.co.kr/LCWS/Event/EventData.aspx");
