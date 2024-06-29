@@ -46,7 +46,7 @@ public class LotteEventController : ControllerBase
         {
             return BadRequest();
         }
-        var obj = await _service.GetLotteGiveawayEventModelAsync(event_id);
+        var obj = await _service.GetLotteGiveawayEventModelAsync(event_id, true);
         return Ok(obj);
     }
 

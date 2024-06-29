@@ -94,7 +94,7 @@ public class LotteService
         return finalList;
     }
 
-    public async Task<LotteGiveawayEventModel?> GetLotteGiveawayEventModelAsync(string eventID)
+    public async Task<LotteGiveawayEventModel?> GetLotteGiveawayEventModelAsync(string eventID, bool updateView = false)
     {
         // 데이터베이스에서 모델 정보 가져오기
         var model = await _giveawayEventModelRepository.GetAsync(eventID);
@@ -108,11 +108,12 @@ public class LotteService
         var root = JsonConvert.DeserializeObject<InfomationDeliveryEventDetailResDTO>(json);
         if (root.IsOK != "true")
             return null;
-        if (root.InfomationDeliveryEventDetail.Count == 0)
+        if (root.InfomationDeliveryEventDetail[0].GoodsGiftItems.Count == 0)
             return null;
         model = root.InfomationDeliveryEventDetail[0].GoodsGiftItems[0];
         // 조회수 올리기
-        await _giveawayEventRepository.UpdateViewAsync(eventID);
+        if (updateView)
+            await _giveawayEventRepository.UpdateViewAsync(eventID);
         // 다음 이벤트 존재하는지 확인
         var nextModel = await GetLotteGiveawayEventModelAsync((long.Parse(eventID) + 1).ToString());
         model.HasNext = nextModel is not null;
