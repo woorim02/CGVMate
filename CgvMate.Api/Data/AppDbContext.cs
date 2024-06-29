@@ -25,8 +25,12 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<CgvGiveawayEvent>()
             .HasKey(x => x.EventIndex);
-        modelBuilder.Entity<LotteEvent>()
-            .HasKey(x => x.EventID);
+        modelBuilder.Entity<LotteEvent>(entity =>
+        {
+            entity.HasKey(x => x.EventID);
+            entity.Ignore(x => x.ImageAlt);
+            entity.Ignore(x=>x.EventNtc);
+        });
         modelBuilder.Entity<MegaboxGiveawayEvent>()
             .HasKey(x => x.ID);
 
