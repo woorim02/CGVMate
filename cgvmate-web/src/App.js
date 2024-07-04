@@ -20,6 +20,7 @@ import LotteGiveawayPage from './pages/lotte/event/giveaway/GiveawayPage';
 import LotteGiveawayDetailPage from './pages/lotte/event/giveaway/detail/GiveawayDetailPage';
 
 import MegaboxGiveawayPage from './pages/megabox/event/giveaway/GiveawayPage';
+import MegaboxGiveawayDetailPage from './pages/megabox/event/giveaway/detail/GiveawayDetailPage';
 
 import NotFound from './pages/NotFound';
 
@@ -50,7 +51,7 @@ function App() {
               <Route path={Constants.lotte_event_giveaway_detail} element={<LotteGiveawayDetailPage />} />
 
               <Route path={Constants.megabox_event_giveaway} element={<MegaboxGiveawayPage />} />
-              <Route path={Constants.megabox_event_giveaway_detail} element={<LotteGiveawayDetailPage />} />
+              <Route path={Constants.megabox_event_giveaway_detail} element={<MegaboxGiveawayDetailPage />} />
               <Route path="*" element={<NotFound />}></Route>
             </Routes>
           </BrowserRouter>
