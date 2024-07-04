@@ -11,6 +11,7 @@ import Home from './pages/Home';
 import CgvEventPage from './pages/cgv/event/EventPage';
 import CgvGiveawayPage from './pages/cgv/event/giveaway/GiveawayPage';
 import CgvGiveawayDetailPage from './pages/cgv/event/giveaway/detail/GiveawayDetailPage';
+import SpeedCuponPage from './pages/cgv/cupon/speed/SpeedCuponPage';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               <Route path={Constants.event_} element={<CgvEventPage />} />
               <Route path={Constants.event_giveaway} element={<CgvGiveawayPage />} />
               <Route path={Constants.event_giveaway_detail} element={<CgvGiveawayDetailPage />} />
+              <Route path={Constants.event_cupon_speed} element={<SpeedCuponPage />} />
               <Route path="*" element={<NotFound />}></Route>
             </Routes>
           </BrowserRouter>
