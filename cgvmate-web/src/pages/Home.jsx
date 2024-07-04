@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Home.css';
+import DisplayAds from '../components/DisplayAds';
 
 const Home = () => {
   
@@ -9,14 +10,15 @@ const Home = () => {
 
   return (
     <article className="main_article">
-      <div className="px-4 py-5 my-5 text-center">
+      <DisplayAds adSlot='4893505812' style="display:inline-block;width:347px;height:90px"/>
+      <div className="px-4 my-4 text-center">
         <h2 className="fw-bold">CGV 도우미</h2>
         <div className="col-lg-6 mx-auto">
           <p className="mb-0">
             CGV 도우미는 다양한 이벤트와 경품 관련 정보를<br /> 손쉽게 확인할 수 있는 안내 사이트입니다.
           </p>
           <div style={{height: '5px'}}></div>
-          <p className="mb-5">
+          <p className="mb-4">
             공식 웹사이트에서 지원하지 않는 다양한 기능들을 제공합니다. :)
           </p>
         </div>
