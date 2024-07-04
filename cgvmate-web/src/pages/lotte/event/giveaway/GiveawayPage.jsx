@@ -11,6 +11,10 @@ const GiveawayPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = '롯데시네마 경품 이벤트 현황';
+  }, []);
+
+  useEffect(() => {
     const fetchEvents = async () => {
       const eventList = await api.getLotteGiveawayEventListAsync();
       setEvents(eventList);

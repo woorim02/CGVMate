@@ -20,6 +20,7 @@ const GiveawayDetailPage = () => {
       if (!eventID) return;
       try {
         const eventInfo = await api.getGiveawayEventDetailAsync(eventID);
+        document.title = eventInfo.title;
         setGiftId(eventInfo.id);
         setGiftName(eventInfo.title);
         setInfo(eventInfo);

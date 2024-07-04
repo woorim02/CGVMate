@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css';
 
 const Home = () => {
+  
+  useEffect(() => {
+    document.title = 'CGV 도우미 | 홈';
+  }, []);
+
   return (
     <article className="main_article">
       <div className="px-4 py-5 my-5 text-center">

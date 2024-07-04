@@ -20,6 +20,7 @@ const GiveawayDetailPage = () => {
       if (!eventID) return;
       try {
         const eventModel = await api.getLotteGiveawayEventModelAsync(eventID);
+        document.title = eventModel.frGiftNm;
         setGiftId(eventModel.frGiftID);
         setGiftName(eventModel.frGiftNm);
         const eventInfo = await api.getLotteGiveawayInfoAsync(eventID, eventModel.frGiftID);

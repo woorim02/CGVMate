@@ -11,6 +11,10 @@ const GiveawayPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    document.title = '메가박스 경품 이벤트 현황';
+  }, []);
+
+  useEffect(() => {
     const fetchEvents = async () => {
       try {
         const eventList = await api.getGiveawayEventListAsync();

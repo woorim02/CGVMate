@@ -20,6 +20,7 @@ const GiveawayDetailPage = () => {
       try {
         const modelResponse = await api.getGiveawayEventModelAsync(eventIndex);
         setModel(modelResponse);
+        document.title = modelResponse.contents;
         // Fetch info data after model data is set
         const infoResponse = await api.getGiveawayInfoAsync(modelResponse.giveawayIndex, currentArea);
         setInfo(infoResponse);

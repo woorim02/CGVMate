@@ -8,7 +8,9 @@ const EventPage = () => {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [eventType, setEventType] = useState('Special');
   const api = useRef(new CgvMateApi()).current;  // useRef를 사용하여 api 객체를 고정
-
+  useEffect(() => {
+    document.title = 'CGV 이벤트 목록';
+  }, []);
   useEffect(() => {
       const fetchEvents = async () => {
           const eventTypeKey = CgvEventType[eventType];

@@ -13,6 +13,10 @@ const SurpriseCuponPage = () => {
   const intervalRef = useRef(null);
 
   useEffect(() => {
+    document.title = '서프라이즈 쿠폰 조회';
+  }, []);
+
+  useEffect(() => {
     const fetchCupons = async () => {
       const cuponEvents = await api.getEventListAsync(4);
       const filteredCupons = cuponEvents

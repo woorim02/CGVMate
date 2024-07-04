@@ -12,6 +12,10 @@ const EventPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = '롯데시네마 이벤트 목록';
+  }, []);
+
+  useEffect(() => {
     const fetchEvents = async () => {
       const data = await api.getLotteEventListAsync(20); // 초기 이벤트 타입을 영화로 설정
       setEvents(data);

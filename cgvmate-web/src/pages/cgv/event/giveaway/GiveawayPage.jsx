@@ -9,6 +9,10 @@ const GiveawayPage = () => {
   const api = useRef(new CgvMateApi()).current;
 
   useEffect(() => {
+    document.title = 'CGV 경품 이벤트 현황';
+  }, []);
+
+  useEffect(() => {
     const fetchEvents = async () => {
       const events = await api.getGiveawayEventListAsync();
       setEventList(events);

@@ -13,6 +13,10 @@ const SpeedCuponPage = () => {
   const intervalRef = useRef(null);
 
   useEffect(() => {
+    document.title = '스피드쿠폰 조회';
+  }, []);
+
+  useEffect(() => {
     const fetchCupons = async () => {
       const response = await api.getSpeedCuponCountsAsync();
       setCupons(response);
