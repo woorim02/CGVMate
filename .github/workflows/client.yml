@@ -3,7 +3,7 @@ name: CgvMate.Client
 on:
   push:
     paths:
-      - 'CgvMate.Client/**'
+      - 'cgvmate-web/**'
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64]
