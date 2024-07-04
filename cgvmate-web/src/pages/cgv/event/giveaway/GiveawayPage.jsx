@@ -47,7 +47,7 @@ const GiveawayPage = () => {
       <header className="header">
         <div className="title">
           <p>
-            진행중인 경품 이벤트 
+            진행중인 경품 이벤트&nbsp;
             <strong>
               {filteredEventList && <span id="listcount">{filteredEventList.length}</span>}
             </strong>

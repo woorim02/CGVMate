@@ -49,7 +49,7 @@ const GiveawayPage = () => {
       <div className="header">
         <div className="title">
           <p>
-            진행중인 경품 이벤트
+            진행중인 경품 이벤트&nbsp;
             <strong>
               {filteredEvents.length}
             </strong>
