@@ -59,8 +59,8 @@ const GiveawayDetailPage = () => {
         </div>
       </div>
       <div className="content-wrap">
-        <div className="header-title2">
-          <p className="header-content">{giftName}</p>
+        <div className="header-title">
+          <span className="header-content">{giftName}</span>
         </div>
         <div className="content">
           {info ? (
@@ -82,7 +82,7 @@ const GiveawayDetailPage = () => {
                   ))}
                 </ul>
               </div>
-              <div className="contentR">
+              <div className="l-g-d-contentR">
                 <ul className="theater-list">
                   {info.cinemaDivisionGoods
                     .filter((item) => item.detailDivisionCode === currentArea)

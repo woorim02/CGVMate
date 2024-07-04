@@ -20,6 +20,7 @@ a {
 .header {
     display: block;
     height: auto;
+    padding: 0;
 }
 
 .header-title {
@@ -31,16 +32,10 @@ a {
     border-bottom: 1px solid #f1f1f1;
 }
 
-.header-title2 {
-    padding: 10px;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #f1f1f1;
-}
-
 .header-content {
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
 }
 
 .header-title .cgv-button {
@@ -90,10 +85,11 @@ a {
     background-color: #f1f1f1;
 }
 
-.contentR {
+.l-g-d-contentR {
     width: 100%;
     height: 100%;
     padding: 15px;
+    padding-top: 10px;
 }
 
 .theater {
