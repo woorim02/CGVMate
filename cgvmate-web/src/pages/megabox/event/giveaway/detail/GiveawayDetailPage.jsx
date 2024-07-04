@@ -82,16 +82,16 @@ const GiveawayDetailPage = () => {
                 </ul>
               </div>
               <div className="contentR">
-                <ul className="theater-list">
+                <ul className="m-theater-list">
                   {info.areas
                     .find((area) => area.code === currentArea)
                     .infos.map((item, i) => (
-                      <li key={i} className="theater">
-                        <div className="theater-name">
-                          <b className="theater-name" dangerouslySetInnerHTML={{ __html: item.name }} />
+                      <li key={i} className="m-theater">
+                        <div className="m-theater-name">
+                          <b className="m-theater-name" dangerouslySetInnerHTML={{ __html: item.name }} />
                         </div>
                         <div>
-                          <b className={`theater-state ${item.fAc}`}>{item.fAc}</b>
+                          <b className={`m-theater-state ${item.fAc}`}>{item.fAc}</b>
                         </div>
                       </li>
                     ))}
@@ -103,16 +103,16 @@ const GiveawayDetailPage = () => {
               <div className="contentL">
                 <ul className="area-list">
                   {[...Array(10)].map((_, i) => (
-                    <li key={i} className="theater" style={{ display: 'block', color: 'white' }}>
+                    <li key={i} className="m-theater" style={{ display: 'block', color: 'white' }}>
                       ...
                     </li>
                   ))}
                 </ul>
               </div>
               <div className="contentR">
-                <ul className="theater-list">
+                <ul className="m-theater-list">
                   {[...Array(15)].map((_, i) => (
-                    <li key={i} className="theater" style={{ display: 'block', color: 'white' }}>
+                    <li key={i} className="m-theater" style={{ display: 'block', color: 'white' }}>
                       ...
                     </li>
                   ))}

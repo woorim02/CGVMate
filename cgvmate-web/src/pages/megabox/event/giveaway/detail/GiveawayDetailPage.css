@@ -88,7 +88,7 @@ a {
     padding: 15px;
 }
 
-.theater {
+.m-theater {
     float: left;
     position: relative;
     width: 100%;
@@ -100,7 +100,7 @@ a {
     justify-content: space-between;
 }
 
-    .theater:after {
+    .m-theater:after {
         content: '';
         display: block;
         position: absolute;
@@ -111,7 +111,7 @@ a {
         background-color: #ebebeb;
     }
 
-.theater-name {
+.m-theater-name {
     line-height: 0.9em;
     font-size: 0.9em;
     display: flex;
@@ -121,7 +121,7 @@ a {
     margin-top: 0;
 }
 
-.theater-count {
+.m-theater-count {
     border-radius: 30px;
     display: inline-grid;
     font-size: 0.8em;
@@ -133,17 +133,13 @@ a {
     vertical-align: middle;
 }
 
-.theater-state {
+.m-theater-state {
     align-items: center;
     margin-top: 7px;
     font-size: 0.857em;
     color: #666;
     line-height: 1.167em;
     align-items: start;
-}
-
-.autosignup {
-    font-size: 0.8rem;
 }
 
 .num {

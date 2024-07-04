@@ -36,7 +36,7 @@ const GiveawayPage = () => {
 
   return (
     <div className="article">
-      <div className="header">
+      <div className="m-header">
         <div className="title">
           <p>
             진행중인 경품 이벤트
@@ -55,7 +55,7 @@ const GiveawayPage = () => {
       </div>
 
       <div className="body">
-        <ul className="eventlist">
+        <ul className="m-eventlist">
           {loading ? (
             Array.from({ length: 20 }).map((_, i) => (
               <li key={i} className="item" style={{ cursor: 'pointer' }}>

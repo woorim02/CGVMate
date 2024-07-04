@@ -8,14 +8,14 @@ ul {
     padding: 0;
 }
 
-.article {
+.m-article {
     display: block;
     padding: 0.5rem 0.7rem;
     height: 100%;
     width: 100%;
 }
 
-.header {
+.m-header {
     height: 4.375rem;
     width: 100%;
     padding: 0px 0px 0px 10px;
@@ -24,21 +24,21 @@ ul {
     flex-direction: column;
 }
 
-    .header p {
+    .m-header p {
         margin: 0;
     }
 
-        .header p strong {
+        .m-header p strong {
             font-weight: 700;
             color: #503396;
         }
 
-    .header .search-bar {
+    .m-header .search-bar {
         width: 100%;
     }
 
 
-        .header .search-bar .search-form {
+        .m-header .search-bar .search-form {
             margin: 0.3rem 0rem 0.5rem 0rem;
             position: relative;
             height: 2rem;
@@ -47,13 +47,13 @@ ul {
             align-items: center;
         }
 
-            .header .search-bar .search-form > input {
+            .m-header .search-bar .search-form > input {
                 padding: 0.2rem 1rem;
                 height: 2rem;
                 margin-right: 0.5rem;
             }
 
-            .header .search-bar .search-form .btn {
+            .m-header .search-bar .search-form .btn {
                 height: 2rem;
                 width: 6rem;
                 padding: .375rem .75rem;
@@ -70,11 +70,11 @@ ul {
     overflow-y: auto;
 }
 
-.eventlist {
+.m-eventlist {
     font-size: 13px;
 }
 
-    .eventlist li {
+    .m-eventlist li {
         list-style: none;
         position: relative;
         padding: 0.6rem;
@@ -82,24 +82,24 @@ ul {
         border-top: 1px solid #f2f2f2;
     }
 
-    .eventlist .text-container {
+    .m-eventlist .text-container {
         display: inline-flex;
         flex-direction: row;
     }
 
-    .eventlist .item {
+    .m-eventlist .item {
         position: relative;
         margin-top: 1px;
     }
 
-        .eventlist .item .item-title {
+        .m-eventlist .item .item-title {
             display: inline;
             padding-right: 10px;
             font-weight: 500;
             font-size: 1.143em;
         }
 
-        .eventlist .item .item-period {
+        .m-eventlist .item .item-period {
             display: inline;
             position: relative;
             margin-top: 0.2rem;
@@ -109,7 +109,7 @@ ul {
             line-height: 1.143em;
         }
 
-        .eventlist .item .item-dday {
+        .m-eventlist .item .item-dday {
             display: inline-flex;
             align-items: center;
             justify-content: center;
