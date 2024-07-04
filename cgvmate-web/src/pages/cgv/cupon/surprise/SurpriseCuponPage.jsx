@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SurpriseCuponPage.css';
 import CgvMateApi from '../../../../api/cgvmateApi';
+import DisplayAds from '../../../../components/DisplayAds';
 
 const api = new CgvMateApi();
 
@@ -93,6 +94,7 @@ const SurpriseCuponPage = () => {
         </div>
       </div>
       <div className="article-body">
+        <DisplayAds adSlot='2485625472'/>
         <ul className="list-group">
           {processTexts.map((text, index) => (
             <li key={index}>
