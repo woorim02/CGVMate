@@ -62,22 +62,6 @@ const GiveawayDetailPage = () => {
         <div className="header-title2">
           <p className="header-content">{giftName}</p>
         </div>
-        <div style={{ height: '50px' }}>
-          <script
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2422895337222657"
-            crossOrigin="anonymous"
-          ></script>
-          <ins
-            className="adsbygoogle"
-            style={{ display: 'block' }}
-            data-ad-client="ca-pub-2422895337222657"
-            data-ad-slot="3730871491"
-            data-ad-format="auto"
-            data-full-width-responsive="true"
-          ></ins>
-          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
         <div className="content">
           {info ? (
             <>
