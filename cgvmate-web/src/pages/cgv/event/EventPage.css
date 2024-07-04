@@ -7,16 +7,27 @@
     padding: 0.3rem;
 }
 
-.header {
+.e-header {
     height: 4.5rem;
     display: contents;
 }
+    .e-header .nav-tabs {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch; /* iOS의 부드러운 스크롤링 */
+        scrollbar-width: thin; /* Firefox */
+        scrollbar-color: #888 #eee; /* Firefox */
+        white-space: nowrap; /* 요소가 줄바꿈되지 않도록 설정 */
+    }
 
-    .header .search-bar {
+    .e-header .search-bar {
         width: 100%;
     }
 
-        .header .search-bar .search-form {
+        .e-header .search-bar .search-form {
             margin: 0.3rem 0rem 0.5rem 0rem;
             position: relative;
             height: 2rem;
@@ -25,13 +36,13 @@
             align-items: center;
         }
 
-            .header .search-bar .search-form > input {
+            .e-header .search-bar .search-form > input {
                 padding: 0.2rem 1rem;
                 height: 2rem;
                 margin-right: 0.5rem;
             }
 
-            .header .search-bar .search-form .btn {
+            .e-header .search-bar .search-form .btn {
                 height: 2rem;
                 width: 6rem;
                 padding: .375rem .75rem;
@@ -52,6 +63,7 @@
     display: flex;
     align-content: center;
     overflow-y: auto;
+    padding: 0;
 }
 
 .wrap {

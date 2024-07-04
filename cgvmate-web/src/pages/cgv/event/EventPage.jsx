@@ -45,7 +45,7 @@ const EventPage = () => {
 
   return (
       <div className="article">
-          <header className="header">
+          <header className="e-header">
               <ul className="nav nav-tabs">
                   {Object.keys(CgvEventType).map((type, index) => (
                       <li key={index} className="nav-item">
