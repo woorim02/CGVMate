@@ -17,6 +17,7 @@ import SurpriseCuponPage from './pages/cgv/cupon/surprise/SurpriseCuponPage';
 
 import LotteEventPage from './pages/lotte/event/EventPage';
 import LotteGiveawayPage from './pages/lotte/event/giveaway/GiveawayPage';
+import LotteGiveawayDetailPage from './pages/lotte/event/giveaway/detail/GiveawayDetailPage';
 
 import NotFound from './pages/NotFound';
 
@@ -44,6 +45,7 @@ function App() {
               
               <Route path={Constants.lotte_event} element={<LotteEventPage />} />
               <Route path={Constants.lotte_event_giveaway} element={<LotteGiveawayPage />} />
+              <Route path={Constants.lotte_event_giveaway_detail} element={<LotteGiveawayDetailPage />} />
               <Route path="*" element={<NotFound />}></Route>
             </Routes>
           </BrowserRouter>
