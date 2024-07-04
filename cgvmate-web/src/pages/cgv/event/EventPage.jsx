@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './EventPage.css'
 import CgvMateApi from '../../../api/cgvmateApi';
@@ -8,7 +7,6 @@ const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [eventType, setEventType] = useState('Special');
-  const navigate = useNavigate();
   const api = useRef(new CgvMateApi()).current;  // useRef를 사용하여 api 객체를 고정
 
   useEffect(() => {
@@ -42,7 +40,7 @@ const EventPage = () => {
   };
 
   const handleCardClick = (event) => {
-      navigate(`https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${event.eventId}`);
+    window.location.href = `https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${event.eventId}`;
   };
 
   return (
@@ -97,11 +95,11 @@ const EventPage = () => {
 
 const CgvEventType = {
   Special: '001',
-  Movie: '004',
-  Theater: '005',
-  Affiliate: '006',
-  Membership_Club: '008',
-  Past: '100'
+  영화: '004',
+  극장: '005',
+  제휴: '006',
+  멤버십_클럽: '008',
+  지난이벤트: '100'
 };
 
 export default EventPage;
