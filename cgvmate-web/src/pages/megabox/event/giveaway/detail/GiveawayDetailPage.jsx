@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import MegaboxMateApi from '../../../../../api/megaboxApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayDetailPage.css';
+import DisplayAds from '../../../../../components/DisplayAds';
 
 const api = new MegaboxMateApi();
 
@@ -62,6 +63,7 @@ const GiveawayDetailPage = () => {
         <div className="header-title">
           <span className="header-content">{giftName}</span>
         </div>
+        <DisplayAds adSlot='8167919304'/>
         <div className="content">
           {info ? (
             <>

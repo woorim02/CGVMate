@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import LotteMateApi from '../../../../../api/lotteApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayDetailPage.css';
+import DisplayAds from '../../../../../components/DisplayAds';
 
 const api = new LotteMateApi();
 
@@ -63,6 +64,7 @@ const GiveawayDetailPage = () => {
         <div className="header-title">
           <span className="header-content">{giftName}</span>
         </div>
+        <DisplayAds adSlot='8167919304'/>
         <div className="content">
           {info ? (
             <>

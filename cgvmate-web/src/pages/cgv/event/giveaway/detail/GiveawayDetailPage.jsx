@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayDetailPage.css';
 import CgvMateApi from '../../../../../api/cgvmateApi';
-import Constants from '../../../../../constants';
+import DisplayAds from '../../../../../components/DisplayAds'
 
 const api = new CgvMateApi();
 
@@ -77,6 +77,7 @@ const GiveawayDetailPage = () => {
             {model && model.title}
           </span>
         </div>
+        <DisplayAds adSlot='8167919304'/>
         <div className="content">
           {info && info.AreaList ? (
             <>
