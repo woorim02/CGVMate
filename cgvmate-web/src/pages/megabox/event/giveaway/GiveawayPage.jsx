@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import MegaboxMateApi from '../../../../api/megaboxApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayPage.css';
@@ -43,6 +44,13 @@ const GiveawayPage = () => {
 
   return (
     <div className="article">
+      <Helmet>
+        <meta name="description" content={`메가박스 경품 특전 수량을 더욱 편리하게 확인 가능합니다.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`메가박스 경품 특전 수량을 더욱 편리하게 확인 가능합니다.`} />
+        <meta property="og:description" content={`메가박스 경품 특전 수량을 더욱 편리하게 확인 가능합니다.`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <div className="m-header">
         <div className="title">
           <p>

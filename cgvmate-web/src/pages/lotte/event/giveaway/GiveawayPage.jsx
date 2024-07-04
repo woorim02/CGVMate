@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import LotteMateApi from '../../../../api/lotteApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayPage.css';
@@ -53,6 +54,13 @@ const GiveawayPage = () => {
 
   return (
     <div className="article">
+      <Helmet>
+        <meta name="description" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:description" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <div className="header">
         <div className="title">
           <p>
@@ -73,7 +81,7 @@ const GiveawayPage = () => {
 
       <div className="body">
         <ul className="eventlist">
-          <DisplayAds adSlot='3730871491'/>
+          <DisplayAds adSlot='3730871491' />
           {loading ? (
             Array.from({ length: 20 }).map((_, i) => (
               <li key={i} className="item" style={{ cursor: 'pointer' }}>

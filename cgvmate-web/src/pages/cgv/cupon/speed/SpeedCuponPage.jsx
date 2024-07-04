@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from "react-helmet-async";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SpeedCuponPage.css';
 import CgvMateApi from '../../../../api/cgvmateApi';
@@ -37,8 +38,8 @@ const SpeedCuponPage = () => {
           ? response
           : response.filter(x => x.movieIndex === selectedMovieIndex);
         const newProcessTexts = selectedCupons.map(cupon => {
-            const now = new Date();
-            const timeString = `${now.toLocaleTimeString()}.${now.getMilliseconds()}`;
+          const now = new Date();
+          const timeString = `${now.toLocaleTimeString()}.${now.getMilliseconds()}`;
           const countText = cupon.count % 100 !== 0
             ? `<span class='count' style='color:lawngreen;'>${cupon.count}</span>`
             : `<span class='count'>${cupon.count}</span>`;
@@ -61,6 +62,13 @@ const SpeedCuponPage = () => {
 
   return (
     <div className="article" id="speed-cupon-article">
+      <Helmet>
+        <meta name="description" content="스피드쿠폰 자동 확인, 스피드쿠폰 매크로" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="스피드쿠폰 자동 확인" />
+        <meta property="og:description" content="스피드쿠폰 자동 확인, 스피드쿠폰 매크로" />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <div className="article-header">
         <div className="switch-container">
           <label id="toggle-switch-label" htmlFor="toggle_switch1">
@@ -85,7 +93,7 @@ const SpeedCuponPage = () => {
         </div>
       </div>
       <div className="article-body">
-        <DisplayAds adSlot='2485625472'/>
+        <DisplayAds adSlot='2485625472' />
         <ul className="list-group">
           {processTexts.map((text, index) => (
             <li key={index}>

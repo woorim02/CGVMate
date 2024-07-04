@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayDetailPage.css';
 import CgvMateApi from '../../../../../api/cgvmateApi';
@@ -20,7 +21,6 @@ const GiveawayDetailPage = () => {
       try {
         const modelResponse = await api.getGiveawayEventModelAsync(eventIndex);
         setModel(modelResponse);
-        document.title = modelResponse.contents;
         // Fetch info data after model data is set
         const infoResponse = await api.getGiveawayInfoAsync(modelResponse.giveawayIndex, currentArea);
         setInfo(infoResponse);
@@ -65,6 +65,16 @@ const GiveawayDetailPage = () => {
 
   return (
     <div className="tl">
+      {model && (
+        <Helmet>
+          <title>{model.contents}</title>
+          <meta name="description" content={`${model.contents} 수량 확인`} />
+          <meta property="og:type" content="website" />
+          <meta property="og:title" content={`${model.contents} 수량 확인`} />
+          <meta property="og:description" content={`${model.contents} 수량 확인`} />
+          <meta property="og:url" content={window.location.href} />
+        </Helmet>
+      )}
       <div className="c-g-d-header">
         <div className="c-g-d-header-title">
           <p id="header-text">잔여 수량 확인</p>
@@ -77,7 +87,7 @@ const GiveawayDetailPage = () => {
             {model && model.title}
           </span>
         </div>
-        <DisplayAds adSlot='8167919304'/>
+        <DisplayAds adSlot='8167919304' />
         <div className="content">
           {info && info.AreaList ? (
             <>

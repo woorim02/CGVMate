@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import MegaboxMateApi from '../../../../../api/megaboxApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayDetailPage.css';
@@ -54,6 +55,16 @@ const GiveawayDetailPage = () => {
 
   return (
     <div className="tl">
+    {giftName && (
+      <Helmet>
+        <title>{giftName}</title>
+        <meta name="description" content={`${giftName} 수량 확인`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`${giftName} 수량 확인`} />
+        <meta property="og:description" content={`${giftName} 수량 확인`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
+    )}
       <div className="header">
         <div className="header-title">
           <p id="header-text">잔여 수량 확인</p>

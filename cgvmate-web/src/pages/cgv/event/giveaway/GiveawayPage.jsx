@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayPage.css';
 import CgvMateApi from '../../../../api/cgvmateApi';
@@ -34,6 +35,13 @@ const GiveawayPage = () => {
 
   return (
     <div className="article">
+      <Helmet>
+        <meta name="description" content={`CGV 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`CGV 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:description" content={`CGV 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <header className="header">
         <div className="title">
           <p>
@@ -57,10 +65,10 @@ const GiveawayPage = () => {
       </header>
       <div className="body">
         <ul className="eventlist">
-        <DisplayAds adSlot='3730871491'/>
+          <DisplayAds adSlot='3730871491' />
           {filteredEventList ? filteredEventList.map((item, index) => (
             <React.Fragment key={item.eventIndex}>
-              {(index === Math.floor(filteredEventList.length / 2)) && <DisplayAds adSlot='1843074752'/>}
+              {(index === Math.floor(filteredEventList.length / 2)) && <DisplayAds adSlot='1843074752' />}
               <li className="item" style={{ cursor: 'pointer' }}>
                 <a href={`/cgv/event/giveaway/detail?eventIndex=${item.eventIndex}`}>
                   <div className="text-container">

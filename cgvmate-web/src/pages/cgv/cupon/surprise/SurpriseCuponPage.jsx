@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Helmet } from 'react-helmet-async';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SurpriseCuponPage.css';
 import CgvMateApi from '../../../../api/cgvmateApi';
@@ -71,6 +72,13 @@ const SurpriseCuponPage = () => {
 
   return (
     <div className="article" id="speed-cupon-article">
+      <Helmet>
+        <meta name="description" content="서프라이즈쿠폰 자동 확인, 서프라이즈쿠폰 매크로" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="서프라이즈쿠폰 자동 확인" />
+        <meta property="og:description" content="서프라이즈쿠폰 자동 확인, 서프라이즈쿠폰 매크로" />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <div className="article-header">
         <div className="switch-container">
           <label id="toggle-switch-label" htmlFor="toggle_switch1">
@@ -94,7 +102,7 @@ const SurpriseCuponPage = () => {
         </div>
       </div>
       <div className="article-body">
-        <DisplayAds adSlot='2485625472'/>
+        <DisplayAds adSlot='2485625472' />
         <ul className="list-group">
           {processTexts.map((text, index) => (
             <li key={index}>
