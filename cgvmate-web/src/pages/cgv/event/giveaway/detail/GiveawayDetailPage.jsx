@@ -64,17 +64,17 @@ const GiveawayDetailPage = () => {
 
   return (
     <div className="tl">
-      <div className="header">
-        <div className="header-title">
+      <div className="c-g-d-header">
+        <div className="c-g-d-header-title">
           <p id="header-text">잔여 수량 확인</p>
         </div>
       </div>
 
       <div className="content-wrap">
-        <div className="header-title">
-          <p className="header-content">
+        <div className="c-g-d-header-title">
+          <span className="c-g-d-header-content">
             {model && model.title}
-          </p>
+          </span>
         </div>
         <div className="content">
           {info && info.AreaList ? (
@@ -92,7 +92,7 @@ const GiveawayDetailPage = () => {
                   </ul>
                 </div>
               )}
-              <div className="contentR">
+              <div className="c-g-d-contentR">
                 <ul className="theater-list">
                   {info.TheaterList.map((item, i) => (
                     <li key={i} className="theater">
@@ -100,10 +100,10 @@ const GiveawayDetailPage = () => {
                         <span className="theater-name">{item.TheaterName}</span>
                       </div>
                       <div>
-                        <span className="theater-count" style={{ backgroundColor: countTypeCodeToColor(item.CountTypeCode) }}>
+                        <span className="c-g-d-theater-count" style={{ backgroundColor: countTypeCodeToColor(item.CountTypeCode) }}>
                           {item.GiveawayRemainCount}
                         </span>
-                        <span className="theater-state">{countTypeCodeToText(item.CountTypeCode)}</span>
+                        <span className="theater-state">&nbsp;{countTypeCodeToText(item.CountTypeCode)}</span>
                       </div>
                     </li>
                   ))}

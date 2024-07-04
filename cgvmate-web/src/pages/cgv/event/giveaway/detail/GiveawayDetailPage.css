@@ -17,13 +17,13 @@ a {
     height: 100%;
 }
 
-.header {
+.c-g-d-header {
     display: block;
     height: auto;
     padding: 0px;
 }
 
-.header-title {
+.c-g-d-header-title {
     white-space: nowrap;
     padding: 10px;
     height: 2.75rem;
@@ -32,16 +32,10 @@ a {
     border-bottom: 1px solid #f1f1f1;
 }
 
-.header-title2 {
-    padding: 10px;
-    height: auto;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #f1f1f1;
-}
-
-.header-content {
+.c-g-d-header-content {
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
 }
 
 .header-title .cgv-button {
@@ -92,10 +86,11 @@ a {
     background-color: #f1f1f1;
 }
 
-.contentR {
+.c-g-d-contentR {
     width: 100%;
     height: 100%;
     padding: 15px;
+    padding-top: 10px;
 }
 
 .theater {
@@ -129,16 +124,16 @@ a {
     margin-top: 0;
 }
 
-.theater-count {
+.c-g-d-theater-count {
     border-radius: 30px;
-    display: inline-grid;
-    font-size: 0.8em;
+    font-size: 0.85em;
     color: #666;
-    line-height: 1.2em;
+    line-height: 0.2em;
     height: 1.167em;
-    width: 2.1em;
-    text-align: center;
-    vertical-align: middle;
+    width: 2.5em;
+    display: inline-flex;
+    justify-content: center; 
+    align-items: center;      
 }
 
 .theater-state {
