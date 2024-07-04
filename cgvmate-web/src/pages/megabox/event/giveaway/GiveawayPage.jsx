@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import MegaboxMateApi from '../../../../api/megaboxApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayPage.css';
+import DisplayAds from '../../../../components/DisplayAds';
 
 const api = new MegaboxMateApi();
 

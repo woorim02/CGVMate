@@ -29,7 +29,7 @@ const DisplayAds = ({ adSlot, style }) => {
   return (
     <ins
       className="adsbygoogle"
-      style={{style}}
+      style={style}
       data-ad-client="ca-pub-2422895337222657"
       data-ad-slot={adSlot}
       data-ad-format="auto"
@@ -40,11 +40,11 @@ const DisplayAds = ({ adSlot, style }) => {
 
 DisplayAds.propTypes = {
   adSlot: PropTypes.string.isRequired,
-  style: PropTypes.string,
+  style: PropTypes.object,
 };
 
 DisplayAds.defaultProps = {
-  style: "display: 'block'",
+  style: { display: 'block' },
 };
 
 export default DisplayAds;

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayPage.css';
 import CgvMateApi from '../../../../api/cgvmateApi';
+import DisplayAds from '../../../../components/DisplayAds';
 
 const GiveawayPage = () => {
   const [eventList, setEventList] = useState([]);

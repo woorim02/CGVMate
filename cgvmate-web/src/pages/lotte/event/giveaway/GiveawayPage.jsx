@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import LotteMateApi from '../../../../api/lotteApi';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './GiveawayPage.css';
+import DisplayAds from '../../../../components/DisplayAds';
 
 const api = new LotteMateApi();
 

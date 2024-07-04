@@ -10,7 +10,7 @@ const Home = () => {
 
   return (
     <article className="main_article">
-      <DisplayAds adSlot='4893505812' style="display:inline-block;width:347px;height:90px"/>
+      <DisplayAds adSlot='4893505812' style={{display:'inline-block', width:'347px', height:'90px'}}/>
       <div className="px-4 my-4 text-center">
         <h2 className="fw-bold">CGV 도우미</h2>
         <div className="col-lg-6 mx-auto">
