@@ -12,6 +12,9 @@ jobs:
     - name: 코드 체크아웃
       uses: actions/checkout@v2
 
+    - name: npm install
+      run: cd cgvmate-web && npm install
+
     - name: 배포
       run: cd cgvmate-web && npm run build && mv build /mnt/bind_mount/cgvmate.com
       
