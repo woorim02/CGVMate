@@ -8,8 +8,9 @@ import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import Offcanvas from './components/Offcanvas/Offcanvas';
 import Home from './pages/Home';
-import EventPage from './pages/cgv/event/EventPage';
-import GiveawayPage from './pages/cgv/event/giveaway/GiveawayPage';
+import CgvEventPage from './pages/cgv/event/EventPage';
+import CgvGiveawayPage from './pages/cgv/event/giveaway/GiveawayPage';
+import CgvGiveawayDetailPage from './pages/cgv/event/giveaway/detail/GiveawayDetailPage';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -28,8 +29,9 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />}></Route>
-              <Route path={Constants.event_} element={<EventPage />} />
-              <Route path={Constants.event_giveaway} element={<GiveawayPage />} />
+              <Route path={Constants.event_} element={<CgvEventPage />} />
+              <Route path={Constants.event_giveaway} element={<CgvGiveawayPage />} />
+              <Route path={Constants.event_giveaway_detail} element={<CgvGiveawayDetailPage />} />
               <Route path="*" element={<NotFound />}></Route>
             </Routes>
           </BrowserRouter>
