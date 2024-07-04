@@ -1,6 +1,6 @@
 {
   "name": "cgvmate-web",
-  "version": "1.0.0-alpha1",
+  "version": "1.0.0-alpha2",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
