@@ -3,10 +3,12 @@ import { BrowserRouter , Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import './App.css';
+import Constants from './constants';
 import Navbar from './components/Navbar/Navbar';
 import Sidebar from './components/Sidebar/Sidebar';
 import Offcanvas from './components/Offcanvas/Offcanvas';
 import Home from './pages/Home';
+import EventPage from './pages/cgv/event/EventPage';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -25,6 +27,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Home />}></Route>
+              <Route path={Constants.event_} element={<EventPage />} />
               <Route path="*" element={<NotFound />}></Route>
             </Routes>
           </BrowserRouter>
