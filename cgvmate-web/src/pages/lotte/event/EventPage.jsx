@@ -31,7 +31,7 @@ const EventPage = () => {
     if (!text) {
       setFilteredEvents(events);
     } else {
-      setFilteredEvents(events.filter(e => e.EventName.toLowerCase().includes(text)));
+      setFilteredEvents(events.filter(e => e.eventName.toLowerCase().includes(text)));
     }
   };
 
