@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^13.5.0",
     "bootstrap": "^5.3.3",
     "cheerio": "^1.0.0-rc.12",
-    "node-fetch": "^3.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.24.1",
@@ -38,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.10"
   }
 }
