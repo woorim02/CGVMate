@@ -15,6 +15,12 @@ jobs:
     - name: npm install
       run: cd cgvmate-web && npm install
 
+    - name: 빌드
+      run: cd cgvmate-web && npm run build
+
+    - name: 이전 파일 삭제
+      run: rm -rf /mnt/bind_mount/cgvmate.com/build
+
     - name: 배포
-      run: cd cgvmate-web && npm run build && mv build /mnt/bind_mount/cgvmate.com
+      run: mv cgvmate-web/build /mnt/bind_mount/cgvmate.com
       
