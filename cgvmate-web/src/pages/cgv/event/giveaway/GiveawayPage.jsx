@@ -71,6 +71,7 @@ const GiveawayPage = () => {
       </header>
       <div className="body">
         <ul className="eventlist">
+        <DisplayAds adSlot='3730871491'/>
           {filteredEventList ? filteredEventList.map((item, index) => (
             <React.Fragment key={item.eventIndex}>
               {renderAds(index, filteredEventList.length)}

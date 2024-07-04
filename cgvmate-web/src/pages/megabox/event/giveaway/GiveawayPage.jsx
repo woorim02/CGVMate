@@ -60,6 +60,7 @@ const GiveawayPage = () => {
 
       <div className="body">
         <ul className="m-eventlist">
+        <DisplayAds adSlot='3730871491'/>
           {loading ? (
             Array.from({ length: 20 }).map((_, i) => (
               <li key={i} className="item" style={{ cursor: 'pointer' }}>
