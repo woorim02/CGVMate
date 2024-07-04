@@ -59,7 +59,7 @@ const GiveawayDetailPage = () => {
       </div>
       <div className="content-wrap">
         <div className="header-title">
-          <p className="header-content">{giftName}</p>
+          <span className="header-content">{giftName}</span>
         </div>
         <div className="content">
           {info ? (

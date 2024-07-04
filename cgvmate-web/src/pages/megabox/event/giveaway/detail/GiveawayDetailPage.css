@@ -33,6 +33,8 @@ a {
 
 .header-content {
     font-size: 0.8rem;
+    display: flex;
+    align-items: center;
 }
 
 .header-title .cgv-button {
