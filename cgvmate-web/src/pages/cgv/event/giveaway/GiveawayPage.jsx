@@ -32,21 +32,6 @@ const GiveawayPage = () => {
     }
   };
 
-  const renderAds = (index, total) => {
-    if (index === Math.floor(total / 3) || (index === Math.floor(total * 2 / 3) && total >= 20)) {
-      return (
-        <div key={`ad-${index}`} className="ad-container">
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2422895337222657" crossorigin="anonymous"></script>
-          <ins className="adsbygoogle" style={{ display: 'block' }} data-ad-client="ca-pub-2422895337222657" data-ad-slot="1843074752" data-ad-format="auto" data-full-width-responsive="true"></ins>
-          <script>
-            {`(adsbygoogle = window.adsbygoogle || []).push({});`}
-          </script>
-        </div>
-      );
-    }
-    return null;
-  };
-
   return (
     <div className="article">
       <header className="header">
@@ -75,7 +60,7 @@ const GiveawayPage = () => {
         <DisplayAds adSlot='3730871491'/>
           {filteredEventList ? filteredEventList.map((item, index) => (
             <React.Fragment key={item.eventIndex}>
-              {renderAds(index, filteredEventList.length)}
+              {(index === Math.floor(filteredEventList.length / 2)) && <DisplayAds adSlot='1843074752'/>}
               <li className="item" style={{ cursor: 'pointer' }}>
                 <a href={`/cgv/event/giveaway/detail?eventIndex=${item.eventIndex}`}>
                   <div className="text-container">
