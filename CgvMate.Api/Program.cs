@@ -3,9 +3,13 @@ using CgvMate.Api.Data;
 using CgvMate.Api.Middleware;
 using CgvMate.Services;
 using CgvMate.Services.Repos;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System;
 using System.Net;
+using System.Text;
 
 namespace CgvMate.Api
 {
@@ -17,26 +21,75 @@ namespace CgvMate.Api
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(opt =>
+            {
+                opt.SwaggerDoc($"v1", new OpenApiInfo { Title = "Cgvmate Api", Version = "v1" });
+                opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please enter token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+                });
+
+                opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type=ReferenceType.SecurityScheme,
+                                Id="Bearer"
+                            }
+                        },
+                    new string[]{}
+                    }   
+                });
+            });
 
             // get Enviroment Varables
 #if DEBUG
-            string? IV = "";
-            string? KEY = "";
-            string? CONNECTION_STRING = "Server=192.168.0.51;Port=13306;Database=cgvmate;User=root;Password=password; ";
-#else
+            SetTestEnvironmentVariable();
+#endif
+            string? ADMIN_ID = Environment.GetEnvironmentVariable("ADMIN_ID");
+            string? ADMIN_PASSWORD = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
+            string? JWT_KEY = Environment.GetEnvironmentVariable("JWT_KEY");
             string? IV = Environment.GetEnvironmentVariable("IV");
             string? KEY = Environment.GetEnvironmentVariable("KEY");
             string? CONNECTION_STRING = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
-            if (IV == null && KEY == null && CONNECTION_STRING == null)
+            if (IV == null
+                || KEY == null
+                || CONNECTION_STRING == null
+                || JWT_KEY == null
+                || ADMIN_ID == null
+                || ADMIN_PASSWORD == null)
             {
                 throw new Exception("환경변수를 모두 설정해 주세요");
             }
-#endif
-
 
             #region App
+            // Add Auth
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "https://cgvmate.com",
+                        ValidAudience = "cgvmate-api",
+                        IssuerSigningKey = new SymmetricSecurityKey(Convert.FromBase64String(JWT_KEY))
+                    };
+                });
+
+            builder.Services.AddAuthorization();
+
             // Add DbContext
             builder.Services.AddDbContext<AppDbContext>(options =>
             {
@@ -113,12 +166,23 @@ namespace CgvMate.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
 
             app.MapControllers();
 
             app.Run();
+        }
+        
+        private static void SetTestEnvironmentVariable()
+        {
+            Environment.SetEnvironmentVariable("ADMIN_ID", "admin");
+            Environment.SetEnvironmentVariable("ADMIN_PASSWORD", "password");
+            Environment.SetEnvironmentVariable("JWT_KEY", "E7qVMZftP0q9zIsyja8+24/CLGY6KcPIhyevEDu8qL4=");
+            Environment.SetEnvironmentVariable("IV", "x3nV9mvvsS+qIN1h2uVEviEFO2M+KXDWw66ClG1fFu4=");
+            Environment.SetEnvironmentVariable("KEY", "n8eqQYpQH816E2tfcvqA+A==");
+            Environment.SetEnvironmentVariable("CONNECTION_STRING", "Server=192.168.0.51;Port=13306;Database=cgvmate;User=root;Password=password;");
         }
     }
 }
