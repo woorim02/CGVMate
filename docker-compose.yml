@@ -3,9 +3,6 @@ services:
     image: 'cgvmate-api:v1.0.0-alpha2'
     restart: always
     container_name: cgvmate-api
-    environment:
-      - CONNECTION_STRING=${CONNECTION_STRING};
-      - IV=${IV}
-      - KEY=${KEY}
+    env_file: ".env"
     ports:
       - 8080:8080
