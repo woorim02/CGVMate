@@ -152,6 +152,18 @@ namespace CgvMate.Api
             builder.Logging.AddFilter("System.Net.Http.HttpClient", LogLevel.Warning);
             #endregion
 
+            // Add CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                    });
+            });
             var app = builder.Build();
 
             app.UseMiddleware<ExceptionMiddleware>();
@@ -173,6 +185,8 @@ namespace CgvMate.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseAuthorization();
