@@ -1,0 +1,22 @@
+.loginContainer {
+    height: 100vh;
+    background-color: #f8f9fa;
+  }
+  
+  .loginCard {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .input {
+    font-size: 1rem;
+    padding: 0.5rem;
+  }
+
+  .btnNoBorder {
+    margin: 0;
+    border: 0; /* 테두리 제거 */
+    box-shadow: none; /* 박스 쉐도우 제거 */
+  }

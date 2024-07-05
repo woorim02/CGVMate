@@ -2,6 +2,9 @@ const Constants = {
   // Routes
   root: "/",
 
+  admin_login: "/admin/login",
+  admin_dashboard: "/admin/dashboard",
+
   event_: "/cgv/event",
   event_cupon_speed: "/cgv/event/cupon/speed",
   event_cupon_surprise: "/cgv/event/cupon/surprise",
@@ -18,6 +21,7 @@ const Constants = {
 
   // API Host
   API_HOST: "https://api.cgvmate.com"
+  // API_HOST: "http://localhost:8080"
 };
 
 // Export the constants for use in other modules
