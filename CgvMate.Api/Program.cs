@@ -1,6 +1,8 @@
 
 using CgvMate.Api.Data;
 using CgvMate.Api.Middleware;
+using CgvMate.Api.Services;
+using CgvMate.Api.Services.Repos;
 using CgvMate.Services;
 using CgvMate.Services.Repos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -130,6 +132,12 @@ namespace CgvMate.Api
                 var httpClient = httpClientFactory.CreateClient();
                 var giveawayEventRepository = provider.GetRequiredService<IMegaboxGiveawayEventRepository>();
                 return new MegaboxEventService(httpClient, giveawayEventRepository);
+            });
+
+            builder.Services.AddScoped<IAdminService, AdminService>(provider =>
+            {
+                var lotteGiveawayEventKeywordRepository = provider.GetRequiredService<ILotteGiveawayEventKeywordRepository>();
+                return new AdminService(lotteGiveawayEventKeywordRepository);
             });
             #endregion
 
