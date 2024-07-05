@@ -41,6 +41,7 @@ public class AdminController : Controller
         return Unauthorized();
     }
 
+    [Authorize]
     [HttpGet]
     [Route("lotte/event/giveaway/keywords")]
     public async Task<IActionResult> GetLotteGiveawayEventKeywords()
@@ -49,6 +50,7 @@ public class AdminController : Controller
         return Ok(keywords);
     }
 
+    [Authorize]
     [HttpPost]
     [Route("lotte/event/giveaway/keywords")]
     public async Task<IActionResult> DeleteLotteGiveawayEventKeyword([FromBody] LotteGiveawayEventKeywordReqDTO dto)
