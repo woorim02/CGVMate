@@ -40,7 +40,7 @@ const EventPage = () => {
   };
 
   const cardOnClick = (eventId) => {
-    navigate(`https://event.lottecinema.co.kr/NLCHS/Event/EventTemplateInfo?eventId=${eventId}`);
+    window.location.href = `https://event.lottecinema.co.kr/NLCHS/Event/EventTemplateInfo?eventId=${eventId}`;
   };
 
   return (
