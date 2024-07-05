@@ -28,10 +28,10 @@ public class ExceptionMiddleware
         {
             if (context.Response.HasStarted)
             {
-                _logger.LogWarning("The response has already started, the exception middleware will not be executed.");
+                _logger.LogWarning($"[{DateTime.Now}] The response has already started, the exception middleware will not be executed.");
                 throw;
             }
-            _logger.LogWarning($"{ex}");
+            _logger.LogWarning($"[{DateTime.Now}] {ex.Message}");
 
             ex = GetActualException(ex);
 
