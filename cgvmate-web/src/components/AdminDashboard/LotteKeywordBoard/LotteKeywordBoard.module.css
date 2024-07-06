@@ -1,0 +1,63 @@
+.dashboardPage {
+    padding: 20px;
+  }
+  
+  .input-group {
+    max-width: 500px;
+    margin: 0 auto;
+    flex-direction: column;
+  }
+  
+  .input-group .form-control {
+    border-radius: 0.25rem;
+    margin-bottom: 10px;
+  }
+  
+  .input-group .btn-primary {
+    width: 100%;
+  }
+  
+  .list-group {
+    max-width: 500px;
+    margin: 20px auto;
+  }
+  
+  .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #f8f9fa;
+  }
+  
+  .list-group-item .btn-danger {
+    padding: 5px 10px;
+  }
+  
+  h1 {
+    text-align: center;
+    color: #007bff;
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+  
+  .btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+  
