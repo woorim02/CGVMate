@@ -22,5 +22,5 @@ jobs:
       run: rm -rf /mnt/bind_mount/cgvmate.com/build
 
     - name: 배포
-      run: mv cgvmate-web/build /mnt/bind_mount/cgvmate.com
+      run: mv cgvmate-web/dist /mnt/bind_mount/cgvmate.com
       
