@@ -19,7 +19,7 @@ jobs:
       run: cd cgvmate-web && npm run build
 
     - name: 이전 파일 삭제
-      run: rm -rf /mnt/bind_mount/cgvmate.com/build
+      run: rm -rf /mnt/bind_mount/cgvmate.com/dist
 
     - name: 배포
       run: mv cgvmate-web/dist /mnt/bind_mount/cgvmate.com

@@ -76,7 +76,7 @@ const GiveawayDetailPage = () => {
         <Grid container sx={{ height: '100%', flexWrap: 'nowrap' }}>
           {info ? (
             <>
-              <Grid item xs={12} sm={4} md={3} sx={{ backgroundColor: '#f1f1f1', width: '25%', maxWidth: { xs: '150px', sm: 'none' } }}>
+              <Grid item xs={12} sm={4} md={3} sx={{ backgroundColor: '#f1f1f1', width: '25%', maxWidth: { xs: '120px', sm: 'none' } }}>
                 <List>
                   {info.cinemaDivisions.map((item) => (
                     <ListItem

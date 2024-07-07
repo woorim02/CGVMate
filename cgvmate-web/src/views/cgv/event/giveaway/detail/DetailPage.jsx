@@ -102,7 +102,7 @@ const GiveawayDetailPage = () => {
           {info && info.AreaList ? (
             <>
               {info.AreaList.reduce((sum, x) => sum + parseInt(x.TheaterCount), 0) > 10 && (
-                <Grid item xs={12} sm={4} md={3} sx={{ backgroundColor: '#f1f1f1', width: '25%', maxWidth: { xs: '150px', sm: 'none' } }}>
+                <Grid item xs={12} sm={4} md={3} sx={{ backgroundColor: '#f1f1f1', width: '25%', maxWidth: { xs: '120px', sm: 'none' } }}>
                   <List>
                     {info.AreaList.map((item) => (
                       <ListItem
