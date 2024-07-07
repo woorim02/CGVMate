@@ -1,5 +1,8 @@
 ﻿using CgvMate.Data.Entities.Megabox;
+using CgvMate.Services.DTOs.Megabox;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace CgvMate.Services;
 
@@ -11,6 +14,27 @@ internal class MegaboxApi
     }
 
     HttpClient _client;
+
+    public async Task<List<Event>> GetCuponEventsAsync()
+    {
+        var req = new HttpRequestMessage(HttpMethod.Post, "https://m.megabox.co.kr/on/oh/ohe/Event/eventMngDiv.do");
+        var body = new EventReqDTO()
+        {
+            currentPage = "1",
+            eventDivCd = "CED01",
+            eventStatCd = "ONG",
+            eventTitle = "빵원",
+            eventTyCd = "",
+            orderReqCd = "ONGlist",
+            recordCountPerPage = "100",
+            totCnt = 1
+        };
+        req.Content = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+        var res = await _client.SendAsync(req);
+        var html = await res.Content.ReadAsStringAsync();
+        var events = ParseEvents(html);
+        return events;
+    } 
 
     public async Task<GiveawayEventDetail?> GetGiveawayEventDetailAsync(string goodsNo)
     {
@@ -49,5 +73,34 @@ internal class MegaboxApi
             detail.Areas.Add(areaGiveawayInfo);
         }
         return detail;
+    }
+
+    private static List<Event> ParseEvents(string html)
+    {
+        var events = new List<Event>();
+        var htmlDoc = new HtmlDocument();
+        htmlDoc.LoadHtml(html);
+
+        var eventNodes = htmlDoc.DocumentNode.SelectNodes("//div[@class='event-list v100']/div[@class='item']");
+
+        foreach (var eventNode in eventNodes)
+        {
+            var titleNode = eventNode.SelectSingleNode(".//p[@class='title']");
+            var dateNode = eventNode.SelectSingleNode(".//p[@class='date']");
+            var imgNode = eventNode.SelectSingleNode(".//img");
+            var linkNode = eventNode.SelectSingleNode(".//a");
+
+            var evt = new Event
+            {
+                Title = titleNode?.InnerText.Trim(),
+                Date = dateNode?.InnerText.Trim(),
+                ImageUrl = imgNode?.GetAttributeValue("data-src", ""),
+                Link = linkNode?.GetAttributeValue("onclick", "").Replace("javascript:fn_eventDetail(", "").Replace(");", "").Trim()
+            };
+
+            events.Add(evt);
+        }
+
+        return events;
     }
 }
