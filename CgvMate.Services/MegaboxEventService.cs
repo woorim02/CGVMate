@@ -14,6 +14,12 @@ public class MegaboxEventService
     private readonly MegaboxApi _api;
     private readonly IMegaboxGiveawayEventRepository _giveawayEventRepository;
 
+    public async Task<List<Event>> GetCuponEventsAsync()
+    {
+        var cupons = await _api.GetCuponEventsAsync();
+        return cupons;
+    }
+
     public async Task<List<GiveawayEvent>> GetGiveawayEventsAsync()
     {
         var events = (await _giveawayEventRepository.GetAllAsync()).ToList();
