@@ -16,6 +16,13 @@ public class MegaboxEventController : ControllerBase
 
     private readonly MegaboxEventService _eventService;
 
+    [HttpGet("cupon/list")]
+    public async Task<IActionResult> GetPromoCuponAsync()
+    {
+        var cuponEvents = await _eventService.GetCuponEventsAsync();
+        return Ok(cuponEvents);
+    }
+
     [HttpGet("giveaway/list")]
     public async Task<IActionResult> GetGiveawayEventList()
     {
