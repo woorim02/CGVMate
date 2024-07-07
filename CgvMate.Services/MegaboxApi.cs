@@ -3,6 +3,7 @@ using CgvMate.Services.DTOs.Megabox;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace CgvMate.Services;
 
@@ -95,8 +96,14 @@ internal class MegaboxApi
                 Title = titleNode?.InnerText.Trim(),
                 Date = dateNode?.InnerText.Trim(),
                 ImageUrl = imgNode?.GetAttributeValue("data-src", ""),
-                Link = linkNode?.GetAttributeValue("onclick", "").Replace("javascript:fn_eventDetail(", "").Replace(");", "").Trim()
+                EventNo = linkNode?.GetAttributeValue("onclick", "").Replace("javascript:fn_eventDetail(", "").Replace(");", "").Trim()
             };
+            var matches = Regex.Matches(evt.EventNo, @"\d+");
+            evt.EventNo = "";
+            foreach (Match match in matches)
+            {
+                evt.EventNo += match.Value;
+            }
 
             events.Add(evt);
         }
