@@ -98,7 +98,7 @@ const GiveawayDetailPage = () => {
                     <ListItem key={i} sx={{ display: 'flex', flexDirection: 'column', paddingTop: 1, paddingBottom: 1 }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center' }}>
-                          <span dangerouslySetInnerHTML={{ __html: item.title }} />
+                          {item.name}
                         </Typography>
                         <Box sx={{ display: 'flex', alignItems: 'center', minWidth: '60px'}}>
                           <Typography sx={{ color: getStatusColor(item.fAc), fontWeight: '600 !important'  }}>
