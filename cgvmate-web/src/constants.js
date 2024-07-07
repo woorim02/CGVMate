@@ -5,6 +5,8 @@ const Constants = {
   admin_login: "/admin/login",
   admin_dashboard: "/admin/dashboard",
 
+  promo_list: '/promo/list',
+
   event_: "/cgv/event",
   event_cupon_speed: "/cgv/event/cupon/speed",
   event_cupon_surprise: "/cgv/event/cupon/surprise",
@@ -20,8 +22,8 @@ const Constants = {
   megabox_event_giveaway_detail: "/megabox/event/giveaway/detail",
 
   // API Host
-  API_HOST: "https://api.cgvmate.com"
-  // API_HOST: "http://localhost:8080"
+  // API_HOST: "https://api.cgvmate.com"
+  API_HOST: "http://localhost:8080"
 };
 
 // Export the constants for use in other modules

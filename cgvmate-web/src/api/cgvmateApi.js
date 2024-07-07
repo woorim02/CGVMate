@@ -1,5 +1,5 @@
 import Constants from '../constants';
-const cheerio = require('cheerio');
+import cheerio from 'cheerio';
 
 class CgvMateApi {
   async getEventListAsync(type) {
@@ -27,7 +27,7 @@ class CgvMateApi {
   }
 
   async getSpeedCuponCountsAsync() {
-    const response = await fetch(`${Constants.API_HOST}/proxy/Event/2021/fcfs/default.aspx?idx=6`);
+    const response = await fetch(`https://api.cgvmate.com//proxy/Event/2021/fcfs/default.aspx?idx=6`);
     const html = await response.text();
     const $ = cheerio.load(html);
 
@@ -49,7 +49,7 @@ class CgvMateApi {
   }
 
   async getSurpriseCuponCountAsync(index) {
-    const response = await fetch(`${Constants.API_HOST}/proxy/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${index}`);
+    const response = await fetch(`https://api.cgvmate.com/proxy/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${index}`);
     const msg = await response.text();
 
     let url = null;
