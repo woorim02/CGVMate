@@ -3,6 +3,7 @@ using CgvMate.Data.Entities.LotteCinema;
 using CgvMate.Data.Entities.Megabox;
 using Microsoft.EntityFrameworkCore;
 using CgvGiveawayEvent = CgvMate.Data.Entities.Cgv.GiveawayEvent;
+using CgvCuponEvent = CgvMate.Data.Entities.Cgv.CuponEvent;
 using LotteEvent = CgvMate.Data.Entities.LotteCinema.Event;
 using MegaboxGiveawayEvent = CgvMate.Data.Entities.Megabox.GiveawayEvent;
 
@@ -16,6 +17,7 @@ public class AppDbContext : DbContext
     }
 
     public DbSet<CgvGiveawayEvent> CgvGiveawayEvents { get; set; }
+    public DbSet<CgvCuponEvent> CgvCuponEvents { get; set; }
     public DbSet<LotteEvent> LotteEvents { get; set; }
     public DbSet<GiveawayEventKeyword> LotteGiveawayEventKeywords { get; set; }
     public DbSet<LotteGiveawayEventModel> LotteGiveawayEventModels { get; set; }
@@ -25,6 +27,8 @@ public class AppDbContext : DbContext
     {
         modelBuilder.Entity<CgvGiveawayEvent>()
             .HasKey(x => x.EventIndex);
+        modelBuilder.Entity<CgvCuponEvent>()
+            .HasKey(x => x.EventId);
         modelBuilder.Entity<LotteEvent>(entity =>
         {
             entity.HasKey(x => x.EventID);

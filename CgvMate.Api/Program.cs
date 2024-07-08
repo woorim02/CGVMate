@@ -104,6 +104,7 @@ namespace CgvMate.Api
             builder.Services.AddScoped<ILotteGiveawayEventKeywordRepository, LotteGiveawayEventKeywordRepository>();
             builder.Services.AddScoped<IMegaboxGiveawayEventRepository, MegaboxGiveawayEventRepository>();
             builder.Services.AddScoped<ILotteGiveawayEventModelRepository, LotteGiveawayEventModelRepository>();
+            builder.Services.AddScoped<ICgvCuponEventRepository, CgvCuponEventRepository>();
 
             // Add HttpClient
             builder.Services.AddHttpClient();
@@ -115,7 +116,8 @@ namespace CgvMate.Api
             builder.Services.AddScoped(provider =>
             {
                 var giveawayEventRepository = provider.GetRequiredService<ICgvGiveawayEventRepository>();
-                return new CgvEventService(cgvClient, giveawayEventRepository, IV, KEY);
+                var cuponEventRepo = provider.GetRequiredService<ICgvCuponEventRepository>();
+                return new CgvEventService(cgvClient, giveawayEventRepository, cuponEventRepo, IV, KEY);
             });
             builder.Services.AddScoped(provider =>
             {
