@@ -1,24 +1,59 @@
 ﻿using CgvMate.Data.Entities.Megabox;
 using CgvMate.Services.Apis;
 using CgvMate.Services.Repos;
+using System.Runtime.InteropServices;
 
 namespace CgvMate.Services;
 
 public class MegaboxEventService
 {
-    public MegaboxEventService(HttpClient httpClient, IMegaboxGiveawayEventRepository giveawayEventRepository)
+    public MegaboxEventService(HttpClient httpClient,
+                               IMegaboxGiveawayEventRepository giveawayEventRepository,
+                               IMegaboxCuponEventRepository cuponEventRepository)
     {
+        _client = httpClient;
         _api = new MegaboxApi(httpClient);
         _giveawayEventRepository = giveawayEventRepository;
+        _cuponEventRepository = cuponEventRepository;
     }
 
+    private readonly HttpClient _client;
     private readonly MegaboxApi _api;
     private readonly IMegaboxGiveawayEventRepository _giveawayEventRepository;
+    private readonly IMegaboxCuponEventRepository _cuponEventRepository;
 
-    public async Task<List<Event>> GetCuponEventsAsync()
+    public async Task<List<CuponEvent>> GetCuponEventsAsync()
     {
-        var cupons = await _api.GetCuponEventsAsync();
-        return cupons;
+        var cuponEvents = await _api.GetCuponEventsAsync();
+        var dbEvents = await _cuponEventRepository.GetCuponEventsAsync();
+        var kvp = dbEvents.ToDictionary(e => e.EventNo);
+        var updateList = new List<CuponEvent>();
+        var finalList = new List<CuponEvent>();
+        foreach (var e in cuponEvents)
+        {
+            if (kvp.ContainsKey(e.EventNo))
+            {
+                finalList.Add(kvp[e.EventNo]);
+            }
+            else
+            {
+                var cuponEvent = new CuponEvent()
+                {
+                    EventNo = e.EventNo,
+                    Date = e.Date,
+                    ImageUrl = e.ImageUrl,
+                    Title = e.Title,
+                    StartDateTime = await _api.GetCuponStartDateTimeAsync(e.EventNo)
+                };
+                finalList.Add(cuponEvent);
+                updateList.Add(cuponEvent);
+            }
+        }
+        if (updateList.Count > 0)
+        {
+            await _cuponEventRepository.AddCuponEventsAsync(updateList);
+        }
+        return finalList;
     }
 
     public async Task<List<GiveawayEvent>> GetGiveawayEventsAsync()

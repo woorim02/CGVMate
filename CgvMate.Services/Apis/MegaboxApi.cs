@@ -2,6 +2,7 @@
 using CgvMate.Services.DTOs.Megabox;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -35,6 +36,31 @@ internal class MegaboxApi
         var html = await res.Content.ReadAsStringAsync();
         var events = ParseEvents(html);
         return events;
+    }
+
+    public async Task<DateTime> GetCuponStartDateTimeAsync(string cuponId)
+    {
+        var req = new HttpRequestMessage(HttpMethod.Get, $"https://www.megabox.co.kr/event/detail?eventNo={cuponId}");
+        var res = await _client.SendAsync(req);
+        var html = await res.Content.ReadAsStringAsync();
+        string dateString = null;
+
+        foreach (var s in html.Split("\n"))
+        {
+            if (s.Contains("var startDate = "))
+            {
+                dateString = ExtractDateString(s);
+                break;
+            }
+        }
+
+        if (dateString == null)
+        {
+            throw new Exception("날짜 파싱 실패");
+        }
+
+        var dateTime = DateTime.ParseExact(dateString, "yyyy.M.d(ddd) HH:mm", CultureInfo.InvariantCulture);
+        return dateTime;
     }
 
     public async Task<GiveawayEventDetail?> GetGiveawayEventDetailAsync(string goodsNo)
@@ -109,5 +135,14 @@ internal class MegaboxApi
         }
 
         return events;
+    }
+
+    private static string ExtractDateString(string html)
+    {
+        var doc = new HtmlDocument();
+        doc.LoadHtml(html);
+        var n3 = doc.DocumentNode.SelectSingleNode("//dd[@class='n3']").InnerText;
+        var dateString = n3.Split('~')[0].Replace("기간 ", "");
+        return n3;
     }
 }
