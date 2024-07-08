@@ -100,11 +100,12 @@ namespace CgvMate.Api
 
             // Add repositories
             builder.Services.AddScoped<ICgvGiveawayEventRepository, CgvGiveawayEventRepository>();
+            builder.Services.AddScoped<ICgvCuponEventRepository, CgvCuponEventRepository>();
             builder.Services.AddScoped<ILotteGiveawayEventRepository, LotteGiveawayEventRepository>();
+            builder.Services.AddScoped<ILotteGiveawayEventModelRepository, LotteGiveawayEventModelRepository>();
             builder.Services.AddScoped<ILotteGiveawayEventKeywordRepository, LotteGiveawayEventKeywordRepository>();
             builder.Services.AddScoped<IMegaboxGiveawayEventRepository, MegaboxGiveawayEventRepository>();
-            builder.Services.AddScoped<ILotteGiveawayEventModelRepository, LotteGiveawayEventModelRepository>();
-            builder.Services.AddScoped<ICgvCuponEventRepository, CgvCuponEventRepository>();
+            builder.Services.AddScoped<IMegaboxCuponEventRepository, MegaboxCuponEventRepository>();
 
             // Add HttpClient
             builder.Services.AddHttpClient();
@@ -133,7 +134,8 @@ namespace CgvMate.Api
                 var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
                 var httpClient = httpClientFactory.CreateClient();
                 var giveawayEventRepository = provider.GetRequiredService<IMegaboxGiveawayEventRepository>();
-                return new MegaboxEventService(httpClient, giveawayEventRepository);
+                var cuponEventRepo = provider.GetRequiredService<IMegaboxCuponEventRepository>();
+                return new MegaboxEventService(httpClient, giveawayEventRepository, cuponEventRepo);
             });
 
             builder.Services.AddScoped<IAdminService, AdminService>(provider =>

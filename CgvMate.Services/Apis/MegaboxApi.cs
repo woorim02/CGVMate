@@ -43,23 +43,17 @@ internal class MegaboxApi
         var req = new HttpRequestMessage(HttpMethod.Get, $"https://www.megabox.co.kr/event/detail?eventNo={cuponId}");
         var res = await _client.SendAsync(req);
         var html = await res.Content.ReadAsStringAsync();
-        string dateString = null;
-
-        foreach (var s in html.Split("\n"))
-        {
-            if (s.Contains("var startDate = "))
-            {
-                dateString = ExtractDateString(s);
-                break;
-            }
-        }
+        string dateString = ExtractDateString(html);
 
         if (dateString == null)
         {
             throw new Exception("날짜 파싱 실패");
         }
-
-        var dateTime = DateTime.ParseExact(dateString, "yyyy.M.d(ddd) HH:mm", CultureInfo.InvariantCulture);
+        var format = "yyyy.M.d(ddd) HH:mm";
+        var provider = new CultureInfo("ko-KR");
+        dateString = dateString.Trim();
+        var dateTime = DateTime.ParseExact(dateString, format, provider);
+        dateTime = dateTime.AddMinutes(-30);
         return dateTime;
     }
 
@@ -141,8 +135,8 @@ internal class MegaboxApi
     {
         var doc = new HtmlDocument();
         doc.LoadHtml(html);
-        var n3 = doc.DocumentNode.SelectSingleNode("//dd[@class='n3']").InnerText;
+        var n3 = doc.DocumentNode.SelectSingleNode("//dd[@class='n3']/span").InnerText;
         var dateString = n3.Split('~')[0].Replace("기간 ", "");
-        return n3;
+        return dateString;
     }
 }

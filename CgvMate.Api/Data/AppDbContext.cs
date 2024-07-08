@@ -6,6 +6,7 @@ using CgvGiveawayEvent = CgvMate.Data.Entities.Cgv.GiveawayEvent;
 using CgvCuponEvent = CgvMate.Data.Entities.Cgv.CuponEvent;
 using LotteEvent = CgvMate.Data.Entities.LotteCinema.Event;
 using MegaboxGiveawayEvent = CgvMate.Data.Entities.Megabox.GiveawayEvent;
+using MegaboxCuponEvent = CgvMate.Data.Entities.Megabox.CuponEvent;
 
 namespace CgvMate.Api.Data;
 
@@ -22,6 +23,7 @@ public class AppDbContext : DbContext
     public DbSet<GiveawayEventKeyword> LotteGiveawayEventKeywords { get; set; }
     public DbSet<LotteGiveawayEventModel> LotteGiveawayEventModels { get; set; }
     public DbSet<MegaboxGiveawayEvent> MegaboxGiveawayEvents { get; set; }
+    public DbSet<MegaboxCuponEvent> MegaboxCuponEvents { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -37,6 +39,9 @@ public class AppDbContext : DbContext
         });
         modelBuilder.Entity<MegaboxGiveawayEvent>()
             .HasKey(x => x.ID);
+
+        modelBuilder.Entity<MegaboxCuponEvent>()
+            .HasKey(x => x.EventNo);
 
         modelBuilder.Entity<GiveawayEventKeyword>(entity =>
         {
