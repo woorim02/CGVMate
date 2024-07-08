@@ -64,16 +64,27 @@ internal class CgvApi
                 break;
             }
         }
+        string title = null;
+        foreach (var s in msg.Split("\n"))
+        {
+            if (s.Contains("_TRK_ICMP_NM ="))
+            {
+                title = ExtractBracketContent(s);
+                break;
+            }
+        }
         var html = await _client.GetStringAsync(url);
 
         var document = new HtmlDocument();
+        document.LoadHtml(html);
         string imageUrl;
         try
         {
-            imageUrl = document.DocumentNode
-                .SelectSingleNode("//div[contains(@class, 'swiper-slide') and contains(@class, 'ver1') and contains(@class, 'swiper-slide-active')]/div/img")
-                .Attributes["src"]
-                .Value;
+            var nodes = document.DocumentNode
+                .SelectNodes("//div[contains(@class, 'swiper-slide') and contains(@class, 'ver1')]/div");
+            var selected = nodes?.Where(x => x.InnerHtml!.Replace(" ", "").Contains(title)).FirstOrDefault();
+            var imageNode = selected.SelectSingleNode("img");
+            imageUrl = imageNode.Attributes["src"].Value;
         }
         catch (Exception ex)
         {
@@ -164,6 +175,12 @@ internal class CgvApi
             item.IsGiveawayAreaCode = true;
         }
         return info;
+    }
+
+    public static string ExtractBracketContent(string input)
+    {
+        var match = Regex.Match(input, @"\[(.*?)\]");
+        return match.Success ? match.Groups[1].Value : string.Empty;
     }
 
     private async Task<string> OCRImageAsync(string imageUrl)
