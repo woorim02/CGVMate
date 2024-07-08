@@ -5,6 +5,12 @@ class MegaboxMateApi {
     this.apiHost = Constants.API_HOST;
   }
 
+  async getCuponEventList(){
+    const response = await fetch(`${Constants.API_HOST}/megabox/event/cupon/list`);
+    const json = await response.json();
+    return json;
+  }
+
   async getGiveawayEventListAsync() {
     try {
       const response = await fetch(`${this.apiHost}/megabox/event/giveaway/list`);

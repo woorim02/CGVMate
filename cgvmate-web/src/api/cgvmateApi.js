@@ -8,6 +8,12 @@ class CgvMateApi {
     return json;
   }
 
+  async getCuponEventList(){
+    const response = await fetch(`${Constants.API_HOST}/cgv/event/cupon/list`);
+    const json = await response.json();
+    return json;
+  }
+
   async getGiveawayEventListAsync() {
     const response = await fetch(`${Constants.API_HOST}/cgv/event/giveaway/list`);
     const events = await response.json();

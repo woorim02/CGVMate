@@ -13,6 +13,7 @@ import LotteGiveawayPage from 'views/lotte/event/giveaway/GiveawayPage';
 import LotteGiveawayDetailPage from 'views/lotte/event/giveaway/detail/DetailPage';
 import MegaboxGiveawayPage from 'views/megabox/event/giveaway/GiveawayPage';
 import MegaboxGiveawayDetailPage from 'views/megabox/event/giveaway/detail/DetailPage';
+import PromoListPage from 'views/promo/ListPage';
 
 
 
@@ -66,6 +67,10 @@ const MainRoutes = {
       path: 'megabox/event/giveaway/detail',
       element: <MegaboxGiveawayDetailPage/>,
     },
+    {
+      path: 'promo/list',
+      element: <PromoListPage/>
+    }
   ]
 };
 
