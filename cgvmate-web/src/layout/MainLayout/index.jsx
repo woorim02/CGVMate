@@ -90,7 +90,7 @@ const MainLayout = () => {
       <Main theme={theme} open={leftDrawerOpened}
         sx={{ marginTop: '60px !important', padding: { xs: '2px', sm: '15px' } }}>
         {/* breadcrumb */}
-        <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
+        <Breadcrumbs separator={IconChevronRight} icon title rightAlign />
         <Outlet />
       </Main>
     </Box>
