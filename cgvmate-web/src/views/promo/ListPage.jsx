@@ -21,7 +21,9 @@ const ListPage = () => {
             startDateTime: e.startDateTime,
             title: e.eventName,
             imgSrc: e.imageSource,
-            src: `https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${e.eventId}`
+            src: `https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${e.eventId}`,
+            isToday: isToday(e.startDateTime),
+            isPastEvent: isPastEvent(e.startDateTime),
           };
           eventList.push(event);
         });
@@ -32,7 +34,9 @@ const ListPage = () => {
             startDateTime: e.startDateTime,
             title: e.title,
             imgSrc: e.imageUrl,
-            src: `https://m.megabox.co.kr/event/detail?eventNo=${e.eventNo}`
+            src: `https://m.megabox.co.kr/event/detail?eventNo=${e.eventNo}`,
+            isToday: isToday(e.startDateTime),
+            isPastEvent: isPastEvent(e.startDateTime),
           };
           eventList.push(event);
         });
@@ -68,6 +72,12 @@ const ListPage = () => {
       eventDate.getFullYear() === today.getFullYear();
   };
 
+  const isPastEvent = (date) => {
+    const now = new Date();
+    const eventDate = new Date(date);
+    return eventDate < now;
+  };
+
   return (
     <Box component="article" className="main_article">
       <Helmet>
@@ -100,10 +110,10 @@ const ListPage = () => {
         <Grid container spacing={4}>
           {filteredEventList.map((event, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
-              <Card 
+              <Card
                 onClick={() => window.open(event.src, '_blank')}
                 sx={{
-                  backgroundColor: isToday(event.startDateTime) ? '#fbe9e7' : '#ffffff' // Change background color for today's events
+                  backgroundColor: !event.isPastEvent ? '#fbe9e7' : '#ffffff' // Change background color for today's events
                 }}
               >
                 <CardMedia
@@ -114,7 +124,11 @@ const ListPage = () => {
                   alt={event.title}
                 />
                 <CardContent>
-                  <Typography variant="h6" component="div">
+                  <Typography variant="h6" component="div" sx={{display: 'flex', flexDirection: 'row'}}>
+                    {!event.isPastEvent &&
+                      <Typography variant="h6" component="div" sx={{color: 'red'}}>
+                        (진행 예정)&nbsp;
+                      </Typography>}
                     {event.title}
                   </Typography>
                   <Typography variant="body2" color="text.primary" fontWeight={'600'}>
