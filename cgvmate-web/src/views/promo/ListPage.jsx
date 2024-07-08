@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Box, Container, Typography, Card, CardMedia, CardContent, Grid, TextField, Button } from '@mui/material';
+import { Box, Container, Typography, Card, CardMedia, CardContent, Grid, TextField, Button, FormControlLabel, Checkbox } from '@mui/material';
 import CgvMateApi from 'api/cgvmateApi';
 import MegaboxApi from 'api/megaboxApi';
 
@@ -9,6 +9,7 @@ const ListPage = () => {
   const megaboxApi = new MegaboxApi();
   const [eventList, setEventList] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([]);
+  const [showImage, setShowImage] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -89,24 +90,24 @@ const ListPage = () => {
         <meta property="og:url" content={window.location.href} />
       </Helmet>
       <Container maxWidth="100%">
-        <Typography variant="h4" component="h1" gutterBottom>
+        <Typography variant="h4" component="h1" gutterBottom
+         sx={{display:"flex", alignItems: 'center', justifyContent: 'space-between', margin:0}}>
           프로모션 쿠폰 목록
-          <Typography variant="body2" color="text.secondary">
-            (롯데시네마 추가 예정)
-          </Typography>
-        </Typography>
-        <Box component="header" sx={{ marginBottom: 2, width: '100%' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2, alignItems: 'center' }}>
-            <TextField
-              variant="outlined"
-              onChange={handleSearchChange}
-              placeholder="이벤트 검색"
-              sx={{ width: '80%' }}
-              inputProps={{ style: { height: 30, padding: '0 14px' } }}
+          <FormControlLabel
+              control={
+                <Checkbox
+                  checked={showImage}
+                  onChange={() => setShowImage(!showImage)}
+                  color="primary"
+                />
+              }
+              label="이미지 보기"
+              sx={{ marginLeft: 2 }}
             />
-            <Button variant="contained" color="primary" sx={{ marginLeft: 2, height: 30 }}>검색</Button>
-          </Box>
-        </Box>
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          (롯데시네마 추가 예정)<br/>&nbsp;
+        </Typography>
         <Grid container spacing={4}>
           {filteredEventList.map((event, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
@@ -117,16 +118,16 @@ const ListPage = () => {
                 }}
               >
                 <CardMedia
-                  component="img"
+                  component={showImage ? 'img' : "div"}
                   height="140"
                   width="250"
                   image={event.imgSrc}
                   alt={event.title}
                 />
                 <CardContent>
-                  <Typography variant="h6" component="div" sx={{display: 'flex', flexDirection: 'row'}}>
+                  <Typography variant="h6" component="div" sx={{ display: 'flex', flexDirection: 'row' }}>
                     {!event.isPastEvent &&
-                      <Typography variant="h6" component="div" sx={{color: 'red'}}>
+                      <Typography variant="h6" component="div" sx={{ color: 'red' }}>
                         (진행 예정)&nbsp;
                       </Typography>}
                     {event.title}
