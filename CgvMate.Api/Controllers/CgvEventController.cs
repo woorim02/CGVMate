@@ -31,6 +31,12 @@ public class CgvEventController : ControllerBase
         var events = await _service.GetEvents((CgvEventType)type);
         return Ok(events);
     }
+    [HttpGet("cupon/list")]
+    public async Task<IActionResult> GetCuponEvents()
+    {
+        var cuponEvents = await _service.GetCuponEventsAsync();
+        return Ok(cuponEvents);
+    }
 
     [HttpGet("giveaway/list")]
     public async Task<IActionResult> GetGiveawayEventList()

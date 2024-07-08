@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace CgvMate.Services;
+namespace CgvMate.Services.Apis;
 
 internal class MegaboxApi
 {
@@ -35,7 +35,7 @@ internal class MegaboxApi
         var html = await res.Content.ReadAsStringAsync();
         var events = ParseEvents(html);
         return events;
-    } 
+    }
 
     public async Task<GiveawayEventDetail?> GetGiveawayEventDetailAsync(string goodsNo)
     {
@@ -52,7 +52,7 @@ internal class MegaboxApi
         }
         detail.Areas = new List<AreaGiveawayInfo>();
         var areaNodes = document.DocumentNode.SelectNodes("//li[contains(@class, 'area-cont')]");
-        if(areaNodes == null)
+        if (areaNodes == null)
             return null;
 
         foreach (var areaNode in areaNodes)
