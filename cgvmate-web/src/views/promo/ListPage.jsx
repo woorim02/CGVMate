@@ -85,10 +85,19 @@ const ListPage = () => {
     return () => clearInterval(intervalId);
   }, [eventList, searchTerm]);
 
-  const handleSearchChange = (event) => {
-    const value = event.target.value.toLowerCase();
-    setSearchTerm(value);
-    filterEvents(value);
+  const formatDateTime = (dateStr) => {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    const weekday = date.toLocaleString('ko-KR', { weekday: 'short' });
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const period = hours >= 12 ? '오후' : '오전';
+    const formattedHours = hours % 12 || 12; // 12시간제로 변환
+  
+    return `${year}. ${month}. ${day}. (${weekday}) ${period} ${formattedHours}:${minutes}:${seconds}`;
   };
 
   const filterEvents = (searchTerm) => {
@@ -117,7 +126,7 @@ const ListPage = () => {
     const now = new Date();
     const difference = eventDate - now;
 
-    if (difference <= 0) return "0시간 0분 0초";
+    if (difference <= 0) return "종료됨";
 
     const hours = Math.floor(difference / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
@@ -177,7 +186,7 @@ const ListPage = () => {
                     {event.title}
                   </Typography>
                   <Typography variant="body2" color="text.primary" fontWeight={'600'}>
-                    {new Date(event.startDateTime).toLocaleString()}
+                    {formatDateTime(event.startDateTime)}
                   </Typography>
                   <Typography
                     variant="h6"
