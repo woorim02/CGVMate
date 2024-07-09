@@ -3,10 +3,12 @@ import { Helmet } from 'react-helmet-async';
 import { Box, Container, Typography, Card, CardMedia, CardContent, Grid, TextField, Button, FormControlLabel, Checkbox } from '@mui/material';
 import CgvMateApi from 'api/cgvmateApi';
 import MegaboxApi from 'api/megaboxApi';
+import LotteApi from 'api/lotteApi';
 
 const ListPage = () => {
   const cgvApi = new CgvMateApi();
   const megaboxApi = new MegaboxApi();
+  const lotteApi = new LotteApi();
   const [eventList, setEventList] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [showImage, setShowImage] = useState(false);
@@ -20,7 +22,7 @@ const ListPage = () => {
         cgvEvents.forEach(e => {
           let event = {
             startDateTime: e.startDateTime,
-            title: e.eventName,
+            title: e.eventName.replace("선착순 무료 쿠폰", "서프라이즈 쿠폰"),
             imgSrc: e.imageSource,
             src: `https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${e.eventId}`,
             isToday: isToday(e.startDateTime),
@@ -37,6 +39,20 @@ const ListPage = () => {
             title: e.title,
             imgSrc: e.imageUrl,
             src: `https://m.megabox.co.kr/event/detail?eventNo=${e.eventNo}`,
+            isToday: isToday(e.startDateTime),
+            isPastEvent: isPastEvent(e.startDateTime),
+            remainingTime: getRemainingTime(e.startDateTime)
+          };
+          eventList.push(event);
+        });
+
+        let lotteCuponEvents = await lotteApi.getCuponEventList();
+        lotteCuponEvents.forEach(e => {
+          let event = {
+            startDateTime: e.startDateTime,
+            title: e.title + " 무비싸다구",
+            imgSrc: e.imageUrl,
+            src: e.url,
             isToday: isToday(e.startDateTime),
             isPastEvent: isPastEvent(e.startDateTime),
             remainingTime: getRemainingTime(e.startDateTime)
@@ -133,9 +149,6 @@ const ListPage = () => {
               label="이미지 보기"
               sx={{ marginLeft: 2 }}
             />
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          (롯데시네마 추가 예정)<br/>&nbsp;
         </Typography>
         <Grid container spacing={4}>
           {filteredEventList.map((event, index) => (

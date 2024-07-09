@@ -7,6 +7,12 @@ class LotteMateApi {
     return data;
   }
 
+  async getCuponEventList(){
+    const response = await fetch(`${Constants.API_HOST}/lotte/event/cupon/list`);
+    const json = await response.json();
+    return json;
+  }
+
   async getLotteGiveawayEventListAsync() {
     const response = await fetch(`${Constants.API_HOST}/lotte/event/giveaway/list`);
     const data = await response.json();
