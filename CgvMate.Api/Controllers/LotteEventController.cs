@@ -31,6 +31,13 @@ public class LotteEventController : ControllerBase
         return Ok(events);
     }
 
+    [HttpGet("cupon/list")]
+    public async Task<IActionResult> GetCuponEventList()
+    {
+
+        var events = await _service.GetCuponEventsAsync();
+        return Ok(events);
+    }
 
     [HttpGet("giveaway/list")]
     public async Task<IActionResult> GetGiveawayEventList()
