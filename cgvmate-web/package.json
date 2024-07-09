@@ -32,6 +32,7 @@
     "@tabler/icons-react": "^2.47.0",
     "@vitejs/plugin-react": "^4.2.1",
     "apexcharts": "^3.46.2",
+    "axios": "^1.7.2",
     "cheerio": "^1.0.0-rc.12",
     "env-cmd": "^10.1.0",
     "formik": "^2.4.5",

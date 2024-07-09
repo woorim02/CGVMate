@@ -22,8 +22,7 @@ const Constants = {
   megabox_event_giveaway_detail: "/megabox/event/giveaway/detail",
 
   // API Host
-  API_HOST: "https://api.cgvmate.com"
-  // API_HOST: "http://localhost:8080"
+  API_HOST: process.env.NODE_ENV === 'development' ? "http://localhost:8080" : "https://api.cgvmate.com"
 };
 
 // Export the constants for use in other modules
