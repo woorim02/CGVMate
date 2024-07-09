@@ -18,6 +18,10 @@ const ListPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+}, []);
+
+  useEffect(() => {
     async function fetchCuponEventList() {
       try {
         let eventList = [];
@@ -164,7 +168,11 @@ const ListPage = () => {
         </Typography>
         <Grid container spacing={4}>
 
-        <DisplayAds adSlot='4893505812' style={{display: 'inline-block', width:'300px', height: '100px'}}/>
+          <ins class="adsbygoogle"
+            style={{ display: 'inline-block', width: '300px', height: '100px' }}
+            data-ad-client="ca-pub-2422895337222657"
+            data-ad-slot="4893505812">
+          </ins>
           {filteredEventList.map((event, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
               <Card
