@@ -117,7 +117,7 @@ const ListPage = () => {
     const now = new Date();
     const difference = eventDate - now;
 
-    if (difference <= 0) return "종료됨";
+    if (difference <= 0) return "0시간 0분 0초";
 
     const hours = Math.floor(difference / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
