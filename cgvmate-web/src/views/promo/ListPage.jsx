@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box, Container, Typography, Card, CardMedia, CardContent, Grid, TextField, Button, FormControlLabel, Checkbox } from '@mui/material';
 import CgvMateApi from 'api/cgvmateApi';
@@ -9,6 +10,7 @@ const ListPage = () => {
   const cgvApi = new CgvMateApi();
   const megaboxApi = new MegaboxApi();
   const lotteApi = new LotteApi();
+  const navigate  = useNavigate();
   const [eventList, setEventList] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [showImage, setShowImage] = useState(false);
@@ -154,7 +156,7 @@ const ListPage = () => {
           {filteredEventList.map((event, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
               <Card
-                onClick={() => window.open(event.src, '_blank')}
+                onClick={() => window.location.href = event.src}
                 sx={{
                   backgroundColor: !event.isPastEvent && event.isToday ? '#fbe9e7' : '#ffffff' // Change background color for today's events
                 }}
