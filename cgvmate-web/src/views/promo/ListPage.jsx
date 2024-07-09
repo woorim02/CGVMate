@@ -167,20 +167,22 @@ const ListPage = () => {
           />
         </Typography>
         <Grid container spacing={4} sx={{ marginTop: '10px' }}>
-          <Card>
-            <CardMedia
-              component="div"
-              height="100"
-              width="300"
-            />
-            <CardContent>
-            <ins class="adsbygoogle"
-                style={{ display: 'inline-block', width: '300px', height: '100px' }}
-                data-ad-client="ca-pub-2422895337222657"
-                data-ad-slot="4893505812">
-              </ins>
-            </CardContent>
-          </Card>
+          <Grid item xs={12} sm={6} md={3}>
+            <Card>
+              <CardMedia
+                component="div"
+                height="100"
+                width="300"
+              />
+              <CardContent>
+                <ins className="adsbygoogle"
+                  style={{ display: 'inline-block', width: '300px', height: '100px' }}
+                  data-ad-client="ca-pub-2422895337222657"
+                  data-ad-slot="4893505812">
+                </ins>
+              </CardContent>
+            </Card>
+          </Grid>
           {filteredEventList.map((event, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
               <Card
