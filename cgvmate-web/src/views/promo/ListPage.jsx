@@ -25,6 +25,7 @@ const ListPage = () => {
             src: `https://m.cgv.co.kr/WebApp/EventNotiV4/EventDetailGeneralUnited.aspx?seq=${e.eventId}`,
             isToday: isToday(e.startDateTime),
             isPastEvent: isPastEvent(e.startDateTime),
+            remainingTime: getRemainingTime(e.startDateTime)
           };
           eventList.push(event);
         });
@@ -38,6 +39,7 @@ const ListPage = () => {
             src: `https://m.megabox.co.kr/event/detail?eventNo=${e.eventNo}`,
             isToday: isToday(e.startDateTime),
             isPastEvent: isPastEvent(e.startDateTime),
+            remainingTime: getRemainingTime(e.startDateTime)
           };
           eventList.push(event);
         });
@@ -51,6 +53,19 @@ const ListPage = () => {
     }
     fetchCuponEventList();
   }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const updatedEventList = eventList.map(event => ({
+        ...event,
+        remainingTime: getRemainingTime(event.startDateTime)
+      }));
+      setEventList(updatedEventList);
+      setFilteredEventList(updatedEventList.filter(event => event.title.toLowerCase().includes(searchTerm)));
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [eventList, searchTerm]);
 
   const handleSearchChange = (event) => {
     const value = event.target.value.toLowerCase();
@@ -77,6 +92,20 @@ const ListPage = () => {
     const now = new Date();
     const eventDate = new Date(date);
     return eventDate < now;
+  };
+
+  const getRemainingTime = (startDateTime) => {
+    const eventDate = new Date(startDateTime);
+    const now = new Date();
+    const difference = eventDate - now;
+
+    if (difference <= 0) return "종료됨";
+
+    const hours = Math.floor(difference / (1000 * 60 * 60));
+    const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+    return `${hours}시간 ${minutes}분 ${seconds}초`;
   };
 
   return (
@@ -114,7 +143,7 @@ const ListPage = () => {
               <Card
                 onClick={() => window.open(event.src, '_blank')}
                 sx={{
-                  backgroundColor: !event.isPastEvent ? '#fbe9e7' : '#ffffff' // Change background color for today's events
+                  backgroundColor: !event.isPastEvent && event.isToday ? '#fbe9e7' : '#ffffff' // Change background color for today's events
                 }}
               >
                 <CardMedia
@@ -134,6 +163,13 @@ const ListPage = () => {
                   </Typography>
                   <Typography variant="body2" color="text.primary" fontWeight={'600'}>
                     {new Date(event.startDateTime).toLocaleString()}
+                  </Typography>
+                  <Typography
+                    variant="h6"
+                    component="div"
+                    color={parseInt(event.remainingTime.split('시간')[0]) < 1 ? 'red' : 'text.secondary'}
+                  >
+                    남은 시간: {event.remainingTime}
                   </Typography>
                 </CardContent>
               </Card>
