@@ -5,12 +5,13 @@ import { Box, Container, Typography, Card, CardMedia, CardContent, Grid, TextFie
 import CgvMateApi from 'api/cgvmateApi';
 import MegaboxApi from 'api/megaboxApi';
 import LotteApi from 'api/lotteApi';
+import DisplayAds from 'components/DisplayAds';
 
 const ListPage = () => {
   const cgvApi = new CgvMateApi();
   const megaboxApi = new MegaboxApi();
   const lotteApi = new LotteApi();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const [eventList, setEventList] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [showImage, setShowImage] = useState(false);
@@ -96,7 +97,7 @@ const ListPage = () => {
     const seconds = date.getSeconds().toString().padStart(2, '0');
     const period = hours >= 12 ? '오후' : '오전';
     const formattedHours = hours % 12 || 12; // 12시간제로 변환
-  
+
     return `${year}. ${month}. ${day}. (${weekday}) ${period} ${formattedHours}:${minutes}:${seconds}`;
   };
 
@@ -147,21 +148,23 @@ const ListPage = () => {
       </Helmet>
       <Container maxWidth="100%">
         <Typography variant="h4" component="h1" gutterBottom
-         sx={{display:"flex", alignItems: 'center', justifyContent: 'space-between', margin:0}}>
+          sx={{ display: "flex", alignItems: 'center', justifyContent: 'space-between', margin: 0 }}>
           프로모션 쿠폰 목록
           <FormControlLabel
-              control={
-                <Checkbox
-                  checked={showImage}
-                  onChange={() => setShowImage(!showImage)}
-                  color="primary"
-                />
-              }
-              label="이미지 보기"
-              sx={{ marginLeft: 2 }}
-            />
+            control={
+              <Checkbox
+                checked={showImage}
+                onChange={() => setShowImage(!showImage)}
+                color="primary"
+              />
+            }
+            label="이미지 보기"
+            sx={{ marginLeft: 2 }}
+          />
         </Typography>
         <Grid container spacing={4}>
+
+        <DisplayAds adSlot='4893505812' style={{display: 'inline-block', width:'300px', height: '100px'}}/>
           {filteredEventList.map((event, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
               <Card
