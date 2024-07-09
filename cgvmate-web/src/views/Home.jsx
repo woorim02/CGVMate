@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box, Container, Typography, Card, CardContent, Grid, Button } from '@mui/material';
 
 const Home = () => {
   
+  const navigate  = useNavigate();
+
   useEffect(() => {
     document.title = 'CGV 도우미 | 홈';
   }, []);
 
   const handleCardClick = (url) => {
-    window.location.href = url;
+    navigate(url);
   };
 
   return (
@@ -33,7 +36,7 @@ const Home = () => {
           </Typography>
         <Grid container spacing={4} justifyContent="center">
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick('/promo/list')}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/promo/list')}>
               <CardContent>
                 <Typography variant="h5" component="div">
                   프로모션 쿠폰 목록 조회
@@ -42,7 +45,7 @@ const Home = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick('/cgv/event/giveaway')}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/cgv/event/giveaway')}>
               <CardContent>
                 <Typography variant="h5" component="div">
                 CGV 경품 이벤트 현황
@@ -51,7 +54,7 @@ const Home = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick('/cgv/event/cupon/speed')}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/cgv/event/cupon/speed')}>
               <CardContent>
                 <Typography variant="h5" component="div">
                 CGV 스피드 쿠폰 조회
@@ -60,7 +63,7 @@ const Home = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick('/cgv/event/cupon/surprise')}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/cgv/event/cupon/surprise')}>
               <CardContent>
                 <Typography variant="h5" component="div">
                 CGV 서프라이즈 쿠폰 조회
@@ -69,7 +72,7 @@ const Home = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick('/lotte/event/giveaway')}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/lotte/event/giveaway')}>
               <CardContent>
                 <Typography variant="h5" component="div">
                   롯데시네마 경품 이벤트 현황
@@ -78,7 +81,7 @@ const Home = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick('/megabox/event/giveaway')}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/megabox/event/giveaway')}>
               <CardContent>
                 <Typography variant="h5" component="div">
                   메가박스 경품 이벤트 현황
@@ -87,13 +90,13 @@ const Home = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: '100%', cursor: 'pointer' }} onClick={() => handleCardClick('https://github.com/woorim02/CGVMate')}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('https://github.com/woorim02/CGVMate')}>
               <CardContent>
                 <Typography variant="h5" component="div">
                   Contact
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  궁금한 사항이 있으시면 연락주세요.
+                  버그 제보/문의
                 </Typography>
                 <Button variant="contained" color="primary" sx={{ mt: 2 }} href="https://github.com/woorim02/CGVMate">
                   Github
