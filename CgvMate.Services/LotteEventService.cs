@@ -2,7 +2,9 @@
 using CgvMate.Data.Enums;
 using CgvMate.Services.DTOs.LotteCinema;
 using CgvMate.Services.Repos;
+using HtmlAgilityPack;
 using Newtonsoft.Json;
+using System.Globalization;
 using System.Text;
 
 namespace CgvMate.Services;
@@ -33,6 +35,33 @@ public class LotteService
         var root = JsonConvert.DeserializeObject<EventsResDTO>(json);
 
         return root.Items;
+    }
+
+    public async Task<List<CuponEvent>> GetCuponEventsAsync()
+    {
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://www.lottecinema.co.kr/LCWS/Event/EventData.aspx");
+        request.Headers.Add("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1");
+        var body = new CuponEventReqDto()
+        {
+            MethodName = "GetSpeedEventDetailMulti",
+            EventID = "",
+            MainEventID = "201210016922014",
+        };
+        var json = await SendForm(request, JsonConvert.SerializeObject(body));
+        var res = JsonConvert.DeserializeObject<CuponEventResDto>(json);
+        var cupons = new List<CuponEvent>();
+        foreach (var detail in res.SpeedEventDetail[0].ItemGroup)
+        {
+            var item = detail.Items[0];
+            var cupon = new CuponEvent()
+            {
+                Title = item.MovieNm,
+                ImageUrl = item.Img5Url,
+                StartDateTime = DateTime.ParseExact($"{item.ProgressStartDate} {item.ProgressStartTime}", "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
+            };
+            cupons.Add(cupon);
+        }
+        return cupons;
     }
 
     public async Task<List<Event>> GetGiveawayEventsAsync()
