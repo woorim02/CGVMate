@@ -3,7 +3,7 @@
 
 ![CGV 도우미](/docs/img/screeen_mainpage.png)  
 
-CGV 도우미는 영화를 좋아하는 사람들을 위한 최고의 도구입니다. 경품 수량 조회, 프로모션 쿠폰 취소표 조회등 공식 앱/웹에서 지원하지 않는 다양한 기능들을 제공하며, 무료로 제공되는 오픈소스 소프트웨어입니다.
+CGV 도우미는 영화를 좋아하는 사람들을 위한 종합 영화 정보 사이트입니다. 경품 수량 조회, 프로모션 쿠폰 취소표 조회등 공식 앱/웹에서 지원하지 않는 다양한 기능들을 제공하며, 무료로 제공되는 오픈소스 소프트웨어입니다.
 
 웹 프론트엔드는 React,  
 백엔드는 ASP.NET Core로 개발되었으며,  
@@ -16,11 +16,12 @@ CGV 도우미는 영화를 좋아하는 사람들을 위한 최고의 도구입�
 
 <a href="https://api.cgvmate.com/swagger/index.html">api.cgvmate.com</a> 에서 api 명세서를 확인할 수 있습니다. 자유롭게 사용 가능합니다.  
 
-무언가 잘 작동하지 않나요? 혹은 건의사항이 있으신가요?   <a href="https://open.kakao.com/o/sSS6JJsg">카카오 오픈채팅</a>혹은 <a href="https://github.com/woorim02/CGVMate/issues">Github 이슈</a>로 문의해 주세요!
+건의사항, 버그 제보/문의는 <a href="https://open.kakao.com/o/sSS6JJsg">카카오 오픈채팅</a>혹은 <a href="https://github.com/woorim02/CGVMate/issues">Github 이슈</a>로 문의해 주세요!
 
 ## 지원하는 기능
 CGV 도우미는 다음과 같은 기능을 제공합니다.  
-
+- 3사 공통  
+프로모션 쿠폰 모아보기  
  - CGV  
 이벤트 조회  
 CGV 경품 이벤트 현황 조회, 경품 수량 확인  
@@ -66,10 +67,7 @@ docker-compose 예시입니다.
         image: 'cgvmate-api:latest'
         restart: always
         container_name: cgvmate-api
-        environment:
-          - CONNECTION_STRING=${CONNECTION_STRING};
-          - IV=${IV}
-          - KEY=${KEY}
+        env_file: ".env"
         ports:
           - 8080:8080
 
@@ -90,8 +88,8 @@ docker-compose 예시입니다.
     # Publish
 
     git clone https://github.com/woorim02/CGVMate.git
-    cd CgvMate && cd CgvMate.Client
-    dotnet publish --configuration Release
+    cd cgvmate-web && npm install
+    npm run build
 
 
 ## 디버깅
