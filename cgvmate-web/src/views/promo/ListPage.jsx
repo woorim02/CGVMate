@@ -182,7 +182,7 @@ const ListPage = () => {
                   <Typography
                     variant="h6"
                     component="div"
-                    color={parseInt(event.remainingTime.split('시간')[0]) < 1 ? 'red' : 'text.secondary'}
+                    color={parseInt(event.remainingTime.split('시간')[0]) < 1 && event.remainingTime !== "0시간 0분 0초" ? 'red' : 'text.secondary'}
                   >
                     남은 시간: {event.remainingTime}
                   </Typography>
