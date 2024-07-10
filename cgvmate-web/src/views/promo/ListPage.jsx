@@ -5,16 +5,21 @@ import { Box, Container, Typography, Card, CardMedia, CardContent, Grid, TextFie
 import CgvMateApi from 'api/cgvmateApi';
 import MegaboxApi from 'api/megaboxApi';
 import LotteApi from 'api/lotteApi';
+import DisplayAds from 'components/DisplayAds';
 
 const ListPage = () => {
   const cgvApi = new CgvMateApi();
   const megaboxApi = new MegaboxApi();
   const lotteApi = new LotteApi();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
   const [eventList, setEventList] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [showImage, setShowImage] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  }, []);
 
   useEffect(() => {
     async function fetchCuponEventList() {
@@ -85,10 +90,19 @@ const ListPage = () => {
     return () => clearInterval(intervalId);
   }, [eventList, searchTerm]);
 
-  const handleSearchChange = (event) => {
-    const value = event.target.value.toLowerCase();
-    setSearchTerm(value);
-    filterEvents(value);
+  const formatDateTime = (dateStr) => {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+    const weekday = date.toLocaleString('ko-KR', { weekday: 'short' });
+    const hours = date.getHours();
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const seconds = date.getSeconds().toString().padStart(2, '0');
+    const period = hours >= 12 ? '오후' : '오전';
+    const formattedHours = hours % 12 || 12; // 12시간제로 변환
+
+    return `${year}. ${month}. ${day}. (${weekday}) ${period} ${formattedHours}:${minutes}:${seconds}`;
   };
 
   const filterEvents = (searchTerm) => {
@@ -117,7 +131,7 @@ const ListPage = () => {
     const now = new Date();
     const difference = eventDate - now;
 
-    if (difference <= 0) return "0시간 0분 0초";
+    if (difference <= 0) return "종료됨";
 
     const hours = Math.floor(difference / (1000 * 60 * 60));
     const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
@@ -138,21 +152,28 @@ const ListPage = () => {
       </Helmet>
       <Container maxWidth="100%">
         <Typography variant="h4" component="h1" gutterBottom
-         sx={{display:"flex", alignItems: 'center', justifyContent: 'space-between', margin:0}}>
+          sx={{ display: "flex", alignItems: 'center', justifyContent: 'space-between', margin: 0 }}>
           프로모션 쿠폰 목록
           <FormControlLabel
-              control={
-                <Checkbox
-                  checked={showImage}
-                  onChange={() => setShowImage(!showImage)}
-                  color="primary"
-                />
-              }
-              label="이미지 보기"
-              sx={{ marginLeft: 2 }}
-            />
+            control={
+              <Checkbox
+                checked={showImage}
+                onChange={() => setShowImage(!showImage)}
+                color="primary"
+              />
+            }
+            label="이미지 보기"
+            sx={{ marginLeft: 2 }}
+          />
         </Typography>
-        <Grid container spacing={4}>
+        <Grid container spacing={4} sx={{ marginTop: '10px' }}>
+          <Grid item xs={12} sm={6} md={3}>
+                <ins className="adsbygoogle"
+                  style={{ display: 'inline-block', width: '300px', height: '100px' }}
+                  data-ad-client="ca-pub-2422895337222657"
+                  data-ad-slot="4893505812">
+                </ins>
+          </Grid>
           {filteredEventList.map((event, index) => (
             <Grid item key={index} xs={12} sm={6} md={3}>
               <Card
@@ -177,12 +198,12 @@ const ListPage = () => {
                     {event.title}
                   </Typography>
                   <Typography variant="body2" color="text.primary" fontWeight={'600'}>
-                    {new Date(event.startDateTime).toLocaleString()}
+                    {formatDateTime(event.startDateTime)}
                   </Typography>
                   <Typography
                     variant="h6"
                     component="div"
-                    color={parseInt(event.remainingTime.split('시간')[0]) < 1 ? 'red' : 'text.secondary'}
+                    color={parseInt(event.remainingTime.split('시간')[0]) < 1 && event.remainingTime !== "0시간 0분 0초" ? 'red' : 'text.secondary'}
                   >
                     남은 시간: {event.remainingTime}
                   </Typography>

@@ -131,16 +131,16 @@ const GiveawayDetailPage = () => {
                             justifyContent: 'center',
                             width: '60px',
                             height: '24px',
-                            fontSize: '0.85em',
-                            color: '#666',
+                            fontSize: '1em',
                             backgroundColor: countTypeCodeToColor(item.CountTypeCode),
+                            fontWeight: 500,
                             borderRadius: '30px',
                           }}
                         >
                           {item.GiveawayRemainCount}
                         </Box>
                       </Box>
-                      <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1 }}>
+                      <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1}}>
                         {countTypeCodeToText(item.CountTypeCode)}
                       </Typography>
                       <Divider sx={{ marginTop: 1 }} />
