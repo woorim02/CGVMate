@@ -77,6 +77,7 @@ public class MegaboxEventService
 
         var latestItem = events.OrderByDescending(x => x.ID).FirstOrDefault();
         var latestItemId = int.Parse(latestItem.ID.Replace("FG", ""));
+        int errCount = 0;
         while(true)
         {
             var detail = await _api.GetGiveawayEventDetailAsync($"FG{++latestItemId:D6}");
@@ -90,6 +91,10 @@ public class MegaboxEventService
                 });
             }
             else
+            {
+                errCount++;
+            }
+            if (errCount > 3)
             {
                 break;
             }
