@@ -10,6 +10,7 @@ public interface IPostRepo
     Task<IEnumerable<Post>> GetPostsByUserIdAsync(int userId, int pageNo, int pageSize);
     Task<IEnumerable<PostSummary>> GetPostSummarysByBoardIdAsync(int boardId, int pageNo, int pageSize);
     Task<IEnumerable<PostSummary>> GetPostSummarysByUserIdAsync(int userId, int pageNo, int pageSize);
+    Task<IEnumerable<PostSummary>> GetPostSummariesByBoardIdAndUserId(int boardId, int userId, int pageNo, int pageSize);
     Task AddPostAsync(Post post);
     Task UpdatePostAsync(Post post);
     Task DeletePostAsync(int id);
