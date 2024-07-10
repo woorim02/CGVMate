@@ -47,4 +47,14 @@ public class PostService : IPostService
     {
         return _postRepo.DeletePostAsync(id);
     }
+
+    public Task<IEnumerable<PostSummary>> GetPostSummarysByBoardIdAsync(int boardId, int pageNo, int pageSize)
+    {
+        return _postRepo.GetPostSummarysByBoardIdAsync(boardId, pageNo, pageSize);
+    }
+
+    public Task<IEnumerable<PostSummary>> GetPostSummarysByUserIdAsync(int userId, int pageNo, int pageSize)
+    {
+        return _postRepo.GetPostSummarysByUserIdAsync(userId, pageNo, pageSize);
+    }
 }
