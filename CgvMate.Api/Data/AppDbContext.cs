@@ -7,6 +7,7 @@ using CgvCuponEvent = CgvMate.Data.Entities.Cgv.CuponEvent;
 using LotteEvent = CgvMate.Data.Entities.LotteCinema.Event;
 using MegaboxGiveawayEvent = CgvMate.Data.Entities.Megabox.GiveawayEvent;
 using MegaboxCuponEvent = CgvMate.Data.Entities.Megabox.CuponEvent;
+using CgvMate.Api.Entites;
 
 namespace CgvMate.Api.Data;
 
@@ -24,7 +25,12 @@ public class AppDbContext : DbContext
     public DbSet<LotteGiveawayEventModel> LotteGiveawayEventModels { get; set; }
     public DbSet<MegaboxGiveawayEvent> MegaboxGiveawayEvents { get; set; }
     public DbSet<MegaboxCuponEvent> MegaboxCuponEvents { get; set; }
-    
+
+    public DbSet<Board> Boards { get; set; }
+    public DbSet<Post> Posts { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<User> Users { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<CgvGiveawayEvent>()
@@ -55,6 +61,56 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<LotteGiveawayEventModel>(entity =>
         {
             entity.HasKey(x => x.EventID);
+        });
+
+
+        // Board entity configuration
+        modelBuilder.Entity<Board>(builder =>
+        {
+            builder.HasKey(b => b.Id);
+            builder.HasMany(b => b.Posts)
+                   .WithOne(p => p.Board)
+                   .HasForeignKey(p => p.BoardId);
+        });
+
+        // Post entity configuration
+        modelBuilder.Entity<Post>(builder =>
+        {
+            builder.HasKey(p => p.Id);
+            builder.HasOne(p => p.User)
+                   .WithMany(u => u.Posts)
+                   .HasForeignKey(p => p.UserId);
+            builder.HasMany(p => p.Comments)
+                   .WithOne(c => c.Post)
+                   .HasForeignKey(c => c.PostId);
+        });
+
+        // Comment entity configuration
+        modelBuilder.Entity<Comment>(builder =>
+        {
+            builder.HasKey(c => c.Id);
+            builder.HasOne(c => c.Post)
+                   .WithMany(p => p.Comments)
+                   .HasForeignKey(c => c.PostId);
+            builder.HasOne(c => c.ParentComment)
+                   .WithMany(c => c.Children)
+                   .HasForeignKey(c => c.ParentCommentId)
+                   .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(c => c.User)
+                   .WithMany(u => u.Comments)
+                   .HasForeignKey(c => c.UserId);
+        });
+
+        // User entity configuration
+        modelBuilder.Entity<User>(builder =>
+        {
+            builder.HasKey(u => u.Id);
+            builder.HasMany(u => u.Posts)
+                   .WithOne(p => p.User)
+                   .HasForeignKey(p => p.UserId);
+            builder.HasMany(u => u.Comments)
+                   .WithOne(c => c.User)
+                   .HasForeignKey(c => c.UserId);
         });
     }
 }
