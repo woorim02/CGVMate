@@ -21,9 +21,12 @@ public class Comment
     public ICollection<Comment> Children { get; set; } = new List<Comment>();
 
     // Writer
+    public bool IsAnonymous => UserId == -1;
     public string? WriterIP { get; set; }
     public string? WriterName { get; set; }
-    public int UserId { get; set; } = 0;
+    public string? WriterPasswordHash { get; set; }
+    public string? WriterPasswordSalt { get; set; }
+    public int UserId { get; set; } = -1;
     public User? User { get; set; }
 
     // Content
