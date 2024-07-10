@@ -34,10 +34,10 @@ public class AdminController : Controller
         if (request.UserName == adminUsername && request.Password == adminPassword)
         {
             var token = GenerateJwtToken();
-            _logger.LogInformation($"[{DateTime.Now}] 로그인 성공 ({request.UserName}/{HttpContext.Connection.RemoteIpAddress})");
+            _logger.LogInformation($"[{DateTime.Now}] 로그인 성공 ({request.UserName}/{HttpContext.GetServerVariable("HTTP_X_FORWARDED_FOR")})");
             return Ok(new { token });
         }
-        _logger.LogWarning($"[{DateTime.Now}] 로그인 실패 ({request.UserName}/{HttpContext.Connection.RemoteIpAddress})");
+        _logger.LogWarning($"[{DateTime.Now}] 로그인 실패 ({request.UserName}/{HttpContext.GetServerVariable("HTTP_X_FORWARDED_FOR")})");
         return Unauthorized();
     }
 

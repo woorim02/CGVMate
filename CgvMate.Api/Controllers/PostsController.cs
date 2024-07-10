@@ -38,7 +38,7 @@ public class PostsController : ControllerBase
     public async Task<ActionResult<PostAddReqDto>> AddPost(PostAddReqDto postDto)
     {
         var post = postDto.ToEntity();
-        post.WriterIP = HttpContext.Connection.RemoteIpAddress.ToString();
+        post.WriterIP = HttpContext.GetServerVariable("HTTP_X_FORWARDED_FOR");
         await _postService.AddPostAsync(post);
         return CreatedAtAction(nameof(GetPostById), new { id = post.Id }, postDto);
     }

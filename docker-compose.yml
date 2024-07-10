@@ -1,6 +1,6 @@
 services:
   cgvmate-api:
-    image: 'cgvmate-api:v1.4.0-alpha1'
+    image: 'cgvmate-api:v1.4.0-alpha2'
     restart: always
     container_name: cgvmate-api
     env_file: ".env"
