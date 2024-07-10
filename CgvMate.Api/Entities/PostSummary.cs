@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CgvMate.Api.Entites;
+namespace CgvMate.Api.Entities;
 
-public class Post
+public class PostSummary
 {
     public int Id { get; set; }
 
@@ -20,13 +20,9 @@ public class Post
     [Required]
     [StringLength(100)]
     public string Title { get; set; }
-    [Required]
-    public string Content { get; set; }
+
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public int ViewCount { get; set; } = 0;
     public int Upvote { get; set; } = 0;
     public int Downvote { get; set; } = 0;
-
-    // Comments
-    public ICollection<Comment> Comments { get; set; } = new List<Comment>();
 }

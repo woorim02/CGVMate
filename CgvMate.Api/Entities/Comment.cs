@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CgvMate.Api.Entites;
+namespace CgvMate.Api.Entities;
 
 public class Comment
 {
@@ -11,11 +11,14 @@ public class Comment
     public Post Post { get; set; }
 
     // Comment
-    public int ParentCommentId { get; set; }
+    /// <summary>
+    /// -1일 경우 부모 댓글이 존재하지 않음
+    /// </summary>
+    public int ParentCommentId { get; set; } = -1;
     public Comment? ParentComment { get; set; }
-    public bool HasParent => ParentComment is not null;
+    public bool HasParent => ParentCommentId == -1;
 
-    public ICollection<Comment> Children { get; set; }
+    public ICollection<Comment> Children { get; set; } = new List<Comment>();
 
     // Writer
     public string? WriterIP { get; set; }

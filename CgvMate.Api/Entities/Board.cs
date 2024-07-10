@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CgvMate.Api.Entites;
+namespace CgvMate.Api.Entities;
 
 public class Board
 {
