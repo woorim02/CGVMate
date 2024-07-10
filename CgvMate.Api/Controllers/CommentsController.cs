@@ -3,6 +3,7 @@ using CgvMate.Api.Entities;
 using CgvMate.Api.Services.Interfaces;
 using System.Threading.Tasks;
 using CgvMate.Api.DTOs;
+using Microsoft.Extensions.Hosting;
 
 namespace CgvMate.Api.Controllers
 {
@@ -22,6 +23,7 @@ namespace CgvMate.Api.Controllers
         {
             var comment = commentDto.ToEntity();
             await _commentService.AddCommentAsync(comment);
+            comment.WriterIP = HttpContext.Connection.RemoteIpAddress.ToString();
 
             var commentResDto = CommentResDTO.FromEntity(comment);
 

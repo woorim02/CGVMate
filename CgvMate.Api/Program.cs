@@ -6,6 +6,7 @@ using CgvMate.Api.Services.Interfaces;
 using CgvMate.Services;
 using CgvMate.Services.Repos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -22,6 +23,11 @@ namespace CgvMate.Api
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddControllers();
+            builder.Services.Configure<ForwardedHeadersOptions>(options =>
+            {
+                options.ForwardedHeaders =
+                    ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(opt =>
             {
@@ -184,6 +190,7 @@ namespace CgvMate.Api
                 app.UseSwagger();
                 app.UseSwaggerUI();
                 app.UseHsts();
+                app.UseForwardedHeaders();
             }
 
             app.UseHttpsRedirection();

@@ -38,6 +38,7 @@ public class PostsController : ControllerBase
     public async Task<ActionResult<PostAddReqDto>> AddPost(PostAddReqDto postDto)
     {
         var post = postDto.ToEntity();
+        post.WriterIP = HttpContext.Connection.RemoteIpAddress.ToString();
         await _postService.AddPostAsync(post);
         return CreatedAtAction(nameof(GetPostById), new { id = post.Id }, postDto);
     }
