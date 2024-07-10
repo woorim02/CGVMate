@@ -7,7 +7,7 @@ using CgvCuponEvent = CgvMate.Data.Entities.Cgv.CuponEvent;
 using LotteEvent = CgvMate.Data.Entities.LotteCinema.Event;
 using MegaboxGiveawayEvent = CgvMate.Data.Entities.Megabox.GiveawayEvent;
 using MegaboxCuponEvent = CgvMate.Data.Entities.Megabox.CuponEvent;
-using CgvMate.Api.Entites;
+using CgvMate.Api.Entities;
 
 namespace CgvMate.Api.Data;
 
@@ -105,6 +105,9 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<User>(builder =>
         {
             builder.HasKey(u => u.Id);
+            builder.HasIndex(u => u.Email).IsUnique();
+            builder.Ignore(u => u.PostCount);
+            builder.Ignore(u => u.CommentCount);
             builder.HasMany(u => u.Posts)
                    .WithOne(p => p.User)
                    .HasForeignKey(p => p.UserId);
