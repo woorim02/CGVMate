@@ -1,4 +1,4 @@
-﻿namespace CgvMate.Api.Services.Repos;
+﻿namespace CgvMate.Api.Services.Interfaces;
 
 public interface IAdminService
 {

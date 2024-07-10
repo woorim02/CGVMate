@@ -1,5 +1,5 @@
 ﻿using CgvMate.Api.DTOs;
-using CgvMate.Api.Services.Repos;
+using CgvMate.Api.Services.Interfaces;
 using CgvMate.Services.Repos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

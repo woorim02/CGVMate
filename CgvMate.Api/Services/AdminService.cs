@@ -1,4 +1,4 @@
-﻿using CgvMate.Api.Services.Repos;
+﻿using CgvMate.Api.Services.Interfaces;
 using CgvMate.Services.Repos;
 
 namespace CgvMate.Api.Services;

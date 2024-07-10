@@ -2,7 +2,7 @@
 using CgvMate.Api.Data;
 using CgvMate.Api.Middleware;
 using CgvMate.Api.Services;
-using CgvMate.Api.Services.Repos;
+using CgvMate.Api.Services.Interfaces;
 using CgvMate.Services;
 using CgvMate.Services.Repos;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
