@@ -34,7 +34,7 @@ public class AdminController : Controller
         if (request.UserName == adminUsername && request.Password == adminPassword)
         {
             var token = GenerateJwtToken();
-            _logger.LogInformation($"[{DateTime.Now}] 로그인 성공 ({request.UserName}/{HttpContext.GetServerVariable("X-Forwarded-For")})");
+            _logger.LogInformation($"[{DateTime.Now}] 로그인 성공 ({request.UserName}/{HttpContext.Response.Headers["X-Forwarded-For"].FirstOrDefault()})");
             return Ok(new { token });
         }
         _logger.LogWarning($"[{DateTime.Now}] 로그인 실패 ({request.UserName}/{HttpContext.GetServerVariable("X-Forwarded-For")})");

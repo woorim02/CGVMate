@@ -23,7 +23,7 @@ namespace CgvMate.Api.Controllers
         {
             var comment = commentDto.ToEntity();
             await _commentService.AddCommentAsync(comment);
-            comment.WriterIP = HttpContext.GetServerVariable("X-Forwarded-For");
+            comment.WriterIP = HttpContext.Response.Headers["X-Forwarded-For"].FirstOrDefault();
 
             var commentResDto = CommentResDTO.FromEntity(comment);
 
