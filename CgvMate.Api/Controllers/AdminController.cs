@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -30,6 +31,7 @@ public class AdminController : Controller
     {
         var adminUsername = Environment.GetEnvironmentVariable("ADMIN_ID");
         var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
+        Console.WriteLine(JsonConvert.SerializeObject(HttpContext.Response.Headers, Formatting.Indented));
 
         if (request.UserName == adminUsername && request.Password == adminPassword)
         {
