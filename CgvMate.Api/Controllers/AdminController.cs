@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -30,14 +31,14 @@ public class AdminController : Controller
     {
         var adminUsername = Environment.GetEnvironmentVariable("ADMIN_ID");
         var adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
-
+        Console.WriteLine(HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString());
         if (request.UserName == adminUsername && request.Password == adminPassword)
         {
             var token = GenerateJwtToken();
-            _logger.LogInformation($"[{DateTime.Now}] 로그인 성공 ({request.UserName}/{HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault()})");
+            _logger.LogInformation($"[{DateTime.Now}] 로그인 성공 ({request.UserName}/{HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()})");
             return Ok(new { token });
         }
-        _logger.LogWarning($"[{DateTime.Now}] 로그인 실패 ({request.UserName}/{HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault()})");
+        _logger.LogWarning($"[{DateTime.Now}] 로그인 실패 ({request.UserName}/{HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString()})");
         return Unauthorized();
     }
 
