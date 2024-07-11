@@ -9,6 +9,7 @@ const GiveawayPage = () => {
   const [eventList, setEventList] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
   const api = useRef(new LotteApi()).current;
 
   useEffect(() => {
@@ -25,15 +26,15 @@ const GiveawayPage = () => {
     fetchEvents();
   }, [api]);
 
+  useEffect(() => {
+    const filteredEvents = eventList.filter(event => event.eventName.toLowerCase().includes(searchText.toLowerCase()));
+    setFilteredEventList(filteredEvents);
+  }, [searchText, eventList]);
+
   const handleSearchChange = (event) => {
-    const searchText = event.target.value.toLowerCase().trim();
-    if (!searchText) {
-      setFilteredEventList(eventList);
-    } else {
-      const filtered = eventList.filter(event => event.title.toLowerCase().includes(searchText));
-      setFilteredEventList(filtered);
-    }
+    setSearchText(event.target.value);
   };
+
   const convertToDDay = (dateString) => {
     const targetDate = new Date(dateString);
     const currentDate = new Date().setHours(0, 0, 0, 0);
@@ -48,6 +49,7 @@ const GiveawayPage = () => {
       return 'D-Day';
     }
   };
+
   return (
     <Box sx={{ padding: 0 }}>
       <Helmet>
@@ -67,6 +69,7 @@ const GiveawayPage = () => {
             variant="outlined"
             onChange={handleSearchChange}
             placeholder="이벤트 검색"
+            value={searchText}
             sx={{ flexGrow: 1 }}
             inputProps={{ style: { height: '30px', padding: '0 14px' } }}
           />
