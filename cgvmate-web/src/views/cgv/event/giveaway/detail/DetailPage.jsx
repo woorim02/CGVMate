@@ -121,7 +121,7 @@ const GiveawayDetailPage = () => {
               <Grid item xs={12} sm={8} md={9}>
                 <List>
                   {info.TheaterList.map((item, i) => (
-                    <ListItem key={i} sx={{ display: 'flex', flexDirection: 'column', paddingTop: 1, paddingBottom: 1, alignItems:'flex-start' }}>
+                    <ListItem key={i} sx={{ display: 'flex', flexDirection: 'column', paddingTop: 0.5, paddingBottom: 0.5, alignItems:'flex-start' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         <Typography variant="body1" sx={{display: 'flex', alignItems: 'center'}}>{item.TheaterName}</Typography>
                         <Box
@@ -140,7 +140,7 @@ const GiveawayDetailPage = () => {
                           {item.GiveawayRemainCount}
                         </Box>
                       </Box>
-                      <Typography variant="body2" color="textSecondary" sx={{ marginTop: 1}}>
+                      <Typography variant="body2" color="textSecondary" sx={{ marginTop: 0}}>
                         {countTypeCodeToText(item.CountTypeCode)}
                       </Typography>
                       <Divider sx={{ marginTop: 1 }} />
