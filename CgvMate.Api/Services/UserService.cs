@@ -1,9 +1,10 @@
 ﻿using CgvMate.Api.Data.Interfaces;
 using CgvMate.Api.Entities;
+using CgvMate.Api.Services.Interfaces;
 
 namespace CgvMate.Api.Services;
 
-public class UserService
+public class UserService : IUserService
 {
     private readonly IUserRepo _userRepo;
 
