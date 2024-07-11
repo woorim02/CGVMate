@@ -39,7 +39,7 @@ public class AdminController : Controller
             _logger.LogInformation($"[{DateTime.Now}] 로그인 성공 ({request.UserName}/{HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault()})");
             return Ok(new { token });
         }
-        _logger.LogWarning($"[{DateTime.Now}] 로그인 실패 ({request.UserName}/{HttpContext.GetServerVariable("X-Forwarded-For")})");
+        _logger.LogWarning($"[{DateTime.Now}] 로그인 실패 ({request.UserName}/{HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault()})");
         return Unauthorized();
     }
 
