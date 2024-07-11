@@ -71,8 +71,8 @@ const EventPage = () => {
         <Grid container spacing={2}>
           {filteredEvents.length > 0 ? (
             filteredEvents.map(item => (
-              <Grid item key={item.eventId} xs={12} sm={6} md={4} lg={3}>
-                <Card onClick={() => cardOnClick(item.eventId)} sx={{ cursor: 'pointer', maxHeight: '300px' }}>
+              <Grid item key={item.eventID} xs={12} sm={6} md={4} lg={3}>
+                <Card onClick={() => cardOnClick(item.eventID)} sx={{ cursor: 'pointer', maxHeight: '300px' }}>
 
                   <CardMedia
                     component="img"
