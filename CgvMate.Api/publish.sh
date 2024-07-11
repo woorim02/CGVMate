@@ -1,1 +1,1 @@
-dotnet publish --os linux --arch x64 /t:PublishContainer -c Release -p:ContainerImageTag=v1.4.1-alpha1
+dotnet publish --os linux --arch x64 /t:PublishContainer -c Release -p:ContainerImageTag=v1.4.1-alpha2
