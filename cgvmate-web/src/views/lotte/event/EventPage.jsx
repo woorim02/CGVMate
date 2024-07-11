@@ -9,7 +9,12 @@ const EventPage = () => {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [tabValue, setTabValue] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsMobile(isMobileDevice());
+  }, []);
 
   useEffect(() => {
     document.title = '롯데시네마 이벤트 목록';
@@ -42,7 +47,12 @@ const EventPage = () => {
   };
 
   const cardOnClick = (eventId) => {
-    window.location.href = `https://event.lottecinema.co.kr/NLCHS/Event/EventTemplateInfo?eventId=${eventId}`;
+    window.location.href = `https://event.lottecinema.co.kr/${isMobile ? 'NLCMW' : 'NLCHS'}/Event/EventTemplateInfo?eventId=${eventId}`;
+  };
+
+  const isMobileDevice = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return /android|iPhone|iPad|iPod|blackberry|iemobile|opera mini|windows phone/i.test(userAgent);
   };
 
   return (
@@ -71,8 +81,8 @@ const EventPage = () => {
         <Grid container spacing={2}>
           {filteredEvents.length > 0 ? (
             filteredEvents.map(item => (
-              <Grid item key={item.eventId} xs={12} sm={6} md={4} lg={3}>
-                <Card onClick={() => cardOnClick(item.eventId)} sx={{ cursor: 'pointer', maxHeight: '300px' }}>
+              <Grid item key={item.eventID} xs={12} sm={6} md={4} lg={3}>
+                <Card onClick={() => cardOnClick(item.eventID)} sx={{ cursor: 'pointer', maxHeight: '300px' }}>
 
                   <CardMedia
                     component="img"
