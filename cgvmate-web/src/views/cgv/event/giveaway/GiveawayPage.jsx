@@ -78,14 +78,14 @@ const GiveawayPage = () => {
                   {index === Math.floor(filteredEventList.length / 4) &&
                     filteredEventList.length > 10 &&
                     <ListItem>
-                      <BannerAds adSlot='4357139561' />
+                      <BannerAds adSlot='1843074752' />
                     </ListItem>
                   }
 
                   {index === Math.floor(filteredEventList.length * (3 / 4)) &&
                     filteredEventList.length > 10 &&
                     <ListItem>
-                      <BannerAds adSlot='4357139561' />
+                      <BannerAds adSlot='1843074752' />
                     </ListItem>
                   }
                   <ListItem button component="a" href={`/cgv/event/giveaway/detail?eventIndex=${item.eventIndex}`}>
