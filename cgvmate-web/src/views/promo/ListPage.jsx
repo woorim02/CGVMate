@@ -93,7 +93,7 @@ const ListPage = () => {
   const formatDateTime = (dateStr) => {
     const date = new Date(dateStr);
     const year = date.getFullYear();
-    const month = date.getMonth();
+    const month = date.getMonth() + 1;
     const day = date.getDate();
     const weekday = date.toLocaleString('ko-KR', { weekday: 'short' });
     const hours = date.getHours();
