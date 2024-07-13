@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 const DisplayAds = ({ adSlot, style }) => {
+  const location = useLocation();
+
   useEffect(() => {
     const pushAd = () => {
       try {
@@ -25,6 +28,20 @@ const DisplayAds = ({ adSlot, style }) => {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    const pushAd = () => {
+      try {
+        const adsbygoogle = window.adsbygoogle;
+        adsbygoogle.push({});
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    // Refresh ad when URL changes
+    pushAd();
+  }, [location]);
 
   return (
     <ins
