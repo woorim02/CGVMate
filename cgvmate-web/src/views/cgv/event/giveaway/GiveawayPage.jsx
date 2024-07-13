@@ -45,7 +45,7 @@ const GiveawayPage = () => {
         <meta property="og:url" content={window.location.href} />
       </Helmet>
       <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h6" sx={{fontSize: '0.95rem'}}>
+        <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>
           진행중인 경품 이벤트&nbsp;
           <strong>{filteredEventList.length}</strong>개
         </Typography>
@@ -74,10 +74,25 @@ const GiveawayPage = () => {
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventIndex}>
                   {index === Math.floor(filteredEventList.length / 2) && <DisplayAds adSlot='1843074752' />}
+                  {index === Math.floor(filteredEventList.length / 4) &&
+                    filteredEventList.length > 10 &&
+                    <ins class="kakao_ad_area" style={{ display: 'none' }}
+                      data-ad-unit="DAN-7pDCywvypmgAFKqZ"
+                      data-ad-width="320"
+                      data-ad-height="50"></ins>
+                  }
+
+                  {index === Math.floor(filteredEventList.length * (3 / 4)) &&
+                    filteredEventList.length > 10 &&
+                    <ins class="kakao_ad_area" style={{ display: 'none' }}
+                      data-ad-unit="DAN-P7AzNUuwB00pPYzJ"
+                      data-ad-width="320"
+                      data-ad-height="50"></ins>
+                  }
                   <ListItem button component="a" href={`/cgv/event/giveaway/detail?eventIndex=${item.eventIndex}`}>
                     <ListItemText
                       primary={
-                        <Typography variant="h6" sx={{fontSize: '0.95rem'}}>
+                        <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>
                           {item.title}
                         </Typography>
                       }

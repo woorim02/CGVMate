@@ -60,7 +60,7 @@ const GiveawayPage = () => {
         <meta property="og:url" content={window.location.href} />
       </Helmet>
       <Box sx={{ marginBottom: 2 }}>
-        <Typography variant="h6" sx={{fontSize: '0.95rem'}}>
+        <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>
           진행중인 경품 이벤트&nbsp;
           <strong>{filteredEventList.length}</strong>개
         </Typography>
@@ -90,17 +90,32 @@ const GiveawayPage = () => {
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventID}>
                   {index === Math.floor(filteredEventList.length / 2) && <DisplayAds adSlot='1843074752' />}
+                  {index === Math.floor(filteredEventList.length / 4) &&
+                    filteredEventList.length > 10 &&
+                    <ins class="kakao_ad_area" style={{ display: 'none' }}
+                      data-ad-unit="DAN-7pDCywvypmgAFKqZ"
+                      data-ad-width="320"
+                      data-ad-height="50"></ins>
+                  }
+
+                  {index === Math.floor(filteredEventList.length * (3 / 4)) &&
+                    filteredEventList.length > 10 &&
+                    <ins class="kakao_ad_area" style={{ display: 'none' }}
+                      data-ad-unit="DAN-P7AzNUuwB00pPYzJ"
+                      data-ad-width="320"
+                      data-ad-height="50"></ins>
+                  }
                   <ListItem button component="a" href={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
                     <ListItemText
                       primary={
-                        <Typography variant="h6" sx={{fontSize: '0.95rem'}}>
+                        <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>
                           {item.eventName}
                         </Typography>
                       }
                       secondary={
                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                           <Typography variant="body2" color="textSecondary" sx={{ marginRight: 1 }}>
-                          {item.progressStartDate} ~ {item.progressEndDate}
+                            {item.progressStartDate} ~ {item.progressEndDate}
                           </Typography>
                           <VisibilityIcon fontSize="small" />
                           <Typography variant="body2" color="textSecondary" sx={{ marginLeft: 0.5 }}>
