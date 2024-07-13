@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Box, Typography, Container, List, ListItem, ListItemText, CircularProgress, Grid, Divider } from '@mui/material';
@@ -16,6 +16,8 @@ const GiveawayDetailPage = () => {
   const [giftId, setGiftId] = useState(null);
   const [giftName, setGiftName] = useState(null);
   const [info, setInfo] = useState(null);
+
+  const boxRef = useRef(null);
 
   useEffect(() => {
     const fetchEventData = async () => {
@@ -48,6 +50,12 @@ const GiveawayDetailPage = () => {
     fetchAreaData();
   }, [eventID, giftId]);
 
+  useEffect(() => {
+    if (boxRef.current) {
+      boxRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [currentArea]);
+
   const selectAreaTheaterList = (areaCode) => {
     setCurrentArea(areaCode);
     setSearchParams({ eventIndex: eventID, areaCode: areaCode }, { replace: true });
@@ -70,7 +78,7 @@ const GiveawayDetailPage = () => {
       </Box>
 
       <Container sx={{ padding: '0px !important' }}>
-        <Box sx={{ padding: 1, borderBottom: '1px solid #f1f1f1', display: 'flex', alignItems: 'center' }}>
+        <Box ref={boxRef} sx={{ padding: 1, borderBottom: '1px solid #f1f1f1', display: 'flex', alignItems: 'center' }}>
           <Typography variant="body1">{giftName}</Typography>
         </Box>
         <DisplayAds adSlot='8167919304' />
