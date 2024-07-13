@@ -62,7 +62,7 @@ const GiveawayDetailPage = () => {
   };
 
   return (
-    <Box sx={{ width: '100%', height: 'auto', padding: 0 }}>
+    <Box ref={boxRef} sx={{ width: '100%', height: 'auto', padding: 0 }}>
       {giftName && (
         <Helmet>
           <title>{giftName}</title>
@@ -78,7 +78,7 @@ const GiveawayDetailPage = () => {
       </Box>
 
       <Container sx={{ padding: '0px !important' }}>
-        <Box ref={boxRef} sx={{ padding: 1, borderBottom: '1px solid #f1f1f1', display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ padding: 1, borderBottom: '1px solid #f1f1f1', display: 'flex', alignItems: 'center' }}>
           <Typography variant="body1">{giftName}</Typography>
         </Box>
         <DisplayAds adSlot='8167919304' />
