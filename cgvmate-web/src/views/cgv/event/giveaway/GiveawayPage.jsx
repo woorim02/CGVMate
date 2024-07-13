@@ -64,13 +64,13 @@ const GiveawayPage = () => {
         </Box>
       </Box>
       <Container maxWidth={false} sx={{ padding: 0 }}>
+      <DisplayAds adSlot='3730871491' />
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <CircularProgress />
           </Box>
         ) : (
           <List sx={{ padding: 0, margin: 0 }}>
-            <DisplayAds adSlot='3730871491' />
             {filteredEventList.length > 0 ? (
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventIndex}>
