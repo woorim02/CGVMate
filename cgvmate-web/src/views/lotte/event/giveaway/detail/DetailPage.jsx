@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { Box, Typography, Container, List, ListItem, ListItemText, CircularProgress, Grid, Divider } from '@mui/material';
 import LotteMateApi from '../../../../../api/lotteApi';
 import DisplayAds from '../../../../../components/DisplayAds';
+import BannerAds from 'components/BannerAds';
 
 const api = new LotteMateApi();
 
@@ -73,12 +74,7 @@ const GiveawayDetailPage = () => {
           <Typography variant="body1">{giftName}</Typography>
         </Box>
         <DisplayAds adSlot='8167919304' />
-        <ins className="kakao_ad_area"
-          style={{ display: 'none' }}
-          data-ad-unit="DAN-IC5ElVFBp94M8rXK"
-          data-ad-width="320"
-          data-ad-height="50"></ins>
-        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+        <BannerAds />
         <Grid container sx={{ height: '100%', flexWrap: 'nowrap' }}>
           {info ? (
             <>

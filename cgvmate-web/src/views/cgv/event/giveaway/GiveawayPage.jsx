@@ -4,6 +4,7 @@ import { Box, Typography, TextField, Button, Container, List, ListItem, ListItem
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import CgvMateApi from 'api/cgvmateApi';
 import DisplayAds from 'components/DisplayAds';
+import BannerAds from 'components/BannerAds';
 
 const GiveawayPage = () => {
   const [eventList, setEventList] = useState([]);
@@ -76,13 +77,7 @@ const GiveawayPage = () => {
                   {index === Math.floor(filteredEventList.length / 2) && <DisplayAds adSlot='1843074752' />}
                   {index === Math.floor(filteredEventList.length / 4) &&
                     filteredEventList.length > 10 &&
-                    <div>
-                      <ins class="kakao_ad_area" style={{ display: 'none' }}
-                        data-ad-unit="DAN-7pDCywvypmgAFKqZ"
-                        data-ad-width="320"
-                        data-ad-height="50"></ins>
-                      <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-                    </div>
+                    <BannerAds />
                   }
 
                   {index === Math.floor(filteredEventList.length * (3 / 4)) &&
