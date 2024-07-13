@@ -90,15 +90,14 @@ const GiveawayPage = () => {
             {filteredEventList.length > 0 ? (
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventID}>
-                  {index === Math.floor(filteredEventList.length / 2) && <BannerAds adSlot='1843074752' />}
-                  {index === Math.floor(filteredEventList.length / 4) &&
+                  {index === Math.floor(filteredEventList.length * (1 / 3)) &&
                     filteredEventList.length > 10 &&
                     <ListItem>
                       <BannerAds adSlot='1843074752' />
                     </ListItem>
                   }
 
-                  {index === Math.floor(filteredEventList.length * (3 / 4)) &&
+                  {index === Math.floor(filteredEventList.length * (2 / 3)) &&
                     filteredEventList.length > 10 &&
                     <ListItem>
                       <BannerAds adSlot='1843074752' />
