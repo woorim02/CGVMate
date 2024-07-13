@@ -5,21 +5,23 @@ import { useLocation } from 'react-router-dom';
 const DisplayAds = ({ adSlot, style }) => {
   const location = useLocation();
 
-  useEffect(() => {
-    const pushAd = () => {
-      try {
-        const adsbygoogle = window.adsbygoogle;
+  const pushAd = () => {
+    try {
+      const adsbygoogle = window.adsbygoogle;
+      if (adsbygoogle) {
         adsbygoogle.push({});
-      } catch (e) {
-        console.error(e);
       }
-    };
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
+  useEffect(() => {
     let interval = setInterval(() => {
-      // Check if Adsense script is loaded every 300ms
+      // 300ms마다 Adsense 스크립트가 로드되었는지 확인
       if (window.adsbygoogle) {
         pushAd();
-        // clear the interval once the ad is pushed so that function isn't called indefinitely
+        // 광고가 푸시된 후 인터벌을 클리어하여 함수가 무한정 호출되지 않도록 함
         clearInterval(interval);
       }
     }, 300);
@@ -30,17 +32,12 @@ const DisplayAds = ({ adSlot, style }) => {
   }, []);
 
   useEffect(() => {
-    const pushAd = () => {
-      try {
-        const adsbygoogle = window.adsbygoogle;
-        adsbygoogle.push({});
-      } catch (e) {
-        console.error(e);
-      }
-    };
+    // 광고 요소가 지워지고 다시 렌더링될 시간을 주기 위한 딜레이 추가
+    const timeout = setTimeout(() => {
+      pushAd();
+    }, 1000);
 
-    // Refresh ad when URL changes
-    pushAd();
+    return () => clearTimeout(timeout);
   }, [location]);
 
   return (
