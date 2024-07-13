@@ -1,15 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useLocation } from 'react-router-dom';
 
 const DisplayAds = ({ adSlot, style }) => {
   const location = useLocation();
+  const adRef = useRef(null);
 
   const pushAd = () => {
     try {
-      const adsbygoogle = window.adsbygoogle;
-      if (adsbygoogle) {
-        adsbygoogle.push({});
+      if (window.adsbygoogle && adRef.current) {
+        // Remove the existing ad element
+        adRef.current.innerHTML = '';
+        // Create a new ad element
+        const adElement = document.createElement('ins');
+        adElement.className = 'adsbygoogle';
+        Object.assign(adElement.style, style);
+        adElement.setAttribute('data-ad-client', 'ca-pub-2422895337222657');
+        adElement.setAttribute('data-ad-slot', adSlot);
+        adElement.setAttribute('data-ad-format', 'auto');
+        adElement.setAttribute('data-full-width-responsive', 'true');
+        adRef.current.appendChild(adElement);
+        // Push the new ad element
+        window.adsbygoogle.push({});
       }
     } catch (e) {
       console.error(e);
@@ -32,24 +44,11 @@ const DisplayAds = ({ adSlot, style }) => {
   }, []);
 
   useEffect(() => {
-    // 광고 요소가 지워지고 다시 렌더링될 시간을 주기 위한 딜레이 추가
-    const timeout = setTimeout(() => {
-      pushAd();
-    }, 1000);
-
-    return () => clearTimeout(timeout);
+    // URL이 변경될 때 광고 갱신
+    pushAd();
   }, [location]);
 
-  return (
-    <ins
-      className="adsbygoogle"
-      style={style}
-      data-ad-client="ca-pub-2422895337222657"
-      data-ad-slot={adSlot}
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
-  );
+  return <div ref={adRef}></div>;
 };
 
 DisplayAds.propTypes = {
