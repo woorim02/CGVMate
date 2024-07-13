@@ -64,7 +64,7 @@ const GiveawayDetailPage = () => {
           <meta property="og:url" content={window.location.href} />
         </Helmet>
       )}
-      <Box sx={{ display: 'block'}}>
+      <Box sx={{ display: 'block' }}>
         <Typography variant="h6" sx={{ padding: 1, borderBottom: '1px solid #f1f1f1' }}>잔여 수량 확인</Typography>
       </Box>
 
@@ -73,6 +73,12 @@ const GiveawayDetailPage = () => {
           <Typography variant="body1">{giftName}</Typography>
         </Box>
         <DisplayAds adSlot='8167919304' />
+        <ins className="kakao_ad_area"
+          style={{ display: 'none' }}
+          data-ad-unit="DAN-IC5ElVFBp94M8rXK"
+          data-ad-width="320"
+          data-ad-height="50"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
         <Grid container sx={{ height: '100%', flexWrap: 'nowrap' }}>
           {info ? (
             <>
@@ -99,7 +105,7 @@ const GiveawayDetailPage = () => {
                       <ListItem key={i} sx={{ display: 'flex', flexDirection: 'column', paddingTop: 1, paddingBottom: 1 }}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                           <Typography variant="body1" sx={{ display: 'flex', alignContent: 'center' }}>{item.cinemaNameKR}</Typography>
-                          <Box sx={{display: 'flex', alignContent:'center'}}>
+                          <Box sx={{ display: 'flex', alignContent: 'center' }}>
                             <Typography color=' #ED4C6B'>
                               {item.cnt}
                             </Typography>

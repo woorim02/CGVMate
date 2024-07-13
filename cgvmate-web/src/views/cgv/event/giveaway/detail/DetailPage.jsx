@@ -89,7 +89,7 @@ const GiveawayDetailPage = () => {
           <meta property="og:url" content={window.location.href} />
         </Helmet>
       )}
-      <Box sx={{ display: 'block'}}>
+      <Box sx={{ display: 'block' }}>
         <Typography variant="h6" sx={{ padding: 1, borderBottom: '1px solid #f1f1f1' }}>잔여 수량 확인</Typography>
       </Box>
 
@@ -98,6 +98,12 @@ const GiveawayDetailPage = () => {
           <Typography variant="body1">{model && model.title}</Typography>
         </Box>
         <DisplayAds adSlot='8167919304' />
+        <ins className="kakao_ad_area"
+          style={{ display: 'none' }}
+          data-ad-unit="DAN-IC5ElVFBp94M8rXK"
+          data-ad-width="320"
+          data-ad-height="50"></ins>
+        <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
         <Grid container sx={{ height: '100%', flexWrap: 'nowrap' }}>
           {info && info.AreaList ? (
             <>
@@ -121,9 +127,9 @@ const GiveawayDetailPage = () => {
               <Grid item xs={12} sm={8} md={9}>
                 <List>
                   {info.TheaterList.map((item, i) => (
-                    <ListItem key={i} sx={{ display: 'flex', flexDirection: 'column', paddingTop: 0.5, paddingBottom: 0.5, alignItems:'flex-start' }}>
+                    <ListItem key={i} sx={{ display: 'flex', flexDirection: 'column', paddingTop: 0.5, paddingBottom: 0.5, alignItems: 'flex-start' }}>
                       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                        <Typography variant="body1" sx={{display: 'flex', alignItems: 'center'}}>{item.TheaterName}</Typography>
+                        <Typography variant="body1" sx={{ display: 'flex', alignItems: 'center' }}>{item.TheaterName}</Typography>
                         <Box
                           sx={{
                             display: 'inline-flex',
@@ -140,7 +146,7 @@ const GiveawayDetailPage = () => {
                           {item.GiveawayRemainCount}
                         </Box>
                       </Box>
-                      <Typography variant="body2" color="textSecondary" sx={{ marginTop: 0}}>
+                      <Typography variant="body2" color="textSecondary" sx={{ marginTop: 0 }}>
                         {countTypeCodeToText(item.CountTypeCode)}
                       </Typography>
                       <Divider sx={{ marginTop: 1 }} />
