@@ -54,10 +54,11 @@ const GiveawayPage = () => {
   return (
     <Box sx={{ padding: 0 }}>
       <Helmet>
-        <meta name="description" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta name="description" content={`롯데시네마 경품 특전 수량 확인하기, 아트카드 수량 확인, 스페셜 아트카드 수량 확인, 스아카 수량 확인, 롯데시네마 포스터 경품 수량 확인하기`} />
+        <meta name="keywords" content="롯데시네마, 경품, 특전, 아트카드, 스아카, 포스터, 이벤트, 수량 확인" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
-        <meta property="og:description" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:title" content={`롯데시네마 경품 특전 수량 확인하기, 아트카드 수량 확인, 스페셜 아트카드 수량 확인, 스아카 수량 확인, 롯데시네마 포스터 경품 수량 확인하기`} />
+        <meta property="og:description" content={`롯데시네마 경품 특전 수량 확인하기, 아트카드 수량 확인, 스페셜 아트카드 수량 확인, 스아카 수량 확인, 롯데시네마 포스터 경품 수량 확인하기`} />
         <meta property="og:url" content={window.location.href} />
       </Helmet>
       <Box sx={{ marginBottom: 2 }}>
