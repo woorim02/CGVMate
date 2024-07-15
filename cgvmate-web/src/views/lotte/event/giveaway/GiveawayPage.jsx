@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Box, Typography, TextField, Button, Container, List, ListItem, ListItemText, ListItemSecondaryAction, CircularProgress } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useLocation, Link } from 'react-router-dom';
 import LotteApi from 'api/lotteApi';
 import DisplayAds from 'components/DisplayAds';
 import BannerAds from 'components/BannerAds';
@@ -12,6 +13,7 @@ const GiveawayPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const api = useRef(new LotteApi()).current;
+  const location = useLocation();
 
   useEffect(() => {
     document.title = '롯데시네마 경품 이벤트 현황';
@@ -81,7 +83,7 @@ const GiveawayPage = () => {
         </Box>
       </Box>
       <Container maxWidth={false} sx={{ padding: 0 }}>
-      <DisplayAds adSlot='3730871491' />
+        <DisplayAds adSlot='3730871491' />
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <CircularProgress />
@@ -104,7 +106,7 @@ const GiveawayPage = () => {
                       <BannerAds adSlot='1843074752' />
                     </ListItem>
                   }
-                  <ListItem button component="a" href={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
+                  <ListItem button component={Link} to={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
                     <ListItemText
                       primary={
                         <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>
