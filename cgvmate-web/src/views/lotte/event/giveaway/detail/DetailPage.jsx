@@ -48,7 +48,7 @@ const GiveawayDetailPage = () => {
     };
 
     fetchAreaData();
-  }, [eventID, giftId]);
+  }, [eventID]);
 
   useEffect(() => {
     if (boxRef.current) {
