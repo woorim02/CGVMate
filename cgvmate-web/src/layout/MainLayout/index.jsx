@@ -88,7 +88,7 @@ const MainLayout = () => {
 
       {/* main content */}
       <Main theme={theme} open={leftDrawerOpened}
-        sx={{ marginTop: '60px !important', padding: { xs: '5px', sm: '15px' }, paddingTop: { xs: '15px', sm: '15px' }}}>
+        sx={{ marginTop: '40px !important', padding: { xs: '5px', sm: '15px' }, paddingTop: { xs: '15px', sm: '15px' }}}>
         {/* breadcrumb */}
         <Breadcrumbs separator={IconChevronRight} icon title rightAlign />
         <Outlet />

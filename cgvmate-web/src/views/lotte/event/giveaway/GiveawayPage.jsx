@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Box, Typography, TextField, Button, Container, List, ListItem, ListItemText, ListItemSecondaryAction, CircularProgress } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { useLocation, Link } from 'react-router-dom';
 import LotteApi from 'api/lotteApi';
 import DisplayAds from 'components/DisplayAds';
 import BannerAds from 'components/BannerAds';
@@ -12,6 +13,7 @@ const GiveawayPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchText, setSearchText] = useState('');
   const api = useRef(new LotteApi()).current;
+  const location = useLocation();
 
   useEffect(() => {
     document.title = '롯데시네마 경품 이벤트 현황';
@@ -54,10 +56,11 @@ const GiveawayPage = () => {
   return (
     <Box sx={{ padding: 0 }}>
       <Helmet>
-        <meta name="description" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta name="description" content={`롯데시네마 경품 특전 수량 확인하기, 아트카드 수량 확인, 스페셜 아트카드 수량 확인, 스아카 수량 확인, 롯데시네마 포스터 경품 수량 확인하기`} />
+        <meta name="keywords" content="롯데시네마, 경품, 특전, 아트카드, 스아카, 포스터, 이벤트, 수량 확인" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
-        <meta property="og:description" content={`롯데시네마 경품 특전 수량 확인하기, 공식 사이트에서 공개되지 않는 특전 수량 확인이 가능합니다.`} />
+        <meta property="og:title" content={`롯데시네마 경품 특전 수량 확인하기, 아트카드 수량 확인, 스페셜 아트카드 수량 확인, 스아카 수량 확인, 롯데시네마 포스터 경품 수량 확인하기`} />
+        <meta property="og:description" content={`롯데시네마 경품 특전 수량 확인하기, 아트카드 수량 확인, 스페셜 아트카드 수량 확인, 스아카 수량 확인, 롯데시네마 포스터 경품 수량 확인하기`} />
         <meta property="og:url" content={window.location.href} />
       </Helmet>
       <Box sx={{ marginBottom: 2 }}>
@@ -80,31 +83,30 @@ const GiveawayPage = () => {
         </Box>
       </Box>
       <Container maxWidth={false} sx={{ padding: 0 }}>
+        <DisplayAds adSlot='3730871491' />
         {loading ? (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <CircularProgress />
           </Box>
         ) : (
           <List sx={{ padding: 0, margin: 0 }}>
-            <DisplayAds adSlot='3730871491' />
             {filteredEventList.length > 0 ? (
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventID}>
-                  {index === Math.floor(filteredEventList.length / 2) && <DisplayAds adSlot='1843074752' />}
-                  {index === Math.floor(filteredEventList.length / 4) &&
+                  {index === Math.floor(filteredEventList.length * (1 / 3)) &&
                     filteredEventList.length > 10 &&
                     <ListItem>
-                      <BannerAds />
+                      <BannerAds adSlot='1843074752' />
                     </ListItem>
                   }
 
-                  {index === Math.floor(filteredEventList.length * (3 / 4)) &&
+                  {index === Math.floor(filteredEventList.length * (2 / 3)) &&
                     filteredEventList.length > 10 &&
                     <ListItem>
-                      <BannerAds />
+                      <BannerAds adSlot='1843074752' />
                     </ListItem>
                   }
-                  <ListItem button component="a" href={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
+                  <ListItem button component={Link} to={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
                     <ListItemText
                       primary={
                         <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>

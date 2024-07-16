@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Box, Typography, TextField, Button, Container, List, ListItem, ListItemText, ListItemSecondaryAction, CircularProgress } from '@mui/material';
+import { Box, Typography, TextField, Button, Container, List, ListItem, ListItemText, CircularProgress } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { Link, useLocation } from 'react-router-dom';
 import MegaboxApi from 'api/megaboxApi';
 import DisplayAds from 'components/DisplayAds';
 
@@ -9,7 +10,9 @@ const GiveawayPage = () => {
   const [eventList, setEventList] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchText, setSearchText] = useState('');
   const api = useRef(new MegaboxApi()).current;
+  const location = useLocation();
 
   useEffect(() => {
     document.title = '메가박스 경품 이벤트 현황';
@@ -34,11 +37,13 @@ const GiveawayPage = () => {
       setFilteredEventList(filtered);
     }
   };
+
   const decodeHtml = (html) => {
     var txt = document.createElement("textarea");
     txt.innerHTML = html;
     return txt.value;
   };
+
   return (
     <Box sx={{ padding: 0 }}>
       <Helmet>
@@ -78,7 +83,7 @@ const GiveawayPage = () => {
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.id}>
                   {index === Math.floor(filteredEventList.length / 2) && <DisplayAds adSlot='1843074752' />}
-                  <ListItem button component="a" href={`/megabox/event/giveaway/detail?eventIndex=${item.id}`}>
+                  <ListItem button component={Link} to={`/megabox/event/giveaway/detail?eventIndex=${item.id}`}>
                     <ListItemText
                       primary={
                         <Box sx={{ display: 'flex', alignItems: 'center', marginRight:'5px' }}>

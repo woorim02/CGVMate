@@ -43,7 +43,7 @@ const GiveawayDetailPage = () => {
       case '소량보유':
         return '#FF5733';
       default:
-        return 'inherit';
+        return '#d3d3d3';
     }
   };
   const decodeHtml = (html) => {
