@@ -23,6 +23,7 @@ public class PostSummary
 
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public int ViewCount { get; set; } = 0;
+    public int CommentCount { get; set; } = 0;
     public int Upvote { get; set; } = 0;
     public int Downvote { get; set; } = 0;
 }

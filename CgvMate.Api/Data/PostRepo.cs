@@ -86,6 +86,7 @@ public class PostRepo : IPostRepo
             .Take(pageSize)
             .Include(p => p.Board)
             .Include(p => p.User)
+            .Include(p => p.Comments)
             .Select(p => new PostSummary
             {
                 Id = p.Id,
@@ -98,6 +99,7 @@ public class PostRepo : IPostRepo
                 Title = p.Title,
                 DateCreated = p.DateCreated,
                 ViewCount = p.ViewCount,
+                CommentCount = p.Comments.Count,
                 Upvote = p.Upvote,
                 Downvote = p.Downvote
             })
@@ -112,6 +114,7 @@ public class PostRepo : IPostRepo
             .Take(pageSize)
             .Include(p => p.Board)
             .Include(p => p.User)
+            .Include(p => p.Comments)
             .Select(p => new PostSummary
             {
                 Id = p.Id,
@@ -124,6 +127,7 @@ public class PostRepo : IPostRepo
                 Title = p.Title,
                 DateCreated = p.DateCreated,
                 ViewCount = p.ViewCount,
+                CommentCount = p.Comments.Count,
                 Upvote = p.Upvote,
                 Downvote = p.Downvote
             })
@@ -152,6 +156,7 @@ public class PostRepo : IPostRepo
             .Take(pageSize)
             .Include(p => p.Board)
             .Include(p => p.User)
+            .Include(p => p.Comments)
             .Select(p => new PostSummary
             {
                 Id = p.Id,
@@ -164,6 +169,7 @@ public class PostRepo : IPostRepo
                 Title = p.Title,
                 DateCreated = p.DateCreated,
                 ViewCount = p.ViewCount,
+                CommentCount = p.Comments.Count,
                 Upvote = p.Upvote,
                 Downvote = p.Downvote
             })
