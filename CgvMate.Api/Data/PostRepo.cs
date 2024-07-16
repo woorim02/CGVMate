@@ -20,6 +20,7 @@ public class PostRepo : IPostRepo
                              .Include(p => p.Board)
                              .Include(p => p.User)
                              .Include(p => p.Comments)
+                             .OrderByDescending(p => p.Id)
                              .ToListAsync();
     }
 
@@ -36,6 +37,7 @@ public class PostRepo : IPostRepo
     {
         return await _context.Posts
                              .Where(p => p.BoardId == boardId)
+                             .OrderByDescending(p => p.Id)
                              .Skip((pageNo - 1) * pageSize)
                              .Take(pageSize)
                              .Include(p => p.Board)
@@ -48,6 +50,7 @@ public class PostRepo : IPostRepo
     {
         return await _context.Posts
                              .Where(p => p.UserId == userId)
+                             .OrderByDescending(p => p.Id)
                              .Skip((pageNo - 1) * pageSize)
                              .Take(pageSize)
                              .Include(p => p.Board)
@@ -82,6 +85,7 @@ public class PostRepo : IPostRepo
     {
         return await _context.Set<Post>()
             .Where(p => p.BoardId == boardId)
+            .OrderByDescending(p => p.Id)
             .Skip((pageNo - 1) * pageSize)
             .Take(pageSize)
             .Include(p => p.Board)
@@ -110,6 +114,7 @@ public class PostRepo : IPostRepo
     {
         return await _context.Set<Post>()
             .Where(p => p.UserId == userId)
+            .OrderByDescending(p => p.Id)
             .Skip((pageNo - 1) * pageSize)
             .Take(pageSize)
             .Include(p => p.Board)
@@ -152,6 +157,7 @@ public class PostRepo : IPostRepo
 
         return await _context.Set<Post>()
             .Where(func)
+            .OrderByDescending(p => p.Id)
             .Skip((pageNo - 1) * pageSize)
             .Take(pageSize)
             .Include(p => p.Board)
