@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, CircularProgress, List, ListItem, ListItemText, Paper, Button, TextField, Divider } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BoardApi from 'api/boardApi';
+import { Helmet } from 'react-helmet-async';
 
 const DetailPage = () => {
   const location = useLocation();

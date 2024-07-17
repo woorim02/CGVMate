@@ -4,6 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { IconPencilPlus } from '@tabler/icons-react';
 import BoardApi from 'api/boardApi';
+import { Helmet } from 'react-helmet-async';
 
 const BoardPage = () => {
   const location = useLocation();

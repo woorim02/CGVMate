@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, TextField, Button, Box, Typography, Paper } from '@mui/material';
 import BoardApi from 'api/boardApi';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const WritePage = () => {
   const location = useLocation();
