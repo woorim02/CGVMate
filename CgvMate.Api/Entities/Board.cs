@@ -4,7 +4,7 @@ namespace CgvMate.Api.Entities;
 
 public class Board
 {
-    public int Id { get; set; }
+    public string Id { get; set; }
 
     [Required]
     [StringLength(100)]

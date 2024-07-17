@@ -21,13 +21,22 @@ namespace CgvMate.Api.DTOs
                 Id = comment.Id,
                 PostId = comment.PostId,
                 ParentCommentId = comment.ParentCommentId,
-                WriterIP = comment.WriterIP,
+                WriterIP = GetFirstTwoParts(comment.WriterIP),
                 WriterName = comment.WriterName,
                 UserId = comment.UserId,
                 UserName = comment.User?.UserName,
                 Content = comment.Content,
                 DateCreated = comment.DateCreated
             };
+        }
+        private static string GetFirstTwoParts(string ipAddress)
+        {
+            var parts = ipAddress.Split('.');
+            if (parts.Length >= 2)
+            {
+                return $"{parts[0]}.{parts[1]}";
+            }
+            return string.Empty;
         }
     }
 }

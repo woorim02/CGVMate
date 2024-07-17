@@ -1,13 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using CgvMate.Api.Entities;
 
-namespace CgvMate.Api.Entities;
+namespace CgvMate.Api.DTOs;
 
 public class PostSummary
 {
     public int Id { get; set; }
+    public int No { get; set; }
 
     // Board
-    public int BoardId { get; set; }
+    public string BoardId { get; set; }
     public Board Board { get; set; }
 
     // Writer

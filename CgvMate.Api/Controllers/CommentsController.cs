@@ -19,28 +19,19 @@ namespace CgvMate.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<CommentResDTO>> AddComment(CommentAddReqDto commentDto)
+        public async Task<ActionResult<CommentResDTO>> AddComment(CommentAddReqDto dto)
         {
-            var comment = commentDto.ToEntity();
-            await _commentService.AddCommentAsync(comment);
-            comment.WriterIP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            dto.WriterIP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            await _commentService.AddCommentAsync(dto);
 
-            var commentResDto = CommentResDTO.FromEntity(comment);
-
-            return CreatedAtAction(nameof(GetCommentById), new { id = comment.Id }, commentResDto);
+            return Created();
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<CommentResDTO>> GetCommentById(int id)
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteComment(int id, [FromBody] string password)
         {
-            var comment = await _commentService.GetCommentByIdAsync(id);
-            if (comment == null)
-            {
-                return NotFound();
-            }
-
-            var commentResDto = CommentResDTO.FromEntity(comment);
-            return Ok(commentResDto);
+            await _commentService.DeleteCommentAsync(id, password);
+            return Ok();
         }
     }
 }

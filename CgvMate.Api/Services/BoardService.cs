@@ -1,40 +1,20 @@
-﻿using CgvMate.Api.Data.Interfaces;
+﻿using CgvMate.Api.Data;
 using CgvMate.Api.Entities;
 using CgvMate.Api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CgvMate.Api.Services;
 
 public class BoardService : IBoardService
 {
-    private readonly IBoardRepo _boardRepo;
-
-    public BoardService(IBoardRepo boardRepo)
+    public BoardService(AppDbContext context)
     {
-        _boardRepo = boardRepo;
+        _context = context;
     }
+    AppDbContext _context;
 
-    public Task<IEnumerable<Board>> GetAllBoardsAsync()
+    public async Task<IEnumerable<Board>> GetAllBoardsAsync()
     {
-        return _boardRepo.GetAllBoardsAsync();
-    }
-
-    public Task<Board?> GetBoardByIdAsync(int id)
-    {
-        return _boardRepo.GetBoardByIdAsync(id);
-    }
-
-    public Task AddBoardAsync(Board board)
-    {
-        return _boardRepo.AddBoardAsync(board);
-    }
-
-    public Task UpdateBoardAsync(Board board)
-    {
-        return _boardRepo.UpdateBoardAsync(board);
-    }
-
-    public Task DeleteBoardAsync(int id)
-    {
-        return _boardRepo.DeleteBoardAsync(id);
+        return await _context.Boards.ToListAsync();
     }
 }

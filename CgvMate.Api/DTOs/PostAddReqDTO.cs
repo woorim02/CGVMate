@@ -8,12 +8,12 @@ namespace CgvMate.Api.DTOs;
 public class PostAddReqDto
 {
     [Required]
-    public int BoardId { get; set; }
+    public string BoardId { get; set; }
 
     // Writer
-    public string? WriterIP { get; set; }
-    public string? WriterName { get; set; }
-    public string? WriterPassword { get; set; }
+    public string WriterIP { get; set; }
+    public string WriterName { get; set; }
+    public string WriterPassword { get; set; }
 
     // Content
     [Required]
@@ -24,18 +24,12 @@ public class PostAddReqDto
 
     public Post ToEntity()
     {
-        if (WriterIP == null || WriterName == null || WriterPassword == null)
-        {
-            throw new Exception("WriterIP == null || WriterName == null || WriterPassword == null");
-        }
-        if (Contents.Count == 0)
-            throw new Exception("Contents.Count는 0 이상이어야 합니다.");
         return new Post
         {
             BoardId = this.BoardId,
             WriterIP = this.WriterIP,
-            WriterName = this.WriterName,
-            WriterPasswordHash = this.WriterPassword is null ? null : PasswordHasher.HashPassword(this.WriterPassword), // Assume hashing happens elsewhere
+            WriterName = this.WriterName.Trim().Replace(" ", ""),
+            WriterPasswordHash = PasswordHasher.HashPassword(this.WriterPassword), 
             Title = this.Title,
             Content = JsonConvert.SerializeObject(this.Contents),
             DateCreated = DateTime.Now,

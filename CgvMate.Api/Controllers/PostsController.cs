@@ -16,42 +16,39 @@ public class PostsController : ControllerBase
         _postService = postService;
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<PostResDto>> GetPostById(int id)
+    [HttpGet]
+    public async Task<ActionResult<PostResDto>> GetPost([FromQuery] string boardId, [FromQuery] int postNo)
     {
-        var post = await _postService.GetPostByIdAsync(id);
-        if (post == null)
-        {
-            return NotFound();
-        }
-        return Ok(PostResDto.FromEntity(post));
-    }
-
-    [HttpGet("list/{boardId}")]
-    public async Task<IActionResult> GetPostSummarysByBoardIdAsync(int boardId, [FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)
-    {
-        var posts = await _postService.GetPostSummarysByBoardIdAsync(boardId, pageNo, pageSize);
-        return Ok(posts.Select(p => PostSummaryResDTO.FromEntity(p)));
+        var post = await _postService.GetPostAsync(boardId, postNo);
+        return Ok(post);
     }
 
     [HttpPost]
-    public async Task<ActionResult<PostAddReqDto>> AddPost(PostAddReqDto postDto)
+    public async Task<IActionResult> AddPost([FromBody] PostAddReqDto dto)
     {
-        var post = postDto.ToEntity();
-        post.WriterIP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-        await _postService.AddPostAsync(post);
-        return CreatedAtAction(nameof(GetPostById), new { id = post.Id }, postDto);
+        dto.WriterIP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+        var tuple = await _postService.AddPostAsync(dto);
+        return Ok(tuple);
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeletePost(int id,[FromBody] string password)
+    [HttpPut("{postId}")]
+    public async Task<ActionResult> UpdatePost(int postId, [FromBody] PostAddReqDto dto)
     {
-        var post = await _postService.GetPostByIdAsync(id);
+        var tuple = await _postService.UpdatePostAsync(dto, postId);
+        return Ok(tuple);
+    }
 
-        if (post == null || PasswordHasher.VerifyPassword(password, post.WriterPasswordHash))
-            return BadRequest();
+    [HttpDelete("{postId}")]
+    public async Task<IActionResult> DeletePost(int postId, [FromBody] string password)
+    {
+        await _postService.DeletePostAsync(postId, password);
+        return Ok();
+    }
 
-        await _postService.DeletePostAsync(id);
-        return NoContent();
+    [HttpGet("{boardId}")]
+    public async Task<IActionResult> GetPostSummarys(string boardId, [FromQuery] int pageNo = 1, [FromQuery] int pageSize = 10)
+    {
+        var posts = await _postService.GetPostSummarysAsync(boardId, pageNo, pageSize);
+        return Ok(posts);
     }
 }

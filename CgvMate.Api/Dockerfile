@@ -5,9 +5,10 @@ WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
 
-# Install tzdata and set timezone
-RUN apt-get update && apt-get install -y tzdata && \
-    ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime && echo "Asia/Seoul" > /etc/timezone
+ARG DEBIAN_FRONTEND=noninteractive
+RUN apt-get install -y tzdata
+
+RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release

@@ -1,6 +1,5 @@
 
 using CgvMate.Api.Data;
-using CgvMate.Api.Data.Interfaces;
 using CgvMate.Api.Middleware;
 using CgvMate.Api.Services;
 using CgvMate.Api.Services.Interfaces;
@@ -116,17 +115,11 @@ namespace CgvMate.Api
             builder.Services.AddScoped<IMegaboxGiveawayEventRepository, MegaboxGiveawayEventRepository>();
             builder.Services.AddScoped<IMegaboxCuponEventRepository, MegaboxCuponEventRepository>();
 
-            builder.Services.AddScoped<IBoardRepo, BoardRepo>();
-            builder.Services.AddScoped<IPostRepo, PostRepo>();
-            builder.Services.AddScoped<ICommentRepo, CommentRepo>();
-            builder.Services.AddScoped<IUserRepo, UserRepo>();
-
             // Add HttpClient
             builder.Services.AddHttpClient();
             builder.Services.AddScoped<IBoardService, BoardService>();
             builder.Services.AddScoped<IPostService, PostService>();
             builder.Services.AddScoped<ICommentService, CommentService>();
-            builder.Services.AddScoped<IUserService, UserService>();
 
             //Add Services
             var cgvClient = new HttpClient();

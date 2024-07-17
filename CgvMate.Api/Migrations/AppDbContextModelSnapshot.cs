@@ -24,11 +24,8 @@ namespace CgvMate.Api.Migrations
 
             modelBuilder.Entity("CgvMate.Api.Entities.Board", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -99,8 +96,9 @@ namespace CgvMate.Api.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BoardId")
-                        .HasColumnType("int");
+                    b.Property<string>("BoardId")
+                        .IsRequired()
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Content")
                         .IsRequired()
@@ -110,6 +108,9 @@ namespace CgvMate.Api.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<int>("Downvote")
+                        .HasColumnType("int");
+
+                    b.Property<int>("No")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -140,9 +141,10 @@ namespace CgvMate.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoardId");
-
                     b.HasIndex("UserId");
+
+                    b.HasIndex("BoardId", "No")
+                        .IsUnique();
 
                     b.ToTable("Posts");
                 });

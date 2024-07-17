@@ -77,6 +77,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Post>(builder =>
         {
             builder.HasKey(p => p.Id);
+            builder.HasIndex(p => new { p.BoardId, p.No })
+                   .IsUnique();
             builder.HasOne(p => p.User)
                    .WithMany(u => u.Posts)
                    .HasForeignKey(p => p.UserId);
@@ -115,5 +117,24 @@ public class AppDbContext : DbContext
                    .WithOne(c => c.User)
                    .HasForeignKey(c => c.UserId);
         });
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        foreach (var entry in ChangeTracker.Entries<Post>())
+        {
+            if (entry.State == EntityState.Added)
+            {
+                var maxNo = await Posts
+                    .Where(p => p.BoardId == entry.Entity.BoardId)
+                    .OrderByDescending(p => p.No)
+                    .Select(p => p.No)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                entry.Entity.No = maxNo + 1;
+            }
+        }
+
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

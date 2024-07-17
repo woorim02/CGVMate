@@ -1,60 +1,126 @@
-﻿using CgvMate.Api.Data.Interfaces;
+﻿using CgvMate.Api.Data;
+using CgvMate.Api.DTOs;
 using CgvMate.Api.Entities;
 using CgvMate.Api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CgvMate.Api.Services;
 
 public class PostService : IPostService
 {
-    private readonly IPostRepo _postRepo;
+    private readonly AppDbContext _context;
 
-    public PostService(IPostRepo postRepo)
+    public PostService(AppDbContext context)
     {
-        _postRepo = postRepo;
+        _context = context;
     }
 
-    public Task<IEnumerable<Post>> GetAllPostsAsync()
+    public async Task<PostResDto> GetPostAsync(string boardId, int postNo)
     {
-        return _postRepo.GetAllPostsAsync();
+        var post = await _context.Posts
+            .Include(p => p.Comments)
+            .Where(p => p.BoardId == boardId && p.No == postNo)
+            .FirstOrDefaultAsync();
+        if (post == null)
+        {
+            throw new Exception("게시글을 찾을 수 없습니다.");
+        }
+        post.ViewCount++;
+        _context.Update(post);
+        await _context.SaveChangesAsync();
+        return PostResDto.FromEntity(post);
     }
 
-    public Task<Post?> GetPostByIdAsync(int id)
+    public async Task<Tuple<string, int>> AddPostAsync(PostAddReqDto dto)
     {
-        return _postRepo.GetPostByIdAsync(id);
+        var post = dto.ToEntity();
+        if (dto.WriterName.IsNullOrEmpty() || dto.WriterPassword.IsNullOrEmpty()){
+            throw new Exception("작성자명과 비밀번호를 모두 입력해 주세요");
+        }
+        post.WriterName.Replace(" ", "");
+        if (post.WriterName == "관리자")
+            throw new Exception($"'관리자'는 사용할 수 없는 닉네임입니다.");
+        var res = await _context.Posts.AddAsync(post);
+        await _context.SaveChangesAsync();
+        return Tuple.Create(res.Entity.BoardId, res.Entity.No);
     }
 
-    public Task<IEnumerable<Post>> GetPostsByBoardIdAsync(int boardId, int pageNo, int pageSize)
+    public async Task<Tuple<string, int>> UpdatePostAsync(PostAddReqDto dto, int postId)
     {
-        return _postRepo.GetPostsByBoardIdAsync(boardId, pageNo, pageSize);
+        var post = await _context.Posts
+            .Where(p => p.Id == postId)
+            .FirstOrDefaultAsync();
+        if (post == null)
+        {
+            throw new Exception("존재하지 않는 게시글입니다.");
+        }
+        if (!PasswordHasher.VerifyPassword(dto.WriterPassword, post.WriterPasswordHash))
+        {
+            throw new Exception("비밀번호가 잘못되었습니다.");
+        }
+        post.Title = dto.Title;
+        post.Content = dto.ToEntity().Content;
+        var res = _context.Posts
+                          .Update(post);
+        await _context.SaveChangesAsync();
+        return Tuple.Create(res.Entity.BoardId, res.Entity.No);
     }
 
-    public Task<IEnumerable<Post>> GetPostsByUserIdAsync(int userId, int pageNo, int pageSize)
+    public async Task DeletePostAsync(int postId, string password)
     {
-        return _postRepo.GetPostsByUserIdAsync(userId, pageNo, pageSize);
+        var post = await _context.Posts
+            .Where(p => p.Id == postId)
+            .FirstOrDefaultAsync();
+        if (post == null)
+        {
+            throw new Exception("존재하지 않는 게시글입니다.");
+        }
+        if(!PasswordHasher.VerifyPassword(password, post.WriterPasswordHash))
+        {
+            throw new Exception("비밀번호가 잘못되었습니다.");
+        }
+        _context.Posts.Remove(post);
+        await _context.SaveChangesAsync();
     }
 
-    public Task AddPostAsync(Post post)
+    public async Task<IEnumerable<PostSummary>> GetPostSummarysAsync(string boardId, int pageNo = 1, int pageSize = 10)
     {
-        return _postRepo.AddPostAsync(post);
+        return await _context.Set<Post>()
+            .Where(p => p.BoardId == boardId)
+            .OrderByDescending(p => p.Id)
+            .Skip((pageNo - 1) * pageSize)
+            .Take(pageSize)
+            .Include(p => p.Board)
+            .Include(p => p.User)
+            .Include(p => p.Comments)
+            .Select(p => new PostSummary
+            {
+                Id = p.Id,
+                No = p.No,
+                BoardId = p.BoardId,
+                Board = p.Board,
+                WriterIP = GetFirstTwoParts(p.WriterIP),
+                WriterName = p.WriterName,
+                UserId = p.UserId,
+                User = p.User,
+                Title = p.Title,
+                DateCreated = p.DateCreated,
+                ViewCount = p.ViewCount,
+                CommentCount = p.Comments.Count,
+                Upvote = p.Upvote,
+                Downvote = p.Downvote
+            })
+            .ToListAsync();
     }
 
-    public Task UpdatePostAsync(Post post)
+    private static string GetFirstTwoParts(string ipAddress)
     {
-        return _postRepo.UpdatePostAsync(post);
-    }
-
-    public Task DeletePostAsync(int id)
-    {
-        return _postRepo.DeletePostAsync(id);
-    }
-
-    public Task<IEnumerable<PostSummary>> GetPostSummarysByBoardIdAsync(int boardId, int pageNo, int pageSize)
-    {
-        return _postRepo.GetPostSummarysByBoardIdAsync(boardId, pageNo, pageSize);
-    }
-
-    public Task<IEnumerable<PostSummary>> GetPostSummarysByUserIdAsync(int userId, int pageNo, int pageSize)
-    {
-        return _postRepo.GetPostSummarysByUserIdAsync(userId, pageNo, pageSize);
+        var parts = ipAddress.Split('.');
+        if (parts.Length >= 2)
+        {
+            return $"{parts[0]}.{parts[1]}";
+        }
+        return string.Empty;
     }
 }

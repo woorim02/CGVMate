@@ -20,18 +20,6 @@ public class BoardsController : ControllerBase
     public async Task<IActionResult> GetAllBoards()
     {
         var boards = await _boardService.GetAllBoardsAsync();
-        var boardDtos = boards.Select(BoardResDTO.FromEntity);
-        return Ok(boardDtos);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetBoardById(int id)
-    {
-        var board = await _boardService.GetBoardByIdAsync(id);
-        if (board == null)
-        {
-            return NotFound();
-        }
-        return Ok(BoardResDTO.FromEntity(board));
+        return Ok(boards);
     }
 }

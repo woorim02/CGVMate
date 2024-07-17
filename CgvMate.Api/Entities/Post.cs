@@ -6,8 +6,10 @@ public class Post
 {
     public int Id { get; set; }
 
+    public int No { get; set; }
+
     // Board
-    public int BoardId { get; set; }
+    public string BoardId { get; set; }
     public Board Board { get; set; }
 
     // Writer

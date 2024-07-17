@@ -1,16 +1,12 @@
-﻿using CgvMate.Api.Entities;
+﻿using CgvMate.Api.DTOs;
 
 namespace CgvMate.Api.Services.Interfaces;
 
 public interface IPostService
 {
-    Task<IEnumerable<Post>> GetAllPostsAsync();
-    Task<Post?> GetPostByIdAsync(int id);
-    Task<IEnumerable<Post>> GetPostsByBoardIdAsync(int boardId, int pageNo, int pageSize);
-    Task<IEnumerable<PostSummary>> GetPostSummarysByBoardIdAsync(int boardId, int pageNo, int pageSize);
-    Task<IEnumerable<Post>> GetPostsByUserIdAsync(int userId, int pageNo, int pageSize);
-    Task<IEnumerable<PostSummary>> GetPostSummarysByUserIdAsync(int userId, int pageNo, int pageSize);
-    Task AddPostAsync(Post post);
-    Task UpdatePostAsync(Post post);
-    Task DeletePostAsync(int id);
+    Task<PostResDto> GetPostAsync(string boardId, int postNo);
+    Task<Tuple<string, int>> AddPostAsync(PostAddReqDto post);
+    Task<Tuple<string, int>> UpdatePostAsync(PostAddReqDto post, int postId);
+    Task DeletePostAsync(int id, string password);
+    Task<IEnumerable<PostSummary>> GetPostSummarysAsync(string boardId, int pageNo = 1, int pageSize = 10);
 }

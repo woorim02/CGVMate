@@ -1,4 +1,5 @@
-﻿using CgvMate.Api.Data.Interfaces;
+﻿using CgvMate.Api.Data;
+using CgvMate.Api.DTOs;
 using CgvMate.Api.Entities;
 using CgvMate.Api.Services.Interfaces;
 
@@ -6,40 +7,31 @@ namespace CgvMate.Api.Services;
 
 public class CommentService : ICommentService
 {
-    private readonly ICommentRepo _commentRepo;
-
-    public CommentService(ICommentRepo commentRepo)
+    public CommentService(AppDbContext context)
     {
-        _commentRepo = commentRepo;
+        _context = context;
+    }
+    AppDbContext _context;
+
+    public async Task AddCommentAsync(CommentAddReqDto dto)
+    {
+        var comment = dto.ToEntity();
+        await _context.Comments.AddAsync(comment);
+        await _context.SaveChangesAsync();
     }
 
-    public Task<IEnumerable<Comment>> GetAllCommentsAsync()
+    public async Task DeleteCommentAsync(int id, string password)
     {
-        return _commentRepo.GetAllCommentsAsync();
-    }
-
-    public Task<Comment> GetCommentByIdAsync(int id)
-    {
-        return _commentRepo.GetCommentByIdAsync(id);
-    }
-
-    public Task<IEnumerable<Comment>> GetCommentsByPostIdAsync(int postId)
-    {
-        return _commentRepo.GetCommentsByPostIdAsync(postId);
-    }
-
-    public Task AddCommentAsync(Comment comment)
-    {
-        return _commentRepo.AddCommentAsync(comment);
-    }
-
-    public Task UpdateCommentAsync(Comment comment)
-    {
-        return _commentRepo.UpdateCommentAsync(comment);
-    }
-
-    public Task DeleteCommentAsync(int id)
-    {
-        return _commentRepo.DeleteCommentAsync(id);
+        var comment = await _context.Comments.FindAsync(id);
+        if (comment == null)
+        {
+            throw new Exception("존재하지 않는 댓글입니다.");
+        }
+        if(!PasswordHasher.VerifyPassword(password, comment.WriterPasswordHash))
+        {
+            throw new Exception("잘못된 비밀번호입니다.");
+        }
+        _context.Comments.Remove(comment);
+        await _context.SaveChangesAsync();
     }
 }
