@@ -14,6 +14,10 @@ import LotteGiveawayDetailPage from 'views/lotte/event/giveaway/detail/DetailPag
 import MegaboxGiveawayPage from 'views/megabox/event/giveaway/GiveawayPage';
 import MegaboxGiveawayDetailPage from 'views/megabox/event/giveaway/detail/DetailPage';
 import PromoListPage from 'views/promo/ListPage';
+import BoardPage from 'views/board/BoardPage';
+import WritePage from 'views/board/WritePage';
+import DetailPage from 'views/board/DetailPage';
+import DeletePage from 'views/board/DeletePage';
 
 
 
@@ -70,6 +74,22 @@ const MainRoutes = {
     {
       path: 'promo/list',
       element: <PromoListPage/>
+    },
+    {
+      path: 'board',
+      element: <BoardPage/>
+    },
+    {
+      path: 'board/write',
+      element: <WritePage/>
+    },
+    {
+      path: 'board/detail',
+      element: <DetailPage/>
+    },
+    {
+      path: 'board/delete',
+      element: <DeletePage/>
     }
   ]
 };
