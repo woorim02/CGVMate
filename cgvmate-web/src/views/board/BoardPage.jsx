@@ -86,6 +86,14 @@ const BoardPage = () => {
 
   return (
     <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>
+      <Helmet>
+        <title>{post}</title>
+        <meta name="description" content={`커뮤니티`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`커뮤니티`} />
+        <meta property="og:description" content={`커뮤니티`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <Box component="header" sx={{ marginTop: 0, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <Tabs value={board ? board.id : false} onChange={(event, newBoardId) => toggleNavItem(event, newBoardId)} variant='scrollable' sx={{ height: '30px !important', minHeight: '30px' }}>
           {boards.map((board) => (

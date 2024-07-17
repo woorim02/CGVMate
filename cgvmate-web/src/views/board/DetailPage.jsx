@@ -79,7 +79,16 @@ const DetailPage = () => {
   }
 
   return (
-    <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>
+    <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>      {model && (
+      <Helmet>
+        <title>{post}</title>
+        <meta name="description" content={`${post.title}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`${post.title}`} />
+        <meta property="og:description" content={`${post.title}`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
+    )}
       <Paper elevation={3} sx={{ padding: 2, marginTop: 0, boxShadow: 'none' }}>
         <Typography variant="h4">{post.title}</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

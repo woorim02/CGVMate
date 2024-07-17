@@ -41,6 +41,14 @@ const WritePage = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>{post}</title>
+        <meta name="description" content={`게시글 작성`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`게시글 작성`} />
+        <meta property="og:description" content={`게시글 작성`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
       <Box component={Paper} sx={{ p: 3, mt: 1 }}>
         <Box sx={{ display: 'flex' }}>
           <TextField
