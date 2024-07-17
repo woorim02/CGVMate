@@ -37,7 +37,7 @@ const GiveawayDetailPage = () => {
     const fetchInfoData = async () => {
       try {
         if (model) {
-          const infoResponse = await api.getGiveawayInfoAsync(model.giveawayIndex, currentArea);
+          const infoResponse = await api.getGiveawayInfoAsync(model.giveawayIndex, searchParams.get('areaCode'));
           setInfo(infoResponse);
         }
       } catch (error) {
