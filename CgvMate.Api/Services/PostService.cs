@@ -39,8 +39,16 @@ public class PostService : IPostService
             throw new Exception("작성자명과 비밀번호를 모두 입력해 주세요");
         }
         post.WriterName.Replace(" ", "");
-        if (post.WriterName == "관리자")
-            throw new Exception($"'관리자'는 사용할 수 없는 닉네임입니다.");
+        if (dto.WriterPassword == Environment.GetEnvironmentVariable("ADMIN_PASSWORD"))
+        {
+            post.WriterName = "관리자";
+            post.WriterIP = "0.0.0.0";
+        }
+        else
+        {
+            if (post.WriterName == "관리자")
+                throw new Exception($"'관리자'는 사용할 수 없는 닉네임입니다.");
+        }
         var res = await _context.Posts.AddAsync(post);
         await _context.SaveChangesAsync();
         return Tuple.Create(res.Entity.BoardId, res.Entity.No);
