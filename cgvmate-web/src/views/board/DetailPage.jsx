@@ -80,7 +80,7 @@ const DetailPage = () => {
   }
 
   return (
-    <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>      {model && (
+    <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>      {post} && (
       <Helmet>
         <title>{post}</title>
         <meta name="description" content={`${post.title}`} />
