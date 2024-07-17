@@ -80,7 +80,8 @@ const DetailPage = () => {
   }
 
   return (
-    <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>      {post} && (
+    <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>
+      {post && (
       <Helmet>
         <title>{post}</title>
         <meta name="description" content={`${post.title}`} />
@@ -124,8 +125,8 @@ const DetailPage = () => {
                     <Typography color='gray' fontSize='0.8rem'>{`${comment.writerName}(${comment.writerIP})`}</Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                       <Typography color='grey' fontSize='0.8rem'>{`${formatDateTime(comment.dateCreated)}`}</Typography>
-                      <Button sx={{padding: '0px', margin:0 , minWidth: '40px', lineHeight: 'none !important', fontSize: '0.8rem'}}
-                       onClick={() => navigate(`/board/delete/?commentId=${comment.id}&boardId=${boardId}&postNo=${postNo}`)}>
+                      <Button sx={{ padding: '0px', margin: 0, minWidth: '40px', lineHeight: 'none !important', fontSize: '0.8rem' }}
+                        onClick={() => navigate(`/board/delete/?commentId=${comment.id}&boardId=${boardId}&postNo=${postNo}`)}>
                         삭제
                       </Button>
                     </Box>
