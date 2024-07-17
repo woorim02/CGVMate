@@ -27,7 +27,7 @@ class CgvMateApi {
   }
 
   async getGiveawayInfoAsync(giveawayIndex, areaCode = '') {
-    const response = await fetch(`${Constants.API_HOST}/cgv/event/giveaway/info?giveawayIndex=${giveawayIndex}&areaCode=${areaCode}`);
+    const response = await fetch(`${Constants.API_HOST}/cgv/event/giveaway/info?giveawayIndex=${giveawayIndex}&areaCode=${areaCode ? areaCode : ''} `);
     const info = await response.json();
     return info;
   }
