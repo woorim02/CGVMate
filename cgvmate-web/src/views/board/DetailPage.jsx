@@ -83,7 +83,7 @@ const DetailPage = () => {
     <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>
       {post && (
       <Helmet>
-        <title>{post}</title>
+        <title>{post.title}</title>
         <meta name="description" content={`${post.title}`} />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={`${post.title}`} />
