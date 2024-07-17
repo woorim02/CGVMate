@@ -1,9 +1,9 @@
 // assets
-import { IconBell } from '@tabler/icons-react';
+import { IconBell, IconChalkboard } from '@tabler/icons-react';
 import Constants from '../constants'
 
 // constant
-const icons = { IconBell };
+const icons = { IconBell, IconChalkboard };
 
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
 
@@ -18,6 +18,14 @@ const other = {
       type: 'item',
       url: Constants.promo_list,
       icon: icons.IconBell,
+      breadcrumbs: false
+    },
+    {
+      id:'board',
+      title: '커뮤니티',
+      type: 'item',
+      url: '/board',
+      icon: icons.IconChalkboard,
       breadcrumbs: false
     }
   ]
