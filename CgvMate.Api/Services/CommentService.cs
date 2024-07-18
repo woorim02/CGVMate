@@ -2,6 +2,7 @@
 using CgvMate.Api.DTOs;
 using CgvMate.Api.Entities;
 using CgvMate.Api.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace CgvMate.Api.Services;
 
@@ -15,6 +16,11 @@ public class CommentService : ICommentService
 
     public async Task AddCommentAsync(CommentAddReqDto dto)
     {
+        bool? isBannedIP = await _context.BannedIPs.Select(p => p.IP == dto.WriterIP).FirstOrDefaultAsync();
+        if (isBannedIP != null)
+        {
+            throw new Exception("차단된 사용자입니다.");
+        }
         var comment = dto.ToEntity();
         await _context.Comments.AddAsync(comment);
         await _context.SaveChangesAsync();

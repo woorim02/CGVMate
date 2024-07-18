@@ -34,6 +34,12 @@ public class PostService : IPostService
 
     public async Task<Tuple<string, int>> AddPostAsync(PostAddReqDto dto)
     {
+        bool? isBannedIP = await _context.BannedIPs.Select(p => p.IP == dto.WriterIP).FirstOrDefaultAsync();
+        if(isBannedIP != null)
+        {
+            throw new Exception("차단된 사용자입니다.");
+        }
+
         var post = dto.ToEntity();
         if (dto.WriterName.IsNullOrEmpty() || dto.WriterPassword.IsNullOrEmpty()){
             throw new Exception("작성자명과 비밀번호를 모두 입력해 주세요");

@@ -30,6 +30,7 @@ public class AppDbContext : DbContext
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<User> Users { get; set; }
+    public DbSet<BannedIP> BannedIPs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -117,6 +118,9 @@ public class AppDbContext : DbContext
                    .WithOne(c => c.User)
                    .HasForeignKey(c => c.UserId);
         });
+
+        modelBuilder.Entity<BannedIP>()
+            .HasKey(u => u.Id);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
