@@ -99,7 +99,7 @@ const BoardPage = () => {
       <Helmet>
         <title>커뮤니티</title>
       </Helmet>
-      <Box component="header" sx={{ marginTop: 0, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+      <Box component="header" sx={{ marginTop: 0, marginBottom: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <Tabs value={board ? board.id : false} onChange={(event, newBoardId) => toggleNavItem(event, newBoardId)} variant='scrollable' sx={{ height: '30px !important', minHeight: '30px' }}>
           {boards.map((board) => (
             <Tab key={board.id} label={board.title} value={board.id} sx={{ padding: '2px', height: '30px !important', minHeight: '30px !important' }} />
@@ -110,7 +110,7 @@ const BoardPage = () => {
         </Button>
       </Box>
       <BannerAds adSlot='4357139561'/>
-      <Box component="main">
+      <Box component="main" sx={{ marginTop: -1}}>
         <>
           <List sx={{ padding: 0, margin: 0 }}>
             {posts.length > 0 ? (
