@@ -98,9 +98,9 @@ const DetailPage = () => {
           <Typography variant="body1">{`${post.writerName} (${post.writerIP})`}</Typography>
         </Box>
         <Typography variant="body1" sx={{ marginBottom: 1 }}>{`조회수: ${post.viewCount} | ${formatDateTime(post.dateCreated)}`}</Typography>
-        <Divider sx={{ marginBottom: 2 }} />
+        <Divider sx={{ marginBottom: 0.5 }} />
         <BannerAds adSlot='4357139561' style={{ display: 'inline-block', width: '300px', height: '50px' }}/>
-        <Box>
+        <Box sx={{ marginTop: 0.5}}>
           {post.content.map((paragraph, index) => (
             <Typography key={index} variant="body1" paragraph sx={{ wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>
               {paragraph.Body}
