@@ -98,9 +98,9 @@ public class PostService : IPostService
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<PostSummary>> GetPostSummarysAsync(string boardId, int pageNo = 1, int pageSize = 10)
+    public async Task<PostSummarysDTO> GetPostSummarysAsync(string boardId, int pageNo = 1, int pageSize = 10)
     {
-        return await _context.Set<Post>()
+        var posts = await _context.Set<Post>()
             .Where(p => p.BoardId == boardId)
             .OrderByDescending(p => p.Id)
             .Skip((pageNo - 1) * pageSize)
@@ -126,6 +126,10 @@ public class PostService : IPostService
                 Downvote = p.Downvote
             })
             .ToListAsync();
+
+        var postCount = await _context.Posts.Where(p => p.BoardId == boardId).CountAsync();
+
+        return new PostSummarysDTO { TotalCount = postCount, PostSummaries = posts };
     }
 
     private static string GetFirstTwoParts(string ipAddress)

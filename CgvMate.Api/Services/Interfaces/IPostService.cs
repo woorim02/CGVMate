@@ -8,5 +8,5 @@ public interface IPostService
     Task<Tuple<string, int>> AddPostAsync(PostAddReqDto post);
     Task<Tuple<string, int>> UpdatePostAsync(PostAddReqDto post, int postId);
     Task DeletePostAsync(int id, string password);
-    Task<IEnumerable<PostSummary>> GetPostSummarysAsync(string boardId, int pageNo = 1, int pageSize = 10);
+    Task<PostSummarysDTO> GetPostSummarysAsync(string boardId, int pageNo = 1, int pageSize = 10);
 }
