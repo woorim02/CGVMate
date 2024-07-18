@@ -45,6 +45,15 @@ const Home = () => {
             </Card>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
+            <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/board')}>
+              <CardContent>
+                <Typography variant="h5" component="div">
+                  커뮤니티
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
             <Card sx={{ height: '100%', cursor: 'pointer', backgroundColor: '#FBE9E7' }} onClick={() => handleCardClick('/cgv/event/giveaway')}>
               <CardContent>
                 <Typography variant="h5" component="div">
