@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Container, TextField, Button, Box, Typography, Paper } from '@mui/material';
 import BoardApi from 'api/boardApi';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const WritePage = () => {
   const location = useLocation();
@@ -41,6 +42,9 @@ const WritePage = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>게시글 작성</title>
+      </Helmet>
       <Box component={Paper} sx={{ p: 3, mt: 1 }}>
         <Box sx={{ display: 'flex' }}>
           <TextField

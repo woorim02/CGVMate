@@ -4,6 +4,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { IconPencilPlus } from '@tabler/icons-react';
 import BoardApi from 'api/boardApi';
+import { Helmet } from 'react-helmet-async';
 
 const BoardPage = () => {
   const location = useLocation();
@@ -86,6 +87,9 @@ const BoardPage = () => {
 
   return (
     <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>
+      <Helmet>
+        <title>커뮤니티</title>
+      </Helmet>
       <Box component="header" sx={{ marginTop: 0, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
         <Tabs value={board ? board.id : false} onChange={(event, newBoardId) => toggleNavItem(event, newBoardId)} variant='scrollable' sx={{ height: '30px !important', minHeight: '30px' }}>
           {boards.map((board) => (

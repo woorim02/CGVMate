@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Typography, Box, CircularProgress, List, ListItem, ListItemText, Paper, Button, TextField, Divider } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import BoardApi from 'api/boardApi';
+import { Helmet } from 'react-helmet-async';
 
 const DetailPage = () => {
   const location = useLocation();
@@ -80,6 +81,16 @@ const DetailPage = () => {
 
   return (
     <Container sx={{ width: '100%', height: '100%', padding: '0px !important', margin: 0 }} maxWidth={false}>
+      {post && (
+      <Helmet>
+        <title>{post.title}</title>
+        <meta name="description" content={`${post.title}`} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={`${post.title}`} />
+        <meta property="og:description" content={`${post.title}`} />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
+    )}
       <Paper elevation={3} sx={{ padding: 2, marginTop: 0, boxShadow: 'none' }}>
         <Typography variant="h4">{post.title}</Typography>
         <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -114,8 +125,8 @@ const DetailPage = () => {
                     <Typography color='gray' fontSize='0.8rem'>{`${comment.writerName}(${comment.writerIP})`}</Typography>
                     <Box sx={{ display: 'flex', flexDirection: 'row' }}>
                       <Typography color='grey' fontSize='0.8rem'>{`${formatDateTime(comment.dateCreated)}`}</Typography>
-                      <Button sx={{padding: '0px', margin:0 , minWidth: '40px', lineHeight: 'none !important', fontSize: '0.8rem'}}
-                       onClick={() => navigate(`/board/delete/?commentId=${comment.id}&boardId=${boardId}&postNo=${postNo}`)}>
+                      <Button sx={{ padding: '0px', margin: 0, minWidth: '40px', lineHeight: 'none !important', fontSize: '0.8rem' }}
+                        onClick={() => navigate(`/board/delete/?commentId=${comment.id}&boardId=${boardId}&postNo=${postNo}`)}>
                         삭제
                       </Button>
                     </Box>
