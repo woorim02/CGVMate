@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Typography, Box, CircularProgress, List, ListItem, ListItemText, Tabs, Tab, Button, Pagination } from '@mui/material';
+import { Container, Typography, Box, List, ListItem, ListItemText, Tabs, Tab, Button, Pagination } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { IconPencilPlus } from '@tabler/icons-react';
@@ -11,16 +11,24 @@ const BoardPage = () => {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const id = queryParams.get('id');
-  if (!id) {
-    navigate(`/board/?id=free&pageNo=1`);
-  }
+  const pageQueryParam = queryParams.get('pageNo');
   const [loading, setLoading] = useState(true);
   const [boards, setBoards] = useState([]);
   const [posts, setPosts] = useState([]);
   const [board, setBoard] = useState(null);
-  const [pageNo, setPageNo] = useState(parseInt(queryParams.get('pageNo')) || 1);
+  const [pageNo, setPageNo] = useState(parseInt(pageQueryParam) || 1);
   const [totalPages, setTotalPages] = useState(1); // 전체 페이지 수 상태 추가
   const api = useRef(new BoardApi()).current;
+
+  useEffect(() => {
+    if (!id) {
+      navigate(`/board/?id=free&pageNo=1`);
+    }
+  }, [id, navigate]);
+
+  useEffect(() => {
+    setPageNo(parseInt(pageQueryParam) || 1);
+  }, [pageQueryParam]);
 
   useEffect(() => {
     const fetchBoards = async () => {
@@ -39,20 +47,20 @@ const BoardPage = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       if (board && board.id) {
-        const postsData = await api.getPostSummarysAsync(board.id, pageNo);
-        setPosts(postsData);
-        setTotalPages(pageNo + 1); // 전체 페이지 수 설정
+        const dto = await api.getPostSummarysAsync(board.id, pageNo);
+        setPosts(dto.postSummaries);
+        setTotalPages(Math.ceil(dto.totalCount / 10)); // 전체 페이지 수 설정
+        setLoading(false);
       }
     };
 
     fetchPosts();
-    setLoading(false);
-  }, [board, pageNo]);
+  }, [board, pageNo, api]);
 
   const toggleNavItem = (event, newBoardId) => {
     const newBoard = boards.find(b => b.id === newBoardId);
     setBoard(newBoard);
-    navigate(`/board/list?id=${newBoardId}`);
+    navigate(`/board/list?id=${newBoardId}&pageNo=1`);
   };
 
   const handlePageChange = (event, value) => {
