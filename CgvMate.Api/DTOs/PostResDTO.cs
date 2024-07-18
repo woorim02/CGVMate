@@ -17,7 +17,7 @@ public class PostResDto
     public int ViewCount { get; set; }
     public int Upvote { get; set; }
     public int Downvote { get; set; }
-    public IEnumerable<CommentResDto> Comments { get; set; }
+    public IEnumerable<CommentResDTO> Comments { get; set; }
 
     public static PostResDto FromEntity(Post post)
     {
@@ -36,7 +36,7 @@ public class PostResDto
             ViewCount = post.ViewCount,
             Upvote = post.Upvote,
             Downvote = post.Downvote,
-            Comments = post.Comments.Select(c => CommentResDto.FromEntity(c)).ToList()
+            Comments = post.Comments.Select(c => CommentResDTO.FromEntity(c)).ToList()
         };
     }
 
