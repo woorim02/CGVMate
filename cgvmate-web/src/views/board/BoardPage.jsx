@@ -5,6 +5,7 @@ import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { IconPencilPlus } from '@tabler/icons-react';
 import BoardApi from 'api/boardApi';
 import { Helmet } from 'react-helmet-async';
+import BannerAds from 'components/BannerAds';
 
 const BoardPage = () => {
   const location = useLocation();
@@ -108,6 +109,7 @@ const BoardPage = () => {
           <IconPencilPlus />&nbsp;새 글 쓰기
         </Button>
       </Box>
+      <BannerAds adSlot='4357139561'/>
       <Box component="main">
         <>
           <List sx={{ padding: 0, margin: 0 }}>

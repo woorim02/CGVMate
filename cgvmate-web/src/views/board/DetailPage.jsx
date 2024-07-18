@@ -3,6 +3,7 @@ import { Container, Typography, Box, CircularProgress, List, ListItem, ListItemT
 import { useLocation, useNavigate } from 'react-router-dom';
 import BoardApi from 'api/boardApi';
 import { Helmet } from 'react-helmet-async';
+import BannerAds from 'components/BannerAds';
 
 const DetailPage = () => {
   const location = useLocation();
@@ -98,6 +99,7 @@ const DetailPage = () => {
         </Box>
         <Typography variant="body1" sx={{ marginBottom: 1 }}>{`조회수: ${post.viewCount} | ${formatDateTime(post.dateCreated)}`}</Typography>
         <Divider sx={{ marginBottom: 2 }} />
+        <BannerAds adSlot='4357139561' style={{ display: 'inline-block', width: '300px', height: '50px' }}/>
         <Box>
           {post.content.map((paragraph, index) => (
             <Typography key={index} variant="body1" paragraph sx={{ wordWrap: 'break-word', whiteSpace: 'pre-wrap' }}>

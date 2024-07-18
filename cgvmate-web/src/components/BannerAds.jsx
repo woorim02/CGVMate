@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const BannerAds = ({adSlot}) => {
+const BannerAds = ({ adSlot, style }) => {
   useEffect(() => {
     const pushAd = () => {
       try {
@@ -26,10 +26,12 @@ const BannerAds = ({adSlot}) => {
     };
   }, []);
 
+  const defaultStyle = { display: 'inline-block', width: '320px', height: '50px' };
+
   return (
     <ins
       className="adsbygoogle"
-      style={{display: 'inline-block', width: '320px', height: '50px'}}
+      style={style || defaultStyle}
       data-ad-client="ca-pub-2422895337222657"
       data-ad-slot={adSlot}
     ></ins>
@@ -38,5 +40,7 @@ const BannerAds = ({adSlot}) => {
 
 BannerAds.propTypes = {
   adSlot: PropTypes.string.isRequired,
+  style: PropTypes.object,
 };
+
 export default BannerAds;
