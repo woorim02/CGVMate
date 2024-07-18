@@ -12,7 +12,7 @@ const DetailPage = () => {
   const postNo = queryParams.get('postNo');
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [commentWriter, setCommentWriter] = useState('');
+  const [commentWriter, setCommentWriter] = useState('ㅇㅇ');
   const [commentPassword, setCommentPassword] = useState('');
   const [commentContent, setCommentContent] = useState('');
   const api = new BoardApi();
@@ -63,9 +63,8 @@ const DetailPage = () => {
     const day = date.getDate();
     const hours = date.getHours();
     const minutes = date.getMinutes().toString().padStart(2, '0');
-    const formattedHours = hours % 12 || 12;
 
-    return `${year}. ${month}. ${day}. ${formattedHours.toString().padStart(2, '0')}:${minutes}`;
+    return `${year}. ${month}. ${day}. ${hours.toString().padStart(2, '0')}:${minutes}`;
   };
 
   if (loading) {
