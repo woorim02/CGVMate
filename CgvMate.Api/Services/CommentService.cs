@@ -16,10 +16,10 @@ public class CommentService : ICommentService
 
     public async Task AddCommentAsync(CommentAddReqDto dto)
     {
-        bool? isBannedIP = await _context.BannedIPs.Select(p => p.IP == dto.WriterIP).FirstOrDefaultAsync();
-        if (isBannedIP != null)
+        var BannedIP = await _context.BannedIPs.Where(p => p.IP == dto.WriterIP).FirstOrDefaultAsync();
+        if (BannedIP != null)
         {
-            throw new Exception("차단된 사용자입니다.");
+            throw new Exception(BannedIP.Descritpion);
         }
         var comment = dto.ToEntity();
         await _context.Comments.AddAsync(comment);
