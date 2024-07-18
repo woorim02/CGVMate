@@ -107,7 +107,6 @@ const GiveawayDetailPage = () => {
           <Typography variant="body1">{model && model.title}</Typography>
         </Box>
         <DisplayAds adSlot='8167919304' />
-        <BannerAds adSlot='4357139561'/>
         <Grid container sx={{ height: '100%', flexWrap: 'nowrap' }}>
           {info && info.AreaList ? (
             <>
