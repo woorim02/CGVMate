@@ -106,7 +106,7 @@ const GiveawayPage = () => {
                       <BannerAds adSlot='1843074752' />
                     </ListItem>
                   }
-                  <ListItem button component={Link} to={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
+                  <ListItem button component='a' href={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
                     <ListItemText
                       primary={
                         <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>

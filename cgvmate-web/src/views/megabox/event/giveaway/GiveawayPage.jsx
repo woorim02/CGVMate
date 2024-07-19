@@ -83,7 +83,7 @@ const GiveawayPage = () => {
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.id}>
                   {index === Math.floor(filteredEventList.length / 2) && <DisplayAds adSlot='1843074752' />}
-                  <ListItem button component={Link} to={`/megabox/event/giveaway/detail?eventIndex=${item.id}`}>
+                  <ListItem button component='a' href={`/megabox/event/giveaway/detail?eventIndex=${item.id}`}>
                     <ListItemText
                       primary={
                         <Box sx={{ display: 'flex', alignItems: 'center', marginRight:'5px' }}>
