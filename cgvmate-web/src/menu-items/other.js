@@ -1,5 +1,5 @@
 // assets
-import { IconBell, IconChalkboard } from '@tabler/icons-react';
+import { IconBell, IconChalkboard, IconInfoSquare } from '@tabler/icons-react';
 import Constants from '../constants'
 
 // constant
@@ -27,6 +27,15 @@ const other = {
       url: '/board',
       icon: icons.IconChalkboard,
       breadcrumbs: false
+    },
+    {
+      id: 'announce',
+      title: '공지사항',
+      type: 'item',
+      url: 'https://wr-rainforest.tistory.com/13',
+      icon: IconInfoSquare,
+      breadcrumbs : false
+
     }
   ]
 };
