@@ -20,7 +20,8 @@ const GiveawayPage = () => {
 
   useEffect(() => {
     const fetchEvents = async () => {
-      const events = await api.getGiveawayEventListAsync();
+      let events = await api.getGiveawayEventListAsync();
+      events = events.reverse();
       setEventList(events);
       setFilteredEventList(events);
       setLoading(false);
