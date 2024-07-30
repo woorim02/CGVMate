@@ -77,20 +77,6 @@ const GiveawayPage = () => {
             {filteredEventList.length > 0 ? (
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventIndex}>
-                  {index === Math.floor(filteredEventList.length / 2) && <BannerAds adSlot='1843074752' />}
-                  {index === Math.floor(filteredEventList.length / 4) &&
-                    filteredEventList.length > 10 &&
-                    <ListItem>
-                      <BannerAds adSlot='1843074752' />
-                    </ListItem>
-                  }
-
-                  {index === Math.floor(filteredEventList.length * (3 / 4)) &&
-                    filteredEventList.length > 10 &&
-                    <ListItem>
-                      <BannerAds adSlot='1843074752' />
-                    </ListItem>
-                  }
                   <ListItem button component='a' href={`/cgv/event/giveaway/detail?eventIndex=${item.eventIndex}`}>
                     <ListItemText
                       primary={

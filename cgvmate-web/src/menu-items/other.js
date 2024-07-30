@@ -32,7 +32,7 @@ const other = {
       id: 'announce',
       title: '공지사항',
       type: 'item',
-      url: 'https://wr-rainforest.tistory.com/13',
+      url: 'https://wr-rainforest.tistory.com/m/13',
       icon: IconInfoSquare,
       breadcrumbs : false
 
