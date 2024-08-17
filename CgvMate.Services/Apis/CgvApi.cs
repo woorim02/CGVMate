@@ -79,7 +79,7 @@ internal class CgvApi
     public async Task<List<GiveawayEvent>> GetGiveawayEventsAsync()
     {
         var request = new HttpRequestMessage(HttpMethod.Post, "https://m.cgv.co.kr/Event/GiveawayEventList.aspx/GetGiveawayEventList");
-        request.Content = new StringContent("{theaterCode: '', pageNumber: '1', pageSize: '50'}", Encoding.UTF8, "application/json");
+        request.Content = new StringContent("{theaterCode: '', pageNumber: '1', pageSize: '100'}", Encoding.UTF8, "application/json");
         var response = await _client.SendAsync(request);
 
         var content = await response.Content.ReadAsStringAsync();
