@@ -76,6 +76,34 @@ class CgvMateApi {
 
     return { title: titleStr, count, index, isAvailable: ava };
   }
+
+  async getGiveawayEventCountAsync(idx, gidx, tcd) {
+    const response = await fetch(`https://api.cgvmate.com/proxy/Event/GiveawayEventSignup.aspx?idx=${idx}&gidx=${gidx}&tcd=${tcd}`);
+    const msg = await response.text();
+    
+    const remainCntMatch = msg.match(/var remainCnt = "(.*?)";/);
+    const totalCntMatch = msg.match(/var totalCnt = "(.*?)";/);
+
+    const remainCnt = remainCntMatch ? remainCntMatch[1] : null;
+    const totalCnt = totalCntMatch ? totalCntMatch[1] : null;
+
+    return { remainCnt: this.decrypt(remainCnt), totalCnt: this.decrypt(totalCnt) };
+  }
+
+  decrypt(data) {
+    const iv = CryptoJS.enc.Base64.parse('YjUxMWM3MWI5M2E3NDhmNA==');
+    const key = CryptoJS.enc.Base64.parse('YjUxMWM3MWI5M2E3NDhmNDc1YzM5YzY1ZGQwZTFlOTQ=');
+
+    const encryptedData = CryptoJS.enc.Base64.parse(data);
+    
+    const decrypted = CryptoJS.AES.decrypt(
+        { ciphertext: encryptedData }, 
+        key, 
+        { iv: iv, mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 }
+    );
+    
+    return decrypted.toString(CryptoJS.enc.Utf8);
+  }
 }
 
 export default CgvMateApi;

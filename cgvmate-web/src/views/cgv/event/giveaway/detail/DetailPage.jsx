@@ -17,6 +17,8 @@ const GiveawayDetailPage = () => {
   const [info, setInfo] = useState(null);
   const [currentArea, setCurrentArea] = useState(areaCode || '13');
 
+  const signUpTheaters = ['0013', '0059' ,'0074', '0181', '0293', '0128']
+
   const boxRef = useRef(null);
 
   useEffect(() => {
@@ -38,6 +40,11 @@ const GiveawayDetailPage = () => {
       try {
         if (model) {
           const infoResponse = await api.getGiveawayInfoAsync(model.giveawayIndex, searchParams.get('areaCode'));
+          for (const theater of infoResponse.TheaterList) {
+            if (signUpTheaters.includes(theater.TheaterCode)) {
+              theater.GiveawayRemainCount = await api.getGiveawayEventCountAsync(model.eventIndex, model.giveawayIndex, theater.TheaterCode);
+            }
+          }
           setInfo(infoResponse);
         }
       } catch (error) {
@@ -58,6 +65,11 @@ const GiveawayDetailPage = () => {
   const selectAreaTheaterList = async (areaCode) => {
     try {
       const infoResponse = await api.getGiveawayInfoAsync(model.giveawayIndex, areaCode);
+      for (const theater of infoResponse.TheaterList) {
+        if (signUpTheaters.includes(theater.TheaterCode)) {
+          theater.GiveawayRemainCount = await api.getGiveawayEventCountAsync(model.eventIndex, model.giveawayIndex, theater.TheaterCode);
+        }
+      }
       setInfo(infoResponse);
       setCurrentArea(areaCode);
       navigate(`?eventIndex=${eventIndex}&areaCode=${areaCode}`, { replace: true });
@@ -146,6 +158,7 @@ const GiveawayDetailPage = () => {
                             borderRadius: '30px',
                           }}
                         >
+                          {signUpTheaters.includes(item.TheaterCode) && `${item.GiveawayRemainCount.remainCnt}`}
                         </Box>
                       </Box>
                       <Typography variant="body2" color="textSecondary" sx={{ marginTop: 0 }}>
