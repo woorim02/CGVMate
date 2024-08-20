@@ -146,7 +146,6 @@ const GiveawayDetailPage = () => {
                             borderRadius: '30px',
                           }}
                         >
-                          {item.GiveawayRemainCount}
                         </Box>
                       </Box>
                       <Typography variant="body2" color="textSecondary" sx={{ marginTop: 0 }}>
