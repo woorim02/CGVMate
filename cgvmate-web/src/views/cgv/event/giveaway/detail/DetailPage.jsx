@@ -16,10 +16,7 @@ const GiveawayDetailPage = () => {
   const [model, setModel] = useState(null);
   const [info, setInfo] = useState(null);
   const [currentArea, setCurrentArea] = useState(areaCode || '13');
-
-  const signUpTheaters = ['0013', '0059' ,'0074', '0181', '0293', '0128']
-
-  const boxRef = useRef(null);
+  const [buttonTexts, setButtonTexts] = useState({});
 
   useEffect(() => {
     const fetchModelData = async () => {
@@ -40,11 +37,6 @@ const GiveawayDetailPage = () => {
       try {
         if (model) {
           const infoResponse = await api.getGiveawayInfoAsync(model.giveawayIndex, searchParams.get('areaCode'));
-          for (const theater of infoResponse.TheaterList) {
-            if (signUpTheaters.includes(theater.TheaterCode)) {
-              theater.GiveawayRemainCount = await api.getGiveawayEventCountAsync(model.eventIndex, model.giveawayIndex, theater.TheaterCode);
-            }
-          }
           setInfo(infoResponse);
         }
       } catch (error) {
@@ -57,19 +49,27 @@ const GiveawayDetailPage = () => {
   }, [model]);
 
   useEffect(() => {
-    if (boxRef.current) {
-      boxRef.current.scrollIntoView({ behavior: 'smooth' });
+    if (info && info.TheaterList) {
+      const initialButtonTexts = {};
+      info.TheaterList.forEach(item => {
+        initialButtonTexts[item.TheaterCode] = "";
+      });
+      setButtonTexts(initialButtonTexts);
     }
-  }, [currentArea]);
+  }, [info]);
+
+  const getCount = async (theaterCode) => {
+    try {
+      const countText = await api.getGiveawayEventCountAsync(model.eventIndex, model.giveawayIndex, theaterCode);
+      setButtonTexts(prev => ({ ...prev, [theaterCode]: countText }));
+    } catch {
+      setButtonTexts(prev => ({ ...prev, [theaterCode]: "unknown" }));
+    }
+  };
 
   const selectAreaTheaterList = async (areaCode) => {
     try {
       const infoResponse = await api.getGiveawayInfoAsync(model.giveawayIndex, areaCode);
-      for (const theater of infoResponse.TheaterList) {
-        if (signUpTheaters.includes(theater.TheaterCode)) {
-          theater.GiveawayRemainCount = await api.getGiveawayEventCountAsync(model.eventIndex, model.giveawayIndex, theater.TheaterCode);
-        }
-      }
       setInfo(infoResponse);
       setCurrentArea(areaCode);
       navigate(`?eventIndex=${eventIndex}&areaCode=${areaCode}`, { replace: true });
@@ -99,7 +99,7 @@ const GiveawayDetailPage = () => {
   };
 
   return (
-    <Box ref={boxRef} sx={{ width: '100%', height: 'auto', padding: 0 }}>
+    <Box sx={{ width: '100%', height: 'auto', padding: 0 }}>
       {model && (
         <Helmet>
           <title>{model.contents}</title>
@@ -157,8 +157,9 @@ const GiveawayDetailPage = () => {
                             fontWeight: 500,
                             borderRadius: '30px',
                           }}
+                          onClick={() => getCount(item.TheaterCode)}
                         >
-                          {signUpTheaters.includes(item.TheaterCode) && `${item.GiveawayRemainCount.remainCnt}`}
+                          {buttonTexts[item.TheaterCode] || ""}
                         </Box>
                       </Box>
                       <Typography variant="body2" color="textSecondary" sx={{ marginTop: 0 }}>

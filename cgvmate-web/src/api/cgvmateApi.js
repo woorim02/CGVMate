@@ -86,8 +86,7 @@ class CgvMateApi {
 
     const remainCnt = remainCntMatch ? remainCntMatch[1] : null;
     const totalCnt = totalCntMatch ? totalCntMatch[1] : null;
-
-    return { remainCnt: this.decrypt(remainCnt), totalCnt: this.decrypt(totalCnt) };
+    return this.decrypt(remainCnt) ;
   }
 
   decrypt(data) {
