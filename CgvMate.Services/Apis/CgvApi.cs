@@ -147,7 +147,7 @@ internal class CgvApi
 
         foreach (var item in info.TheaterGiveawayInfos)
         {
-            item.GiveawayRemainCount = Decrypt(item.EncCount);
+            item.GiveawayRemainCount = "0";
             item.GiveawayIndex = giveawayIndex;
         }
         foreach (var item in info.Areas)
