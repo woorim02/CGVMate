@@ -77,7 +77,7 @@ const GiveawayPage = () => {
             {filteredEventList.length > 0 ? (
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventIndex}>
-                  <ListItem button component='a' href={`/cgv/event/giveaway/detail?eventIndex=${item.eventIndex}`}>
+                  <ListItem button component={Link} to={`/cgv/event/giveaway/detail?eventIndex=${item.eventIndex}`}>
                     <ListItemText
                       primary={
                         <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>

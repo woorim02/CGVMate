@@ -93,7 +93,7 @@ const GiveawayPage = () => {
             {filteredEventList.length > 0 ? (
               filteredEventList.map((item, index) => (
                 <React.Fragment key={item.eventID}>
-                  <ListItem button component='a' href={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
+                  <ListItem button component={Link} to={`/lotte/event/giveaway/detail?eventIndex=${item.eventID}`}>
                     <ListItemText
                       primary={
                         <Typography variant="h6" sx={{ fontSize: '0.95rem' }}>
