@@ -28,22 +28,6 @@ const dashboard = {
       icon: icons.IconGift,
       breadcrumbs: false
     },
-    {
-      id: 'speed',
-      title: '스피드쿠폰 조회',
-      type: 'item',
-      url: Constants.event_cupon_speed,
-      icon: icons.IconBell,
-      breadcrumbs: false
-    },
-    {
-      id: 'surprise',
-      title: '서프라이즈 쿠폰 조회',
-      type: 'item',
-      url: Constants.event_cupon_surprise,
-      icon: icons.IconBell,
-      breadcrumbs: false
-    },
   ]
 };
 
