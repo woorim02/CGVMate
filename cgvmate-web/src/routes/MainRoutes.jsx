@@ -6,6 +6,8 @@ import Home from 'views/Home';
 import CgvEventPage from 'views/cgv/event/EventPage';
 import CgvGiveawayPage from 'views/cgv/event/giveaway/GiveawayPage';
 import CgvGiveawayDetailPage from 'views/cgv/event/giveaway/detail/DetailPage';
+import SpeedCuponPage from 'views/cgv/event/cupon/SpeedCuponPage';
+import SurpriseCuponPage from 'views/cgv/event/cupon/SurpriseCuponPage';
 import LotteEventPage from 'views/lotte/event/EventPage';
 import LotteGiveawayPage from 'views/lotte/event/giveaway/GiveawayPage';
 import LotteGiveawayDetailPage from 'views/lotte/event/giveaway/detail/DetailPage';
@@ -28,6 +30,14 @@ const MainRoutes = {
     {
       path: '/',
       element: <Home />
+    },
+    {
+      path: 'cgv/event/cupon/speed',
+      element: <SpeedCuponPage/>
+    },
+    {
+      path: 'cgv/event/cupon/surprise',
+      element: <SurpriseCuponPage/>
     },
     {
       path: 'cgv/event',
