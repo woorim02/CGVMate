@@ -21,6 +21,7 @@ namespace CgvMate.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<CommentResDTO>> AddComment(CommentAddReqDto dto)
         {
+            throw new NotImplementedException();
             dto.WriterIP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             await _commentService.AddCommentAsync(dto);
 
