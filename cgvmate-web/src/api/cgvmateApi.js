@@ -78,7 +78,8 @@ class CgvMateApi {
   }
 
   async getGiveawayEventCountAsync(idx, gidx, tcd) {
-    const response = await fetch(`https://api.cgvmate.com/proxy/Event/GiveawayEventSignup.aspx?idx=${idx}&gidx=${gidx}&tcd=${tcd}`);
+    const url = `https://m.cgv.co.kr/Event/GiveawayEventSignup.aspx?idx=${idx}&gidx=${gidx}&tcd=${tcd}`;
+    const response = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
     const msg = await response.text();
     
     const remainCntMatch = msg.match(/var remainCnt = "(.*?)";/);
