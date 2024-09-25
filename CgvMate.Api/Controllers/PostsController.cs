@@ -26,7 +26,6 @@ public class PostsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddPost([FromBody] PostAddReqDto dto)
     {
-        throw new NotImplementedException();
         dto.WriterIP = HttpContext.Request.Headers["X-Forwarded-For"].FirstOrDefault() ?? HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         var tuple = await _postService.AddPostAsync(dto);
         return Ok(tuple);
@@ -35,7 +34,6 @@ public class PostsController : ControllerBase
     [HttpPut("{postId}")]
     public async Task<ActionResult> UpdatePost(int postId, [FromBody] PostAddReqDto dto)
     {
-        throw new NotImplementedException();
         var tuple = await _postService.UpdatePostAsync(dto, postId);
         return Ok(tuple);
     }
