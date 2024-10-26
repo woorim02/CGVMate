@@ -220,7 +220,7 @@ namespace CgvMate.Api
             Environment.SetEnvironmentVariable("JWT_KEY", "E7qVMZftP0q9zIsyja8+24/CLGY6KcPIhyevEDu8qL4=");
             Environment.SetEnvironmentVariable("IV", "x3nV9mvvsS+qIN1h2uVEviEFO2M+KXDWw66ClG1fFu4=");
             Environment.SetEnvironmentVariable("KEY", "n8eqQYpQH816E2tfcvqA+A==");
-            Environment.SetEnvironmentVariable("CONNECTION_STRING", "Server=192.168.0.51;Port=13306;Database=cgvmate;User=root;Password=password;");
+            Environment.SetEnvironmentVariable("CONNECTION_STRING", "Server=192.168.0.30;Port=13306;Database=cgvmate;User=root;Password=password;");
         }
     }
 }
