@@ -3,22 +3,29 @@ name: CgvMate.Api
 on:
   push:
     paths:
-      - 'docker-compose.yml'
+      - "docker-compose.yml"
+
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64]
-    
-    steps:
-    - name: 코드 체크아웃
-      uses: actions/checkout@v2
 
-    - name: 빌드
-      run: cd CgvMate.Api && bash ./publish.sh
-      
-    - name: 환경변수 파일 생성
-      run: |
-        touch .env
-        echo "${{ secrets.DotEnv }}" > .env
-      
-    - name: 도커 컴포즈 실행
-      run: docker compose up -d 
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v2
+
+      - name: 애플리케이션 빌드
+        working-directory: CgvMate.Api
+        run: bash ./publish.sh
+
+      - name: 환경 변수 파일 생성
+        run: |
+          echo "${{ secrets.DotEnv }}" > ~/docker/CgvMate/.env
+
+      - name: 도커 컴포즈 준비
+        run: |
+          mv docker-compose.yml ~/docker/CgvMate/docker-compose.yml
+
+      - name: 도커 컴포즈 실행
+        run: |
+          cd ~/docker/CgvMate
+          docker compose up -d

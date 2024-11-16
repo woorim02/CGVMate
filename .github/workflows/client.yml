@@ -3,24 +3,26 @@ name: CgvMate.Client
 on:
   push:
     paths:
-      - 'cgvmate-web/**'
+      - "cgvmate-web/**"
+
 jobs:
   deploy:
     runs-on: [self-hosted, linux, x64]
-    
+
     steps:
-    - name: 코드 체크아웃
-      uses: actions/checkout@v2
+      - name: 코드 체크아웃
+        uses: actions/checkout@v2
 
-    - name: npm install
-      run: cd cgvmate-web && npm install
+      - name: npm install
+        working-directory: cgvmate-web
+        run: npm install
 
-    - name: 빌드
-      run: cd cgvmate-web && npm run build
+      - name: 클라이언트 빌드
+        working-directory: cgvmate-web
+        run: npm run build
 
-    - name: 이전 파일 삭제
-      run: rm -rf /mnt/bind_mount/cgvmate.com/dist
+      - name: 기존 배포 파일 삭제
+        run: rm -rf /var/www/cgvmate.com/*
 
-    - name: 배포
-      run: mv cgvmate-web/dist /mnt/bind_mount/cgvmate.com
-      
+      - name: 빌드 파일 배포
+        run: mv cgvmate-web/dist/* /var/www/cgvmate.com/

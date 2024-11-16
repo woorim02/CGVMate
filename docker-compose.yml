@@ -1,5 +1,5 @@
 services:
-  cgvmate-api:
+  cgvmate-server:
     image: "cgvmate-api:v1.5.9"
     restart: always
     container_name: cgvmate-api
