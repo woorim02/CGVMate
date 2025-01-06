@@ -1,6 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Box, FormControl, InputLabel, Select, MenuItem, Switch, Typography, List, ListItem, ListItemText, Container, FormControlLabel } from '@mui/material';
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Switch,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  Container,
+  FormControlLabel
+} from '@mui/material';
 import CgvMateApi from '../../../../api/cgvmateApi';
 import DisplayAds from '../../../../components/DisplayAds';
 
@@ -21,8 +34,8 @@ const SurpriseCuponPage = () => {
     const fetchCupons = async () => {
       const cuponEvents = await api.getEventListAsync(4);
       const filteredCupons = cuponEvents
-        .filter(event => event.eventName.includes('선착순 무료 쿠폰'))
-        .map(event => ({
+        .filter((event) => event.eventName.includes('선착순 무료 쿠폰'))
+        .map((event) => ({
           index: event.eventId,
           title: event.eventName,
           count: 0,
@@ -51,10 +64,7 @@ const SurpriseCuponPage = () => {
         const countText = cupon.isAvailable
           ? `<span class='count' style='color:lawngreen;'>${cupon.count}</span>`
           : `<span class='count'>${cupon.count}</span>`;
-        setProcessTexts(prevTexts => [
-          `[${timeString}] [${cupon.title}] : ${countText}`,
-          ...prevTexts
-        ]);
+        setProcessTexts((prevTexts) => [`[${timeString}] [${cupon.title}] : ${countText}`, ...prevTexts]);
       }, 500);
 
       return () => clearInterval(intervalRef.current);
@@ -71,7 +81,40 @@ const SurpriseCuponPage = () => {
 
   return (
     <Container>
-      서버 부하로 인해 일시적으로 사용 중단
+      <Helmet>
+        <meta name="description" content="서프라이즈쿠폰 자동 확인, 서프라이즈쿠폰 매크로" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="서프라이즈쿠폰 자동 확인" />
+        <meta property="og:description" content="서프라이즈쿠폰 자동 확인, 서프라이즈쿠폰 매크로" />
+        <meta property="og:url" content={window.location.href} />
+      </Helmet>
+      <Box sx={{ mb: 2 }}>
+        <Typography variant="h5">서프라이즈 쿠폰 자동 확인</Typography>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <FormControlLabel
+          control={<Switch checked={isRunning} onChange={handleToggleChange} color="primary" />}
+          label="서프라이즈 쿠폰 자동 확인"
+        />
+        <FormControl variant="outlined" sx={{ minWidth: 150 }}>
+          <InputLabel id="cupon-select-label">쿠폰 선택</InputLabel>
+          <Select labelId="cupon-select-label" value={selectedCuponIndex} onChange={handleCuponIndexChange} label="쿠폰 선택">
+            {cupons.map((cupon, index) => (
+              <MenuItem key={index} value={cupon.index}>
+                {cupon.title}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </Box>
+      <DisplayAds adSlot="2485625472" />
+      <List>
+        {processTexts.map((text, index) => (
+          <ListItem key={index}>
+            <ListItemText primary={<span dangerouslySetInnerHTML={{ __html: text }} />} />
+          </ListItem>
+        ))}
+      </List>
     </Container>
   );
 };
