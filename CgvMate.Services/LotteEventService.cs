@@ -29,7 +29,7 @@ public class LotteService
 
     public async Task<List<Event>> GetEventsAsync(LotteEventType type)
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://event.lottecinema.co.kr/LCWS/Event/EventData.aspx");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://www.lottecinema.co.kr/LCWS/Event/EventData.aspx");
         var body = new EventsReqDTO(type);
         var json = await SendForm(request, JsonConvert.SerializeObject(body));
         var root = JsonConvert.DeserializeObject<EventsResDTO>(json);
@@ -138,7 +138,7 @@ public class LotteService
         }
 
         //존재하지 않으면 서버에서 불러오기
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://event.lottecinema.co.kr/LCWS/Event/EventData.aspx");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://www.lottecinema.co.kr/LCWS/Event/EventData.aspx");
         var body = new InfomationDeliveryEventDetailReqDTO(eventID);
         var json = await SendForm(request, JsonConvert.SerializeObject(body));
         var root = JsonConvert.DeserializeObject<InfomationDeliveryEventDetailResDTO>(json);
