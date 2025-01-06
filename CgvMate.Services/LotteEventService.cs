@@ -162,7 +162,7 @@ public class LotteService
 
     public async Task<GiveawayEventDetail> GetLotteGiveawayInfoAsync(string eventID, string giftID)
     {
-        var request = new HttpRequestMessage(HttpMethod.Post, "https://event.lottecinema.co.kr/LCWS/Event/EventData.aspx");
+        var request = new HttpRequestMessage(HttpMethod.Post, "https://www.lottecinema.co.kr/LCWS/Event/EventData.aspx");
         var body = new CinemaGoodsReqDTO(eventID, giftID);
         var json = await SendForm(request, JsonConvert.SerializeObject(body));
         var root = JsonConvert.DeserializeObject<CinemaGoodsResDTO>(json);
