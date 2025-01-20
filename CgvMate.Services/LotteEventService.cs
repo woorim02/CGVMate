@@ -6,6 +6,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Text;
+using static System.Net.WebRequestMethods;
 
 namespace CgvMate.Services;
 
@@ -178,10 +179,11 @@ public class LotteService
 
     private async Task<string> SendForm(HttpRequestMessage request, string body)
     {
-        var form = new MultipartFormDataContent("WebKitFormBoundary");
+        var form = new MultipartFormDataContent("WebKitFormBoundaryfFeN6uLtzIIBZZ2x");
         var content = new StringContent(body, Encoding.UTF8, "application/json");
         form.Add(content, "paramList");
         request.Content = form;
+        request.Headers.Add("Referer", "https://www.lottecinema.co.kr/NLCHS/Event/DetailList?code=20");
         var response = await _client.SendAsync(request);
         var json = await response.Content.ReadAsStringAsync();
         return json;
