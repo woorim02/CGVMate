@@ -51,7 +51,7 @@ internal class MegaboxApi
         }
         var format = "yyyy.M.d(ddd) HH:mm";
         var provider = new CultureInfo("ko-KR");
-        dateString = dateString.Trim();
+        dateString = dateString.Trim().Replace("&nbsp;", " ");
         var dateTime = DateTime.ParseExact(dateString, format, provider);
         dateTime = dateTime.AddMinutes(-30);
         return dateTime;
