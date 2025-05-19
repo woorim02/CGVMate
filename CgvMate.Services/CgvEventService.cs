@@ -35,7 +35,7 @@ public class CgvEventService
         var events = await _api.GetEvents(CgvEventType.Movie);
         var cuponEvents = events
             .Where(e => e.EventName.Contains("스피드 쿠폰")
-                     || e.EventName.Contains("선착순 무료 쿠폰")
+                     || e.EventName.Contains("선착순 무료")
                      || e.EventName.Contains("서프라이즈"))
             .ToList();
         var dbEvents = await _cuponEventRepository.GetCuponEventsAsync();
