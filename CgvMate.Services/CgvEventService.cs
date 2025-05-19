@@ -5,7 +5,7 @@ using System.Data;
 
 namespace CgvMate.Services;
 
-public class CgvEventService : CgvServiceBase
+public class CgvEventService
 {
     private readonly HttpClient _client;
     private readonly ICgvGiveawayEventRepository _giveawayEventRepository;
@@ -16,12 +16,12 @@ public class CgvEventService : CgvServiceBase
                            ICgvGiveawayEventRepository giveawatEventRepository,
                            ICgvCuponEventRepository cuponEventRepository,
                            string iv,
-                           string key) : base(iv, key)
+                           string key)
     {
         _client = client;
         _giveawayEventRepository = giveawatEventRepository;
         _cuponEventRepository = cuponEventRepository;
-        _api = new CgvApi(client, base.Decrypt);
+        _api = new CgvApi(client, null);
     }
 
     public async Task<List<Event>> GetEvents(CgvEventType type)
@@ -35,7 +35,8 @@ public class CgvEventService : CgvServiceBase
         var events = await _api.GetEvents(CgvEventType.Movie);
         var cuponEvents = events
             .Where(e => e.EventName.Contains("스피드 쿠폰")
-                     || e.EventName.Contains("선착순 무료 쿠폰"))
+                     || e.EventName.Contains("선착순 무료 쿠폰")
+                     || e.EventName.Contains("서프라이즈"))
             .ToList();
         var dbEvents = await _cuponEventRepository.GetCuponEventsAsync();
         var kvp = dbEvents.ToDictionary(e => e.EventId);
