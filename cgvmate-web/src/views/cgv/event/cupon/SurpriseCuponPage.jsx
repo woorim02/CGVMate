@@ -34,7 +34,7 @@ const SurpriseCuponPage = () => {
     const fetchCupons = async () => {
       const cuponEvents = await api.getEventListAsync(4);
       const filteredCupons = cuponEvents
-        .filter((event) => event.eventName.includes('선착순 무료 쿠폰'))
+        .filter((event) => event.eventName.includes('선착순 무료') || event.eventName.includes('서프라이즈'))
         .map((event) => ({
           index: event.eventId,
           title: event.eventName,
